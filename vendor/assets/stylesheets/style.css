@@ -606,7 +606,7 @@ html body .br-gary{
 	border-color:#e2e5e8 !important;
 }
 html body .br-default{
-	border-color:#283447 !important;#e2e5e8
+	border-color:#283447 !important;
 }
 /*------------ Global Settings: Status BG Style --------------*/
 html body .bg-online{
@@ -2305,8 +2305,8 @@ padding:0px;
 	Slide Banner 
 --------------------------------------------*/
 .slide-banner {
-    background-size: cover !Important;
-    background-position: center !Important;
+    background-size: cover;
+    background-position: center;
     position: relative;
     margin: 0;
     overflow: hidden;
