@@ -1,0 +1,118 @@
+<!-- Title Header Start -->
+<section class="inner-header-title" style="background-image:url(http://via.placeholder.com/1920x850);">
+  <div class="container">
+    <h1>Register Account</h1>
+  </div>
+</section>
+<div class="clearfix"></div>
+<!-- Title Header End -->
+
+<!-- Tab Section Start -->
+<section class="tab-sec gray">
+  <div class="container">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-lg-offset-2 col-md-offset-2">
+      <div class="new-logwrap">
+        <ul class="nav modern-tabs nav-tabs theme-bg" id="simple-design-tab">
+          <li class="active"><a href="#candidate">Job Seeker</a></li>
+          <li><a href="#employer">Employer</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="candidate" class="tab-pane fade in active">
+            <%= form_with model: @user do |f| %>
+              <div class="form-group">
+                <%= f.label :first_name  %>
+                <div class="input-with-icon">
+                  <%= f.text_field :first_name, placeholder: 'Enter Your First Name', class: 'form-control' %>
+                  <i class="theme-cl ti-user"></i>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :last_name  %>
+                <div class="input-with-icon">
+                  <%= f.text_field :last_name, placeholder: 'Enter Your Last Name', class: 'form-control' %>
+                  <i class="theme-cl ti-user"></i>
+                </div>
+              </div>
+              <div>
+                <%= f.hidden_field :role, value: 'job_seeker' %>
+              </div>
+              <div class="form-group">
+                <%= f.label :email  %>
+                <div class="input-with-icon">
+                  <%= f.email_field :email, placeholder: 'Enter Your Email', class: 'form-control' %>
+                  <i class="theme-cl ti-email"></i>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :password  %>
+                <div class="input-with-icon">
+                  <%= f.password_field :password, placeholder: 'Enter Your Password', class: 'form-control' %>
+                  <i class="theme-cl ti-lock"></i>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :password_confirmation  %>
+                <div class="input-with-icon">
+                  <%= f.password_field :password_confirmation, placeholder: 'Enter Your Password', class: 'form-control' %>
+                  <i class="theme-cl ti-lock"></i>
+                </div>
+              </div>
+              <div class="register-account text-center">
+                By hitting the <span class="theme-cl">"Register"</span> button, you agree to the <a class="theme-cl" href="#">Terms conditions</a> and <a class="theme-cl" href="#">Privacy Policy</a>
+              </div>
+              <div class="form-group">
+                <%= f.submit 'Register', class: 'btn btn-primary theme-bg full-width' %>
+              </div>
+            <% end %>
+
+            <div class="social-devider">
+              <span class="line"></span>
+            </div>
+          </div>
+
+          <div id="employer" class="tab-pane fade">
+            <div class="form-group">
+              <label>User Name</label>
+              <div class="input-with-icon">
+                <input type="text" class="form-control" placeholder="Enter Your Username">
+                <i class="theme-cl ti-user"></i>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Company Name</label>
+              <div class="input-with-icon">
+                <input type="text" class="form-control" placeholder="Enter Your Username">
+                <i class="theme-cl ti-home"></i>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <div class="input-with-icon">
+                <input type="email" class="form-control" placeholder="Enter Your Email">
+                <i class="theme-cl ti-email"></i>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <div class="input-with-icon">
+                <input type="password" class="form-control" placeholder="Enter Your Password">
+                <i class="theme-cl ti-lock"></i>
+              </div>
+            </div>
+            <div class="register-account text-center">
+              By hitting the <span class="theme-cl">"Register"</span> button, you agree to the <a class="theme-cl" href="#">Terms conditions</a> and <a class="theme-cl" href="#">Privacy Policy</a>
+            </div>
+            <div class="form-groups">
+              <button type="submit" class="btn btn-primary theme-bg full-width">Register</button>
+            </div>
+            <div class="social-devider">
+              <span class="line"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Tab section End -->
+
