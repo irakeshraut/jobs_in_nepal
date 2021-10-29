@@ -82,13 +82,9 @@ GEM
     marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.6.1)
     minitest (5.14.4)
     msgpack (1.4.2)
     nio4r (2.5.8)
-    nokogiri (1.12.5)
-      mini_portile2 (~> 2.6.1)
-      racc (~> 1.4)
     nokogiri (1.12.5-x86_64-darwin)
       racc (~> 1.4)
     pg (1.2.3)
@@ -174,7 +170,6 @@ GEM
     zeitwerk (2.5.1)
 
 PLATFORMS
-  ruby
   x86_64-darwin-19
 
 DEPENDENCIES
@@ -196,4 +191,4 @@ RUBY VERSION
    ruby 2.7.4p191
 
 BUNDLED WITH
-   2.2.5
+   2.2.30
