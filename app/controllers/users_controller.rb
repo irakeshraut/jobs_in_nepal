@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.role = 'job_seeker'
     @company = Company.new
     if @user.valid? && @user.save
       redirect_to root_path
@@ -19,6 +20,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :role, :email, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
   end
 end

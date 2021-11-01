@@ -1,6 +1,7 @@
 class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
+    @company.users.first.role = 'employer'
     if @company.valid? && @company.save
       redirect_to root_path
     else
@@ -12,6 +13,6 @@ class CompaniesController < ApplicationController
 
   def company_params
     params.require(:company).permit(:name, :phone, users_attributes: [:first_name, :last_name, :email, :password,
-                                                                      :role, :password_confirmation, :company_id])
+                                                                      :password_confirmation, :company_id])
   end
 end
