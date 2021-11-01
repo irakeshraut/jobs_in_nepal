@@ -18,7 +18,7 @@
             <h4>Login</h4>
           </div>
 
-          <%= form_with url: sessions_path, method: :post, class: 'billing-form' do |f| %>
+          <%= form_with url: sessions_path, local: true, class: 'billing-form' do |f| %>
             <div class='row'>
               <div class="col-xs-12">
                 <%= f.label :email %>
