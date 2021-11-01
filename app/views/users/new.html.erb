@@ -13,11 +13,12 @@
     <div class="col-lg-8 col-md-8 col-sm-12 col-lg-offset-2 col-md-offset-2">
       <div class="new-logwrap">
         <ul class="nav modern-tabs nav-tabs theme-bg" id="simple-design-tab">
-          <li class="active"><a href="#candidate">Job Seeker</a></li>
-          <li><a href="#employer">Employer</a></li>
+          <li class="<%= @tab == 'job_seeker' ? 'active' : '' %>"><a href="#candidate">Job Seeker</a></li>
+          <li class="<%= @tab == 'employer' ? 'active' : '' %>"><a href="#employer">Employer</a></li>
         </ul>
         <div class="tab-content">
-          <div id="candidate" class="tab-pane fade in active">
+          <div id="candidate" class="tab-pane fade <%= @tab == 'job_seeker' ? 'in active' : '' %>">
+            <%= render "shared/form_error_message" %>
             <%= form_with model: @user do |f| %>
               <div class="form-group">
                 <%= f.label :first_name  %>
@@ -70,44 +71,74 @@
             </div>
           </div>
 
-          <div id="employer" class="tab-pane fade">
-            <div class="form-group">
-              <label>User Name</label>
-              <div class="input-with-icon">
-                <input type="text" class="form-control" placeholder="Enter Your Username">
-                <i class="theme-cl ti-user"></i>
+          <div id="employer" class="tab-pane fade <%= @tab == 'employer' ? 'in active' : '' %>">
+            <%= render "shared/form_error_message" %>
+            <%= form_with model: @company, local: true do |f| %>
+              <div class="form-group">
+                <%= f.label :name, 'Business Name' %>
+                <div class="input-with-icon">
+                  <%= f.text_field :name, placeholder: 'Enter Business Name', class: 'form-control' %>
+                  <i class="theme-cl ti-home"></i>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label>Company Name</label>
-              <div class="input-with-icon">
-                <input type="text" class="form-control" placeholder="Enter Your Username">
-                <i class="theme-cl ti-home"></i>
+              <div class="form-group">
+                <%= f.label :phone, 'Business Phone Number' %>
+                <div class="input-with-icon">
+                  <%= f.text_field :phone, placeholder: 'Enter Business Phone Number', class: 'form-control' %>
+                  <i class="theme-cl ti-mobile"></i>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <div class="input-with-icon">
-                <input type="email" class="form-control" placeholder="Enter Your Email">
-                <i class="theme-cl ti-email"></i>
+
+              <%= f.fields_for :users, @company.users.build do |user| %>
+                <div class="form-group">
+                  <%= user.label :first_name %>
+                  <div class="input-with-icon">
+                    <%= user.text_field :first_name, placeholder: 'Enter First Name', class: 'form-control' %>
+                    <i class="theme-cl ti-user"></i>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= user.label :last_name %>
+                  <div class="input-with-icon">
+                    <%= user.text_field :last_name, placeholder: 'Enter Last Name', class: 'form-control' %>
+                    <i class="theme-cl ti-user"></i>
+                  </div>
+                </div>
+                <div>
+                  <%= user.hidden_field :role, value: 'employer' %>
+                </div>
+                <div class="form-group">
+                  <%= user.label :email %>
+                  <div class="input-with-icon">
+                    <%= user.email_field :email, placeholder: 'Enter Your Email', class: 'form-control' %>
+                    <i class="theme-cl ti-email"></i>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= user.label :password %>
+                  <div class="input-with-icon">
+                    <%= user.password_field :password, placeholder: 'Enter Your Password', class: 'form-control' %>
+                    <i class="theme-cl ti-lock"></i>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= user.label :password_confirmation %>
+                  <div class="input-with-icon">
+                    <%= user.password_field :password_confirmation, placeholder: 'Enter Your Password', class: 'form-control' %>
+                    <i class="theme-cl ti-lock"></i>
+                  </div>
+                </div>
+                <div class="register-account text-center">
+                  By hitting the <span class="theme-cl">"Register"</span> button, you agree to the <a class="theme-cl" href="#">Terms conditions</a> and <a class="theme-cl" href="#">Privacy Policy</a>
+                </div>
+              <% end %>
+              <div class="form-groups">
+                <%= f.submit 'Register', class: 'btn btn-primary theme-bg full-width' %>
               </div>
-            </div>
-            <div class="form-group">
-              <label>Password</label>
-              <div class="input-with-icon">
-                <input type="password" class="form-control" placeholder="Enter Your Password">
-                <i class="theme-cl ti-lock"></i>
+              <div class="social-devider">
+                <span class="line"></span>
               </div>
-            </div>
-            <div class="register-account text-center">
-              By hitting the <span class="theme-cl">"Register"</span> button, you agree to the <a class="theme-cl" href="#">Terms conditions</a> and <a class="theme-cl" href="#">Privacy Policy</a>
-            </div>
-            <div class="form-groups">
-              <button type="submit" class="btn btn-primary theme-bg full-width">Register</button>
-            </div>
-            <div class="social-devider">
-              <span class="line"></span>
-            </div>
+            <% end %>
           </div>
         </div>
       </div>
