@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+/* This is to take out extra space from logo surrounded by <a> tag. */
+nav.navbar .navbar-brand {
+  display: none;
+}
