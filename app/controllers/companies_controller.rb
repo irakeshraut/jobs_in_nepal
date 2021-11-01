@@ -1,4 +1,6 @@
 class CompaniesController < ApplicationController
+  skip_before_action :require_login, only: [:create]
+
   def create
     @company = Company.new(company_params)
     @company.users.first.role = 'employer'
