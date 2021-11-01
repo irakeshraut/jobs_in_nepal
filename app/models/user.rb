@@ -9,4 +9,6 @@ class User < ApplicationRecord
   validates :email,  presence: true
   validates :email, uniqueness: true
   validates :role, presence: true, inclusion: { in: %w(employer job_seeker admin) }
+
+  belongs_to :company, optional: true
 end
