@@ -1,5 +1,5 @@
 class Job < ApplicationRecord
-  STATUS = ['Active', 'Expire', 'Close'].freeze
+  STATUS = ['Active', 'Expired', 'Close'].freeze
   TYPE   = ['Full Time', 'Part Time', 'Casual', 'Contract', 'Freelance'].freeze
 
   validates :title,           presence: true
@@ -12,4 +12,6 @@ class Job < ApplicationRecord
   validates :user,            presence: true
 
   belongs_to :user
+
+  has_rich_text :description
 end
