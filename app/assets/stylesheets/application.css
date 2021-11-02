@@ -18,3 +18,7 @@
 nav.navbar .navbar-brand {
   display: none;
 }
+
+nav.navbar.bootsnav .navbar-brand {
+  display: none !Important;
+}
