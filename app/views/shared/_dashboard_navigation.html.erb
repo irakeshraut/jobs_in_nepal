@@ -16,10 +16,14 @@
 
     <div class="dashboard-menu">
       <ul>
-        <li class="active"><a href="dashboard.html"><i class="ti-dashboard"></i>Dashboard</a></li>
-        <li>
+        <li class="<%= controller.controller_name == 'dashboards' && controller.action_name == 'index' ? 'active' : '' %>">
+          <%= link_to dashboards_path do %>
+            <i class="ti-ruler-pencil"></i>Dashboard
+          <% end %>
+        </li>
+        <li class="<%= controller.controller_name == 'jobs' && controller.action_name == 'new' ? 'active' : '' %>">
           <%= link_to new_job_path do %>
-            <i class='ti-ruler-pencil'></i>Post New Job
+            <i class="ti-ruler-pencil"></i>Post New Job
           <% end %>
         </li>
         <li><a href="all-jobs.html"><i class="ti-briefcase"></i>All Jobs</a></li>
