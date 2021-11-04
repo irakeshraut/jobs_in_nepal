@@ -98,7 +98,7 @@
 
             </div>
             <div class="job-instructor-content">
-              <h4 class="instructor-title"><a href="job-detail-2.html"><%= job.title %></a></h4>
+              <h4 class="instructor-title"><%= link_to(job.title, job) %></h4>
               <h5 class="instructor-title"><%= job.user.company.name %></h5>
               <div class="instructor-skills">
                 <h5 class="instructor-scount"><%= job.salary %></h5>

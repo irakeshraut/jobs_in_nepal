@@ -1,6 +1,10 @@
 class JobsController < ApplicationController
-  layout 'dashboard'
+  layout 'dashboard', except: [:show]
 
+  def show
+    @job = Job.find(params[:id])
+  end
+  
   def new
     @job = Job.new
     @error_messages = params[:error_messages] if params[:error_messages]
