@@ -99,218 +99,22 @@
             </div>
             <div class="job-instructor-content">
               <h4 class="instructor-title"><a href="job-detail-2.html"><%= job.title %></a></h4>
+              <h5 class="instructor-title"><%= job.user.company.name %></h5>
               <div class="instructor-skills">
-                <%= truncate(strip_tags(job.description.to_s), length: 70) %>
+                <h5 class="instructor-scount"><%= job.salary %></h5>
               </div>
             </div>
             <div class="job-instructor-footer">
               <div class="instructor-students">
-                <h5 class="instructor-scount">$3.2K - $5K</h5>
               </div>
               <div class="instructor-corses">
-                <span class="c-counting">7 Open</span>
+                <span class="c-counting"><%= job.location %></span>
               </div>
             </div>
           </div>
         </div>
       <% end %>
-      <!-- Single New Job -->
-      <div class="col-md-3 col-sm-6">
-        <div class="job-instructor-layout">
-          <span class="tg-themetag tg-featuretag">Premium</span>
-          <div class="brows-job-type"><span class="freelanc">Freelancer</span></div>
-          <div class="job-instructor-thumb">
-            <a href="job-detail-2.html"><%= image_tag 'com-2', class: 'img-fluid' %></a>
-          </div>
-          <div class="job-instructor-content">
-            <h4 class="instructor-title"><a href="job-detail-2.html">Web Designing</a></h4>
-            <div class="instructor-skills">
-              CSS3, HTML5, Javascript, Bootstrap, Jquery
-            </div>
-          </div>
-          <div class="job-instructor-footer">
-            <div class="instructor-students">
-              <h5 class="instructor-scount">$3.2K - $5K</h5>
-            </div>
-            <div class="instructor-corses">
-              <span class="c-counting">7 Open</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single New Job -->
-      <div class="col-md-3 col-sm-6">
-        <div class="job-instructor-layout">
-          <div class="brows-job-type"><span class="full-time">Full Time</span></div>
-          <div class="job-instructor-thumb">
-            <a href="job-detail-2.html"><%= image_tag 'com-3', class: 'img-fluid' %></a>
-          </div>
-          <div class="job-instructor-content">
-            <h4 class="instructor-title"><a href="job-detail-2.html">App Developer</a></h4>
-            <div class="instructor-skills">
-              CSS3, HTML5, Javascript, Bootstrap, Jquery
-            </div>
-          </div>
-          <div class="job-instructor-footer">
-            <div class="instructor-students">
-              <h5 class="instructor-scount">$4.2K - $5K</h5>
-            </div>
-            <div class="instructor-corses">
-              <span class="c-counting">2 Open</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single New Job -->
-      <div class="col-md-3 col-sm-6">
-        <div class="job-instructor-layout">
-          <div class="brows-job-type"><span class="part-time">Part Time</span></div>
-          <div class="job-instructor-thumb">
-            <a href="job-detail-2.html"><%= image_tag 'com-4', class: 'img-fluid' %></a>
-          </div>
-          <div class="job-instructor-content">
-            <h4 class="instructor-title"><a href="job-detail-2.html">Software Developer</a></h4>
-            <div class="instructor-skills">
-              CSS3, HTML5, Javascript, Bootstrap, Jquery
-            </div>
-          </div>
-          <div class="job-instructor-footer">
-            <div class="instructor-students">
-              <h5 class="instructor-scount">$6.5K - $8K</h5>
-            </div>
-            <div class="instructor-corses">
-              <span class="c-counting">02 Open</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single New Job -->
-      <div class="col-md-3 col-sm-6">
-        <div class="job-instructor-layout">
-          <span class="tg-themetag tg-featuretag">Premium</span>
-          <div class="brows-job-type"><span class="freelanc">Freelancer</span></div>
-          <div class="job-instructor-thumb">
-            <a href="job-detail-2.html"><%= image_tag 'com-5', class: 'img-fluid' %></a>
-          </div>
-          <div class="job-instructor-content">
-            <h4 class="instructor-title"><a href="job-detail-2.html">iPhone Developer</a></h4>
-            <div class="instructor-skills">
-              CSS3, HTML5, Javascript, Bootstrap, Jquery
-            </div>
-          </div>
-          <div class="job-instructor-footer">
-            <div class="instructor-students">
-              <h5 class="instructor-scount">$3.7K - $6K</h5>
-            </div>
-            <div class="instructor-corses">
-              <span class="c-counting">04 Open</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single New Job -->
-      <div class="col-md-3 col-sm-6">
-        <div class="job-instructor-layout">
-          <div class="brows-job-type"><span class="part-time">Part Time</span></div>
-          <div class="job-instructor-thumb">
-            <a href="job-detail-2.html"><%= image_tag 'com-6', class: 'img-fluid' %></a>
-          </div>
-          <div class="job-instructor-content">
-            <h4 class="instructor-title"><a href="job-detail-2.html">UI/UX Designer</a></h4>
-            <div class="instructor-skills">
-              CSS3, HTML5, Javascript, Bootstrap, Jquery
-            </div>
-          </div>
-          <div class="job-instructor-footer">
-            <div class="instructor-students">
-              <h5 class="instructor-scount">$3.2K - $5K</h5>
-            </div>
-            <div class="instructor-corses">
-              <span class="c-counting">05 Open</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single New Job -->
-      <div class="col-md-3 col-sm-6">
-        <div class="job-instructor-layout">
-          <span class="tg-themetag tg-featuretag">Premium</span>
-          <div class="brows-job-type"><span class="full-time">Full Time</span></div>
-          <div class="job-instructor-thumb">
-            <a href="job-detail-2.html"><%= image_tag 'com-7', class: 'img-fluid' %></a>
-          </div>
-          <div class="job-instructor-content">
-            <h4 class="instructor-title"><a href="job-detail-2.html">Content Writer</a></h4>
-            <div class="instructor-skills">
-              CSS3, HTML5, Javascript, Bootstrap, Jquery
-            </div>
-          </div>
-          <div class="job-instructor-footer">
-            <div class="instructor-students">
-              <h5 class="instructor-scount">$304K - $6K</h5>
-            </div>
-            <div class="instructor-corses">
-              <span class="c-counting">02 Open</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single New Job -->
-      <div class="col-md-3 col-sm-6">
-        <div class="job-instructor-layout">
-          <div class="brows-job-type"><span class="enternship">Tnternship</span></div>
-          <div class="job-instructor-thumb">
-            <a href="job-detail-2.html"><%= image_tag 'com-7', class: 'img-fluid' %></a>
-          </div>
-          <div class="job-instructor-content">
-            <h4 class="instructor-title"><a href="job-detail-2.html">Project Manager</a></h4>
-            <div class="instructor-skills">
-              CSS3, HTML5, Javascript, Bootstrap, Jquery
-            </div>
-          </div>
-          <div class="job-instructor-footer">
-            <div class="instructor-students">
-              <h5 class="instructor-scount">$37.5K - $8K</h5>
-            </div>
-            <div class="instructor-corses">
-              <span class="c-counting">07 Open</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single New Job -->
-      <div class="col-md-3 col-sm-6">
-        <div class="job-instructor-layout">
-          <span class="tg-themetag tg-featuretag">Premium</span>
-          <div class="brows-job-type"><span class="full-time">Full Time</span></div>
-          <div class="job-instructor-thumb">
-            <a href="job-detail-2.html"><%= image_tag 'com-1', class: 'img-fluid' %></a>
-          </div>
-          <div class="job-instructor-content">
-            <h4 class="instructor-title"><a href="job-detail-2.html">Wordpress Expert</a></h4>
-            <div class="instructor-skills">
-              CSS3, HTML5, Javascript, Bootstrap, Jquery
-            </div>
-          </div>
-          <div class="job-instructor-footer">
-            <div class="instructor-students">
-              <h5 class="instructor-scount">$10.2K - $16K</h5>
-            </div>
-            <div class="instructor-corses">
-              <span class="c-counting">02 Open</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
+  </div>
 </section>
-<div class="clearfix"></div>
 <!-- Latest Job End-->
