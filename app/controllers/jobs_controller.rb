@@ -1,5 +1,9 @@
 class JobsController < ApplicationController
-  layout 'dashboard', except: [:show]
+  layout 'dashboard', except: [:index, :show]
+
+  def index
+    @jobs = Job.active.reverse
+  end
 
   def show
     @job = Job.find(params[:id])

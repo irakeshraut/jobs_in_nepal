@@ -1,0 +1,95 @@
+<!-- Title Header Start -->
+<section class="inner-header-title" style="background-image:url(http://via.placeholder.com/1920x850);">
+  <div class="container">
+    <h1>Browse Jobs</h1>
+  </div>
+</section>
+<div class="clearfix"></div>
+<!-- Title Header End -->
+
+<!-- ========== Begin: Brows job ===============  -->
+<section>
+  <div class="container">
+    <!-- Company Searrch Filter Start -->
+    <div class="row extra-mrg">
+      <div class="wrap-search-filter">
+        <form>
+          <div class="col-md-4 col-sm-4">
+            <input type="text" class="form-control" placeholder="Keyword: Name, Tag">
+          </div>
+          <div class="col-md-3 col-sm-3">
+            <input type="text" class="form-control" placeholder="Location: City, State, Zip">
+          </div>
+          <div class="col-md-3 col-sm-3">
+            <select class="form-control" id="j-category">
+              <option value="">&nbsp;</option>
+              <option value="1">Information Technology</option>
+              <option value="2">Mechanical</option>
+              <option value="3">Hardware</option>
+              <option value="4">Hospitality & Tourism</option>
+              <option value="5">Education & Training</option>
+              <option value="6">Government & Public</option>
+              <option value="7">Architecture</option>
+            </select>
+
+          </div>
+          <div class="col-md-2 col-sm-2">
+            <button type="submit" class="btn btn-primary full-width">Filter</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Company Searrch Filter End -->
+
+    <% @jobs.each do |job| %>
+      <div class="item-click">
+        <article>
+          <div class="brows-job-list">
+            <div class="col-md-6 col-sm-6">
+              <div class="item-fl-box">
+                <div class="brows-job-company-img">
+                  <a href="job-detail-2.html"><img src="http://via.placeholder.com/150x150" class="img-responsive" alt="" /></a>
+                </div>
+                <div class="brows-job-position">
+                  <h3><%= link_to(job.title, job) %></a></h3>
+                  <p>
+                  <span><%= job.user.company.name %></span><span class="brows-job-sallery"><i class="fa fa-money"></i><%= job.salary %></span>
+                  <span class="job-type cl-success bg-trans-success"><%= job.employment_type %></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-4">
+              <div class="brows-job-location">
+                <p><i class="fa fa-map-marker"></i><%= job.location %></p>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+              <div class="brows-job-link">
+                <a href="job-detail-1.html" class="btn btn-default">Apply Now</a>
+              </div>
+            </div>
+          </div>
+          <% if job.created_at.today? %>
+            <span class="tg-themetag tg-featuretag">New Job</span>
+          <% end %>
+        </article>
+      </div>
+    <% end %>
+
+    <!--/.row-->
+    <div class="row">
+      <ul class="pagination">
+        <li><a href="#"><i class="ti-arrow-left"></i></a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li> 
+        <li><a href="#">4</a></li> 
+        <li><a href="#"><i class="fa fa-ellipsis-h"></i></a></li> 
+        <li><a href="#"><i class="ti-arrow-right"></i></a></li> 
+      </ul>
+    </div>
+
+  </div>
+</section>
+<!-- ========== Begin: Brows job End ===============  -->

@@ -17,6 +17,8 @@ class Job < ApplicationRecord
 
   has_rich_text :description
 
+  scope :active, -> { where(status: 'Active') }
+
   def salary
     if min_salary.present? && max_salary.present?
       "Rs #{number_to_human(min_salary, format: '%n%u', precision: 2, units: { thousand: 'K', million: 'M', billion: 'B' })} -

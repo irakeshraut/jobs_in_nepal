@@ -8,8 +8,10 @@
       </div>
 
       <div class="dashboard-avatar-text">
-        <h4>Shaurya Preet</h4>
-        <span>Zivara Technoloty</span>
+        <h4><%= current_user.full_name %></h4>
+        <% if current_user.company.present? %>
+          <span><%= current_user.company.name %></span>
+        <% end %>
       </div>
 
     </div>
@@ -21,11 +23,13 @@
             <i class="ti-ruler-pencil"></i>Dashboard
           <% end %>
         </li>
-        <li class="<%= controller.controller_name == 'jobs' && controller.action_name == 'new' ? 'active' : '' %>">
-          <%= link_to new_job_path do %>
-            <i class="ti-ruler-pencil"></i>Post New Job
-          <% end %>
-        </li>
+        <% if current_user.admin? || current_user.employer? %>
+          <li class="<%= controller.controller_name == 'jobs' && controller.action_name == 'new' ? 'active' : '' %>">
+            <%= link_to new_job_path do %>
+              <i class="ti-ruler-pencil"></i>Post New Job
+            <% end %>
+          </li>
+        <% end %>
         <li><a href="all-jobs.html"><i class="ti-briefcase"></i>All Jobs</a></li>
         <li><a href="applications.html"><i class="ti-user"></i>Applications</a></li>
         <li><a href="packages.html"><i class="ti-wallet"></i>Packages</a></li>

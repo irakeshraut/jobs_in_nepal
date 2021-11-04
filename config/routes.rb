@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   resources :sessions,  only: [:new, :create, :destroy]
   resources :companies, only: [:create]
   resources :dashboards, only: [:index]
-  resources :jobs, only: [:show, :new, :create]
+  resources :jobs, only: [:index, :show, :new, :create]
 end
