@@ -11,4 +11,20 @@ class User < ApplicationRecord
   validates :role, presence: true, inclusion: { in: %w(employer job_seeker admin) }
 
   belongs_to :company, optional: true
+
+  def admin?
+    role == 'admin'
+  end
+
+  def employer?
+    role == 'employer'
+  end
+
+  def job_seeker?
+    role == 'job_seeker'
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
