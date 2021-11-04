@@ -1,5 +1,11 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   before_action :require_login
+
+  rescue_from Pundit::NotAuthorizedError do
+    flash[:error] = "You are not authorized to perform this action."
+    redirect_to root_path
+  end
 
   private
 
