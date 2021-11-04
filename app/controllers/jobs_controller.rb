@@ -7,11 +7,13 @@ class JobsController < ApplicationController
   
   def new
     @job = Job.new
+    authorize @job
     @error_messages = params[:error_messages] if params[:error_messages]
   end
 
   def create
     @job = Job.new(job_params)
+    authorize @job
     @job.status = 'Active'
     @job.user_id = current_user.id
     if @job.valid? && @job.save
