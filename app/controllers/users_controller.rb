@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: [:new, :create]
+  layout 'dashboard', only: [:edit, :update]
 
   def new
     @user = User.new
@@ -22,7 +23,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find(params[:id])
+    @error_messages = params[:error_messages] if params[:error_messages]
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(edit_user_params)
+      flash[:success] = 'User Profile Sucessfully Updated.'
+      redirect_to dashboards_path
+    else
+      redirect_to edit_user_path(@user, error_messages: @user.errors.full_messages)
+    end
+  end
+
   private
+
+  def edit_user_params
+    params.require(:user).permit(:first_name, :last_name, :email)
+  end
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
