@@ -14,11 +14,13 @@ class CompaniesController < ApplicationController
 
   def edit
     @company = Company.find(params[:id])
+    authorize @company
     @error_messages = params[:error_messages] if params[:error_messages]
   end
 
   def update
     @company = Company.find(params[:id])
+    authorize @company
     if @company.update_attributes(edit_company_params)
       flash[:success] = 'Company Details Successfully Updated.'
       redirect_to edit_company_path(@company)
