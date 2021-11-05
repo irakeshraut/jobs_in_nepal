@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
     @company = Company.new(company_params)
     @company.users.first.role = 'employer'
     if @company.valid? && @company.save
-      redirect_to root_path
+      redirect_to login_path
     else
       redirect_to new_user_path(tab: 'employer', error_messages: @company.errors.full_messages)
     end

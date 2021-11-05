@@ -6,6 +6,9 @@ class UsersController < ApplicationController
     @company = Company.new
     @tab = params[:tab] if params[:tab]
     @error_messages = params[:error_messages] if params[:error_messages]
+    unless @tab
+      redirect_to new_user_path(tab: 'job_seeker')
+    end
   end 
 
   def create
@@ -13,7 +16,7 @@ class UsersController < ApplicationController
     @user.role = 'job_seeker'
     @company = Company.new
     if @user.valid? && @user.save
-      redirect_to root_path
+      redirect_to login_path
     else
       redirect_to new_user_path(tab: 'job_seeker', error_messages: @user.errors.full_messages)
     end
