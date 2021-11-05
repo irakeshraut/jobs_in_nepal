@@ -21,7 +21,7 @@ class CompaniesController < ApplicationController
   def update
     @company = Company.find(params[:id])
     authorize @company
-    if @company.update_attributes(edit_company_params)
+    if @company.update_attributes(company_params)
       flash[:success] = 'Company Details Successfully Updated.'
       redirect_to edit_company_path(@company)
     else
@@ -31,12 +31,9 @@ class CompaniesController < ApplicationController
 
   private
 
-  def edit_company_params
-    params.require(:company).permit(:name, :phone)
-  end
-
   def company_params
-    params.require(:company).permit(:name, :phone, users_attributes: [:first_name, :last_name, :email, :password,
-                                                                      :password_confirmation, :company_id])
+    params.require(:company).permit(:name, :phone, :url, :description, users_attributes: 
+                                    [:first_name, :last_name, :email, :password, 
+                                     :password_confirmation, :company_id])
   end
 end

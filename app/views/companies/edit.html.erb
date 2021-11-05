@@ -2,29 +2,66 @@
   <div class="dashboard-body">
     <div class="dashboard-caption">
       <div class="dashboard-caption-header">
-        <h4><i class="ti-lock"></i>Edit Password</h4>
+        <h4><i class="ti-lock"></i>Edit Company Details</h4>
       </div>
       <div class="dashboard-caption-wrap">
         <%= render 'shared/form_error_message' %>
         <%= form_with model: @company do |f| %>
-          <div class="form-group">
-            <%= f.label :name, 'Business Name'  %>
-            <div class="input-with-icon">
-              <%= f.text_field :name, placeholder: 'Enter Business Name', class: 'form-control', required: true %>
-              <i class="theme-cl ti-home"></i>
+          <div class='row'>
+            <div class='col-md-6 col-sm-6'>
+              <div class="form-group">
+                <%= f.label :name, 'Business Name'  %>
+                <div class="input-with-icon">
+                  <%= f.text_field :name, placeholder: 'Enter Business Name', class: 'form-control', required: true %>
+                  <i class="theme-cl ti-home"></i>
+                </div>
+              </div>
+            </div>
+            <div class='col-md-6 col-sm-6'>
+              <div class="form-group">
+                <%= f.label :phone, 'Business Phone Number'  %>
+                <div class="input-with-icon">
+                  <%= f.text_field :phone, placeholder: 'Enter Business Phone Number', class: 'form-control', required: true %>
+                  <i class="theme-cl ti-mobile"></i>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <%= f.label :phone, 'Business Phone Number'  %>
-            <div class="input-with-icon">
-              <%= f.text_field :phone, placeholder: 'Enter Business Phone Number', class: 'form-control', required: true %>
-              <i class="theme-cl ti-lock"></i>
+          <div class='row'>
+            <div class='col-md-6 col-sm-6'>
+              <div class="form-group">
+                <%= f.label :url, 'Business URL'  %>
+                <div class="input-with-icon">
+                  <%= f.text_field :url, placeholder: 'Enter Business URL', class: 'form-control' %>
+                  <i class="theme-cl ti-world"></i>
+                </div>
+              </div>
+            </div>
+            <div class='col-md-6 col-sm-6'>
+              <div class="form-group">
+                <%= f.label :logo, 'Business Logo'  %>
+                <div class="input-with-icon">
+                  <%= f.file_field :logo, class: 'form-control' %>
+                  <i class="theme-cl ti-shield"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-md-12 col-sm-12'>
+              <div class="form-group">
+                <%= f.label :description  %>
+                <div class="input-with-icon">
+                  <%= f.text_area :description, placeholder: 'Enter Description About Company', class: 'form-control' %>
+                  <i class="theme-cl ti-text"></i>
+                </div>
+              </div>
             </div>
           </div>
           <div class='row mrg-top-30'>
             <div class='col-md-12 col-sm-12'>
               <div class='form-group text-center'>
-                <%= f.submit 'Update Business Detail', class: 'btn btn-primary theme-bg' %>
+                <%= f.submit 'Update Company Detail', class: 'btn btn-primary theme-bg' %>
               </div>
             </div>
           </div>
