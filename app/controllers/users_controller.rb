@@ -26,19 +26,40 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     @error_messages = params[:error_messages] if params[:error_messages]
+    @hide_error_messages = params[:hide_error_messages] if params[:hide_error_messages]
   end
 
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(edit_user_params)
-      flash[:success] = 'User Profile Sucessfully Updated.'
+      flash[:success] = 'User Profile Successfully Updated.'
       redirect_to dashboards_path
     else
       redirect_to edit_user_path(@user, error_messages: @user.errors.full_messages)
     end
   end
 
+  def update_password
+    old_current_user = current_user # need to set current_user before using login otherwise current_user will be nil when login fail.
+    @user = login(old_current_user.email, params[:current_password])
+    if @user
+      if @user.update_attributes(password_params)
+        flash[:success] = 'Password Successfully Updated.'
+        redirect_to dashboards_path
+      else
+        redirect_to edit_user_path(@user, error_messages: @user.errors.full_messages, hide_error_messages: true)
+      end
+    else
+      flash[:error] = 'Invalid Current Password.'
+      redirect_to edit_user_path(old_current_user)
+    end
+  end
+
   private
+
+  def password_params
+    params.permit(:password, :password_confirmation)
+  end
 
   def edit_user_params
     params.require(:user).permit(:first_name, :last_name, :email)

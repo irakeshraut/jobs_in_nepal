@@ -30,7 +30,7 @@
             <% end %>
           </li>
         <% end %>
-        <li class="<%= controller.controller_name == 'jobs' && controller.action_name == 'new' ? 'active' : '' %>">
+        <li class="<%= controller.controller_name == 'users' && controller.action_name == 'edit' ? 'active' : '' %>">
           <%= link_to edit_user_path(current_user.id) do %>
             <i class="ti-user"></i>Edit Profile
           <% end %>
