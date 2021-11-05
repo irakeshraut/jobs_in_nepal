@@ -1,0 +1,35 @@
+<div class="col-lg-9 col-md-8">
+  <div class="dashboard-body">
+    <div class="dashboard-caption">
+      <div class="dashboard-caption-header">
+        <h4><i class="ti-lock"></i>Edit Password</h4>
+      </div>
+      <div class="dashboard-caption-wrap">
+        <%= render 'shared/form_error_message' %>
+        <%= form_with model: @company do |f| %>
+          <div class="form-group">
+            <%= f.label :name, 'Business Name'  %>
+            <div class="input-with-icon">
+              <%= f.text_field :name, placeholder: 'Enter Business Name', class: 'form-control', required: true %>
+              <i class="theme-cl ti-home"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :phone, 'Business Phone Number'  %>
+            <div class="input-with-icon">
+              <%= f.text_field :phone, placeholder: 'Enter Business Phone Number', class: 'form-control', required: true %>
+              <i class="theme-cl ti-lock"></i>
+            </div>
+          </div>
+          <div class='row mrg-top-30'>
+            <div class='col-md-12 col-sm-12'>
+              <div class='form-group text-center'>
+                <%= f.submit 'Update Business Detail', class: 'btn btn-primary theme-bg' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

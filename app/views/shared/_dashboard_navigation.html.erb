@@ -1,19 +1,15 @@
 <div class="col-lg-3 col-md-4">
   <div class="side-dashboard">
-
     <div class="dashboard-avatar">
-
       <div class="dashboard-avatar-thumb">
         <%= image_tag 'can-2.png', class: 'img-avater' %>
       </div>
-
       <div class="dashboard-avatar-text">
         <h4><%= current_user.full_name %></h4>
         <% if current_user.company.present? %>
           <span><%= current_user.company.name %></span>
         <% end %>
       </div>
-
     </div>
 
     <div class="dashboard-menu">
@@ -31,10 +27,17 @@
           </li>
         <% end %>
         <li class="<%= controller.controller_name == 'users' && controller.action_name == 'edit' ? 'active' : '' %>">
-          <%= link_to edit_user_path(current_user.id) do %>
+          <%= link_to edit_user_path(current_user) do %>
             <i class="ti-user"></i>Edit Profile
           <% end %>
         </li>
+        <% if current_user.employer? %>
+          <li class="<%= controller.controller_name == 'companies' && controller.action_name == 'edit' ? 'active' : '' %>">
+            <%= link_to edit_company_path(current_user.company) do %>
+              <i class="ti-home"></i>Edit Company
+            <% end %>
+          </li>
+        <% end %>
     </div>
   </div>
 </div>
