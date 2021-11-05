@@ -53,75 +53,15 @@
             <li><a href="dashboard/index.html">dashboard</a></li>
           </ul>
         </li>
-        <li class="dropdown megamenu-fw"><a href="#" class="dropdown-toggle" data-toggle="dropdown">brows</a>
-          <ul class="dropdown-menu megamenu-content" role="menu">
-            <li>
-              <div class="row">
-                <div class="col-menu col-md-3">
-                  <h6 class="title">main pages</h6>
-                  <div class="content">
-                    <ul class="menu-col">
-                      <li><a href="login.html">new login</a></li>
-                      <li><a href="signin-signup.html">sign in / sign up</a></li>
-                      <li><a href="search-job.html">search job</a></li>
-                      <li><a href="accordion.html">accordion</a></li>
-                      <li><a href="tab.html">tab style</a></li>
-                      <li><a href="blog.html">blog</a></li>
-                      <li><a href="pricing.html">pricing</a></li>
-                    </ul>
-                  </div>
-                </div><!-- end col-3 -->
-                <div class="col-menu col-md-3">
-                  <h6 class="title">for candidate</h6>
-                  <div class="content">
-                    <ul class="menu-col">
-                      <li><a href="browse-candidate-list.html">browse candidates</a></li>
-                      <li><a href="manage-candidate.html">browse candidate</a></li>
-                      <li><a href="top-candidate.html">top candidate</a></li>
-                      <li><a href="candidate-profile.html">candidate detail</a></li>
-                      <li><a href="candidate-detail.html">new candidate detail</a></li>
-                      <li><a href="browse-resume-grid.html">browse candidate grid</a></li>
-                      <li><a href="browse-candidate-map.html">browse candidate with map</a></li>
-                      <li><a href="browse-resume.html">browse resume</a></li>
-                    </ul>
-                  </div>
-                </div><!-- end col-3 -->
-                <div class="col-menu col-md-3">
-                  <h6 class="title">for employer</h6>
-                  <div class="content">
-                    <ul class="menu-col">
-                      <li><a href="browse-employer-list.html">employer with sidebar</a></li>
-                      <li><a href="browse-company.html">browse companies</a></li>
-                      <li><a href="company-detail.html">company detail</a></li>
-                      <li><a href="create-job.html">create job</a></li>
-                      <li><a href="create-company.html">create company</a></li>
-                      <li><a href="manage-company.html">manage company</a></li>
-                      <li><a href="manage-employee.html">manage employee</a></li>
-                      <li><a href="employer-profile.html">employer profile</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-menu col-md-3">
-                  <h6 class="title">extra pages <span class="new-offer">new</span></h6>
-                  <div class="content">
-                    <ul class="menu-col">
-                      <li><a href="top-candidate-detail.html">top candidate detail</a></li>
-                      <li><a href="payment-methode.html">payment methode</a></li>
-                      <li><a href="new-login-signup.html">new login / signup</a></li>
-                      <li><a href="top-candidate-2.html">top candidate 2</a></li>
-                      <li><a href="premium-candidate.html">premium candidate</a></li>
-                      <li><a href="premium-candidate-detail.html">premium candidate detail</a></li>
-                      <li><a href="contact.html">get in touch</a></li>
-                    </ul>
-                  </div>
-                </div><!-- end col-3 -->
-              </div><!-- end row -->
-            </li>
-          </ul>
-        </li>
       </ul>
+
       <ul class="nav navbar-nav navbar-right" data-in="fadeindown" data-out="fadeoutup">
         <% if current_user %>
+          <li>
+            <%= link_to dashboards_path do %>
+              <i class="fa fa-tachometer"></i>dashboard
+            <% end %>
+          </li>
           <li>
             <%= link_to logout_path do %>
               <i class="fa fa-sign-out"></i>sign out
@@ -134,7 +74,11 @@
             <% end %>
           </li>
         <% end %>
-        <li class='left-br'><%= link_to 'sign up', new_user_path(tab: 'job_seeker'), class: 'signin' %></li>
+        <% if current_user && (current_user.admin? || current_user.employer?) %>
+          <li class='left-br'><%= link_to 'post a job', new_job_path, class: 'signin' %></li>
+        <% else %>
+          <li class='left-br'><%= link_to 'sign up', new_user_path(tab: 'job_seeker'), class: 'signin' %></li>
+        <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div>
