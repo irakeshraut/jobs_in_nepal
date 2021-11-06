@@ -28,7 +28,7 @@
             </div>
           </div>
           <div class='row'>
-            <div class='col-md-6 col-sm-6'>
+            <div class='col-md-12 col-sm-12'>
               <div class="form-group">
                 <%= f.label :url, 'Business URL'  %>
                 <div class="input-with-icon">
@@ -37,10 +37,16 @@
                 </div>
               </div>
             </div>
-            <div class='col-md-6 col-sm-6'>
+          </div>
+            <div class='row'>
+            <div class='col-md-12 col-sm-12'>
               <div class="form-group">
                 <%= f.label :logo, 'Business Logo'  %>
                 <div class="input-with-icon">
+                  <% if @company.logo.attached? %>
+                    <%= image_tag @company.logo, class: 'img-responsive', style: 'width: 200px; display: block'  %>
+                    <%= @company.logo.filename %>
+                  <% end %>
                   <%= f.file_field :logo, class: 'form-control' %>
                   <i class="theme-cl ti-shield"></i>
                 </div>
@@ -51,9 +57,8 @@
             <div class='col-md-12 col-sm-12'>
               <div class="form-group">
                 <%= f.label :description  %>
-                <div class="input-with-icon">
-                  <%= f.text_area :description, placeholder: 'Enter Description About Company', class: 'form-control' %>
-                  <i class="theme-cl ti-text"></i>
+                <div>
+                  <%= f.text_area :description, placeholder: 'Enter Description About Company', rows: 10, class: 'form-control' %>
                 </div>
               </div>
             </div>

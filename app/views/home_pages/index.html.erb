@@ -93,8 +93,11 @@
             <div class="brows-job-type"><span class="freelanc"><%= job.employment_type %></span></div>
             <div class="job-instructor-thumb">
               <a href="job-detail-2.html"><%#= image_tag 'com-2', class: 'img-fluid' %></a>
-              <a href=''><%= image_tag 'https://via.placeholder.com/150', class: 'img-fluid' %></a>
-
+              <% if job.user.company.logo.attached? %>
+                <%= image_tag job.user.company.logo, class: 'img-fluid' %>
+              <% else %>
+                <%= image_tag 'https://via.placeholder.com/150', class: 'img-fluid' %>
+              <% end %>
             </div>
             <div class="job-instructor-content">
               <h4 class="instructor-title"><%= link_to(job.title, job) %></h4>

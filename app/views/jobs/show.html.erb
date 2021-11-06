@@ -16,7 +16,11 @@
       <div class="ur-detail-box">
 
         <div class="ur-thumb">
-          <%= image_tag 'com-1', class: 'img-responsive' %>
+          <% if @job.user.company.logo.attached? %>
+            <%= image_tag @job.user.company.logo, class: 'img-responsive' %>
+          <% else %>
+            <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
+          <% end %>
         </div>
         <div class="ur-caption">
           <h4 class="ur-title"><%= @job.title %></h4>

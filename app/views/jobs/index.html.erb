@@ -48,7 +48,11 @@
             <div class="col-md-6 col-sm-6">
               <div class="item-fl-box">
                 <div class="brows-job-company-img">
-                  <a href="job-detail-2.html"><img src="http://via.placeholder.com/150x150" class="img-responsive" alt="" /></a>
+                  <% if job.user.company.logo.attached? %>
+                    <%= image_tag job.user.company.logo, class: 'img-responsive' %>
+                  <% else %>
+                    <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
+                  <% end %>
                 </div>
                 <div class="brows-job-position">
                   <h3><%= link_to(job.title, job) %></a></h3>
