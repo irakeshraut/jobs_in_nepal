@@ -34,4 +34,8 @@ class Job < ApplicationRecord
       'Salary Not Mentioned'
     end
   end
+
+  def created_by_admin?
+    company_name.present? && redirect_link.present? && user.role == 'admin'
+  end
 end

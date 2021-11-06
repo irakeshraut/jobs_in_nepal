@@ -70,7 +70,9 @@
             <div class="brows-job-type"><span class="freelanc"><%= job.employment_type %></span></div>
             <div class="job-instructor-thumb">
               <a href="job-detail-2.html"><%#= image_tag 'com-2', class: 'img-fluid' %></a>
-              <% if job.user.company.logo.attached? %>
+              <% if job.created_by_admin? %>
+                <%= image_tag 'https://via.placeholder.com/150', class: 'img-fluid' %>
+              <% elsif job.user.company.logo.attached? %>
                 <%= image_tag job.user.company.logo, class: 'img-fluid' %>
               <% else %>
                 <%= image_tag 'https://via.placeholder.com/150', class: 'img-fluid' %>
@@ -78,7 +80,13 @@
             </div>
             <div class="job-instructor-content">
               <h4 class="instructor-title"><%= link_to(job.title, job) %></h4>
-              <h5 class="instructor-title"><%= job.user.company.name %></h5>
+              <h5 class="instructor-title">
+                <% if job.created_by_admin?  %>
+                  <%= job.company_name %>
+                <% else %>
+                  <%= job.user.company.name %>
+                <% end %>
+              </h5>
               <div class="instructor-skills">
                 <h5 class="instructor-scount"><%= job.salary %></h5>
               </div>

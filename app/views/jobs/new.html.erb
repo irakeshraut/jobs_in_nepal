@@ -17,7 +17,7 @@
             <div class="col-md-6 col-sm-6">
               <div class="form-group">
                 <%= f.label :employment_type, 'Employment Type' %>
-                <%= f.select :employment_type, Job::TYPE, { prompt: '-- Select --' }, class: 'form-control', required: true %>
+                <%= f.select :employment_type, Job::TYPE, { prompt: '-- Select --' }, class: 'form-control', required: true, id: 'choose-category' %>
               </div>
             </div>
           </div>
@@ -25,7 +25,7 @@
             <div class="col-md-6 col-sm-6">
               <div class="form-group">
                 <%= f.label :category %>
-                <%= f.select :category, Category::LIST.keys.sort, { prompt: '-- Select --' }, class: 'form-control', required: true %>
+                <%= f.select :category, Category::LIST.keys.sort, { prompt: '-- Select --' }, class: 'form-control', required: true, id: 'choose-category' %>
               </div>
             </div>
             <div class="col-md-6 col-sm-6">
@@ -44,11 +44,27 @@
             </div>
             <div class="col-md-6 col-sm-6">
               <div class="form-group">
-                <%= f.label :max_salary %>
+                <%= f.label :max_salary, 'Maximum Salary' %>
                 <%= f.text_field :max_salary, placeholder: 'Maximum Salary', class: 'form-control' %>
               </div>
             </div>
           </div>
+          <% if current_user.admin? %>
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <%= f.label :redirect_link, 'Redirect URL' %>
+                  <%= f.text_field :redirect_link, placeholder: 'Enter Redirect URL', class: 'form-control', required: true %>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <%= f.label :company_name, 'Company Name' %>
+                  <%= f.text_field :company_name, placeholder: 'Enter Company Name', class: 'form-control', required: true %>
+                </div>
+              </div>
+            </div>
+          <% end %>
           <div class='row'>
             <div class="col-md-12 col-sm-12">
               <%= f.label :description, 'Job Description' %>

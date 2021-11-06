@@ -2,7 +2,7 @@
   <div class="side-dashboard">
     <div class="dashboard-avatar">
       <div class="dashboard-avatar-thumb">
-        <% if current_user.company&.logo.attached? %>
+        <% if current_user.company&.logo&.attached? %>
           <%= image_tag current_user.company.logo, class: 'img-avatar' %>
         <% else %>
           <%= image_tag 'https://via.placeholder.com/150', class: 'img-avater' %>

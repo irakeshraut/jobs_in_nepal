@@ -16,7 +16,9 @@
       <div class="ur-detail-box">
 
         <div class="ur-thumb">
-          <% if @job.user.company.logo.attached? %>
+          <% if @job.created_by_admin? %>
+            <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
+          <% elsif @job.user.company.logo.attached? %>
             <%= image_tag @job.user.company.logo, class: 'img-responsive' %>
           <% else %>
             <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
@@ -25,7 +27,13 @@
         <div class="ur-caption">
           <h4 class="ur-title"><%= @job.title %></h4>
           <p class="ur-location"><i class="ti-location-pin mrg-r-5"></i><%= @job.location %></p>
-          <span class="ur-designation"><i class="ti-home mrg-r-5"></i><%= @job.user.company.name %>h</span>
+          <span class="ur-designation"><i class="ti-home mrg-r-5"></i>
+            <% if @job.created_by_admin? %>
+              <%= @job.company_name %>
+            <% else %>
+              <%= @job.user.company.name %>
+            <% end %>
+          </span>
         </div>
 
       </div>
@@ -91,7 +99,13 @@
                   <li>
                     <i class="ti-home"></i>
                     <h5>Company</h5>
-                    <span><%= @job.user.company.name %></span>
+                    <span>
+                      <% if @job.created_by_admin? %>
+                        <%= @job.company_name %>
+                      <% else %>
+                        <%= @job.user.company.name %>
+                      <% end %>
+                    </span>
                   </li>
                   <li>
                     <i class="ti-wallet"></i>
