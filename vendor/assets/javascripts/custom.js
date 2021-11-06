@@ -194,7 +194,7 @@ All custom js files contents are below
 	
 	// --------- Job List --------
 	var options = {
-		url: "./assets/js/resources/joblist.json",
+		// url: "./assets/js/resources/joblist.json",
 
 		getValue: "name",
 
@@ -207,7 +207,7 @@ All custom js files contents are below
 	
 	// --------- Companies --------
 	var options = {
-		url: "./assets/js/resources/companies.json",
+		// url: "./assets/js/resources/companies.json",
 
 		getValue: "name",
 
@@ -222,7 +222,7 @@ All custom js files contents are below
 	
 	// --------- Location --------
 	var options = {
-		url: "./assets/js/resources/location.json",
+		// url: "./assets/js/resources/location.json",
 
 		getValue: "name",
 
