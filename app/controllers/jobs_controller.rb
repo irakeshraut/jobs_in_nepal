@@ -2,7 +2,10 @@ class JobsController < ApplicationController
   layout 'dashboard', except: [:index, :show]
 
   def index
-    @jobs = Job.active.reverse
+    @jobs = Job.active.order('created_at DESC')
+    @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
+    @jobs = @jobs.filter_by_category(params[:category]) if params[:category].present?
+    @jobs = @jobs.filter_by_location(params[:location]) if params[:location].present?
   end
 
   def show

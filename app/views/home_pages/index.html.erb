@@ -5,69 +5,46 @@
       <div class="col-md-12 col-sm-12 banner-text">
         <div class="full-search-2 eclip-search italian-search hero-search-radius">
           <div class="hero-search-content">
-
             <div class="row">
-
-              <div class="col-lg-4 col-md-4 col-sm-12 small-padd b-r">
-                <div class="form-group">
-                  <div class="input-with-icon">
-                    <input type="text" class="form-control" placeholder="Job Title or Keywords">
-                    <i class="ti-search"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-md-3 col-sm-12 small-padd">
-                <div class="form-group">
-                  <div class="input-with-icon">
-                    <select id="choose-category" class="form-control">
-                      <option>Job Category</option>
-                      <option>Education & Trainee</option>
-                      <option>Sales & Marketing</option>
-                      <option>Automotive Jobs</option>
-                      <option>Health & Medical</option>
-                      <option>Design & Development</option>
-                      <option>Book Services</option>
-                    </select>
-                    <i class="ti-layers"></i>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="col-lg-3 col-md-3 col-sm-12 small-padd">
-                <div class="form-group">
-                  <div class="input-with-icon">
-                    <select id="choose-city" class="form-control">
-                      <option>Choose City</option>
-                      <option>Chandigarh</option>
-                      <option>London</option>
-                      <option>England</option>
-                      <option>Pratapcity</option>
-                      <option>Ukrain</option>
-                      <option>Wilangana</option>
-                    </select>
-                    <i class="ti-layers"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-2 col-md-2 col-sm-12 small-padd">
-                <div class="form-group">
+              <%= form_with url: jobs_path, method: :get, local: true do |f| %>
+                <div class="col-lg-4 col-md-4 col-sm-12 small-padd b-r">
                   <div class="form-group">
-                    <a href="#" class="btn btn-primary search-btn">Search</a>
+                    <div class="input-with-icon">
+                      <%= f.text_field :title, placeholder: 'Enter Job Title', class: 'form-control' %>
+                      <i class="ti-search"></i>
+                    </div>
                   </div>
                 </div>
-              </div>
-
+                <div class="col-lg-3 col-md-3 col-sm-12 small-padd">
+                  <div class="form-group">
+                    <div class="input-with-icon">
+                      <%= f.select :category, Category::LIST.keys.sort, { prompt: '-- Select --' }, class: 'form-control', id: 'choose-category' %>
+                      <i class="ti-layers"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12 small-padd">
+                  <div class="form-group">
+                    <div class="input-with-icon">
+                      <%= f.text_field :location, placeholder: 'Enter City Name', class: 'form-control' %>
+                      <i class="ti-location-arrow"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-12 small-padd">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <%= f.submit 'Search', class: 'btn btn-primary search-btn' %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
             </div>
-
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>
 
 
