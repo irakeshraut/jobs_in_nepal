@@ -16,6 +16,7 @@ class Job < ApplicationRecord
   belongs_to :user
 
   has_rich_text :description
+  validates :description, presence: true
 
   scope :active, -> { where(status: 'Active') }
   scope :filter_by_title, ->(title) { where("lower(title) like ?", "%#{title.downcase}%") }

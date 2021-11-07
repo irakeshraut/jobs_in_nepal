@@ -35,3 +35,5 @@ en:
       company:
         name: 'Business Name'
         phone: 'Business Phone Number'
+      job:
+        description: 'Job Description'
