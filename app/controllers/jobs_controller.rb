@@ -3,7 +3,7 @@ class JobsController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
 
   def index
-    @jobs = Job.includes(user: { company: [logo_attachment: :blob] }).active.order('created_at DESC')
+    @jobs = Job.includes(user: { company: [logo_attachment: :blob] }).active.order(created_at: :desc)
     @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
     @jobs = @jobs.filter_by_category(params[:category]) if params[:category].present?
     @jobs = @jobs.filter_by_location(params[:location]) if params[:location].present?
