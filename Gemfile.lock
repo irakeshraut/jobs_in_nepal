@@ -201,6 +201,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    select2-rails (4.0.13)
     sorcery (0.16.1)
       bcrypt (~> 3.1)
       oauth (~> 0.5, >= 0.5.5)
@@ -259,6 +260,7 @@ DEPENDENCIES
   pundit
   rails (~> 6.0.4, >= 6.0.4.1)
   sass-rails (>= 6)
+  select2-rails
   sorcery
   spring
   spring-watcher-listen (~> 2.0.0)
