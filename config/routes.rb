@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     member do
       post :update_password
     end
+    resources :work_experiences, only: [:new]
   end
 
   resources :sessions,  only: [:new, :create, :destroy]
