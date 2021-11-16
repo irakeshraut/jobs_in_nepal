@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_06_080112) do
+ActiveRecord::Schema.define(version: 2021_11_10_085542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -87,6 +87,21 @@ ActiveRecord::Schema.define(version: 2021_11_06_080112) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  create_table "work_experiences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "job_title", null: false
+    t.string "company_name", null: false
+    t.string "start_month", null: false
+    t.integer "start_year", null: false
+    t.string "finish_month"
+    t.integer "finish_year"
+    t.boolean "still_in_role"
+    t.text "description"
+    t.uuid "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_work_experiences_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
