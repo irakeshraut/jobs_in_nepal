@@ -8,6 +8,7 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
   validates :email,  presence: true
   validates :email, uniqueness: true
+  validates :email, email: { mode: :strict, require_fqdn: true }
   validates :role, presence: true, inclusion: { in: %w(employer job_seeker admin) }
 
   belongs_to :company, optional: true
