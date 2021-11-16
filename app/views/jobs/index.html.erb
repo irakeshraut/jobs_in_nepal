@@ -81,17 +81,10 @@
 
     <!--/.row-->
     <div class="row">
-      <ul class="pagination">
-        <li><a href="#"><i class="ti-arrow-left"></i></a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li> 
-        <li><a href="#">4</a></li> 
-        <li><a href="#"><i class="fa fa-ellipsis-h"></i></a></li> 
-        <li><a href="#"><i class="ti-arrow-right"></i></a></li> 
-      </ul>
+      <div class="digg_pagination">
+        <%= will_paginate @jobs %>
+      </div>
     </div>
-
   </div>
 </section>
 <!-- ========== Begin: Brows job End ===============  -->
