@@ -1,0 +1,31 @@
+<div class="col-lg-9 col-md-8">
+  <div class="dashboard-body">
+    <div class="dashboard-caption">
+      <div class="dashboard-caption-header">
+        <h4><i class="ti-lock"></i>Edit Work Experiences</h4>
+      </div>
+      <div class="dashboard-caption-wrap">
+        <%= render 'shared/form_error_message' %>
+        <%= form_for @user do |f| %>
+          <div id='work_experiences'>
+            <%= f.fields_for :work_experiences do |work_experience| %>
+              <%= render 'work_experience_fields', f: work_experience %>
+            <% end %>
+            <div class='links'>
+              <%= link_to_add_association  f, :work_experiences, class: 'btn btn-primary' do %>
+                <i class="fa fa-plus"></i> Add Work Experience
+              <% end %>
+            </div>
+          </div>
+          <div class='row mrg-top-30'>
+            <div class='col-md-12 col-sm-12'>
+              <div class='form-group text-center'>
+                <%= f.submit 'Update Work Experience', class: 'btn btn-primary theme-bg foo' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

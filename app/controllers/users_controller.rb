@@ -33,11 +33,20 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     authorize @user
-    if @user.update_attributes(edit_user_params)
-      flash[:success] = 'User Profile Successfully Updated.'
-      redirect_to dashboards_path
+    if @user.update(user_params)
+      if params[:redirect_to] == 'edit_work_experience_path'
+        flash[:success] = 'Work Experience Successfully Updated.'
+        redirect_to new_user_work_experience_path(@user)
+      else
+        flash[:success] = 'User Profile Successfully Updated.'
+        redirect_to edit_user_path(@user)
+      end
     else
-      redirect_to edit_user_path(@user, error_messages: @user.errors.full_messages)
+      if params[:redirect_to] == 'edit_work_experience_path'
+        redirect_to new_user_work_experience_path(@user, error_messages: @user.errors.full_messages)
+      else
+        redirect_to edit_user_path(@user, error_messages: @user.errors.full_messages)
+      end
     end
   end
 
@@ -47,7 +56,7 @@ class UsersController < ApplicationController
     authorize @user
 
     if @user
-      if @user.update_attributes(password_params)
+      if @user.update(password_params)
         flash[:success] = 'Password Successfully Updated.'
         redirect_to dashboards_path
       else
@@ -70,6 +79,8 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, work_experiences_attributes: [:id, :job_title, :company_name, :_destroy, 
+                                                                                                                                   :start_month, :start_year, 
+                                                                                                                                   :finish_month, :finish_year, :still_in_role, :description])
   end
 end
