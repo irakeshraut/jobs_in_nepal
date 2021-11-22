@@ -1,0 +1,99 @@
+<div class='nested-fields'>
+  <div class='row'>
+    <div class='col-md-6 col-sm-6'>
+      <div class="form-group">
+        <%= hidden_field_tag :redirect_to, :edit_education_path %>
+        <%= f.label :institution_name, 'Institution Name'  %>
+        <div class="input-with-icon">
+          <%= f.text_field :institution_name, placeholder: 'Enter Institution Name ', class: 'form-control', required: true %>
+          <i class="theme-cl ti-home"></i>
+        </div>
+      </div>
+    </div>
+    <div class='col-md-6 col-sm-6'>
+      <div class="form-group">
+        <%= f.label :course_name, 'Course Name'  %>
+        <div class="input-with-icon">
+          <%= f.text_field :course_name, placeholder: 'Enter Course Name', class: 'form-control', required: true %>
+          <i class="theme-cl ti-mobile"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-6 col-sm-6'>
+      <div class="form-group">
+        <%= f.label :course_completed, 'Course Complete'  %>
+        <div class="input-with-icon">
+          <%= f.check_box :course_completed, class: 'form-control checkbox' %>
+          <!-- <i class="theme&#45;cl ti&#45;home"></i> -->
+        </div>
+      </div>
+    </div>
+    <div class='col-md-6 col-sm-6 finished_year'>
+      <div class="form-group">
+        <%= f.label :finished_year, 'Finished Year (optional)'  %>
+        <div class="input-with-icon">
+          <%= f.select :finished_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control' %>
+          <i class="theme-cl ti-mobile"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='row expected_finished_time'>
+    <div class='col-md-6 col-sm-6'>
+      <div class="form-group">
+        <%= f.label :expected_finished_month, 'Expected Finished Month (optional)'  %>
+        <div class="input-with-icon">
+          <%= f.select :expected_finished_month, WorkExperiencesHelper.months, { prompt: '-- Select --' }, class: 'form-control' %>
+          <i class="theme-cl ti-mobile"></i>
+        </div>
+      </div>
+    </div>
+    <div class='col-md-6 col-sm-6'>
+      <div class="form-group">
+        <%= f.label :expected_finished_year, 'Expected Finished Year (optional)'  %>
+        <div class="input-with-icon">
+          <%= f.select :expected_finished_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control' %>
+          <i class="theme-cl ti-mobile"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-12 col-sm-12'>
+      <div class="form-group">
+        <%= f.label :course_highlights, 'Course Highlights (optional)' %>
+        <%= f.text_area :course_highlights, rows: 10, placeholder: 'Add activities, projects, awards or achievements during your study.', class: 'form-control'  %>
+      </div>
+    </div>
+  </div>
+
+  <%= link_to_remove_association  f, class: 'btn btn-danger' do %>
+    <i class="fa fa-trash"></i> Delete
+  <% end %>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('.checkbox').each(function(){
+      if(this.checked) { 
+        $(this).closest('.row').next('.expected_finished_time').hide();
+        $(this).closest('.row').find('.finished_year').show();
+      } else {
+        $(this).closest('.row').next('.expected_finished_time').show();
+        $(this).closest('.row').find('.finished_year').hide();
+      }
+    });
+
+    $(".checkbox").change(function() {
+      if (this.checked) {
+        $(this).closest('.row').next('.expected_finished_time').hide();
+        $(this).closest('.row').find('.finished_year').show();
+      } else {
+        $(this).closest('.row').next('.expected_finished_time').show();
+        $(this).closest('.row').find('.finished_year').hide();
+      }
+    });
+  });
+</script>

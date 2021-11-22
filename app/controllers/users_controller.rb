@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     unless @tab
       redirect_to new_user_path(tab: 'job_seeker')
     end
-  end 
+  end
 
   def create
     @user = User.new(user_params)
@@ -37,6 +37,9 @@ class UsersController < ApplicationController
       if params[:redirect_to] == 'edit_work_experience_path'
         flash[:success] = 'Work Experience Successfully Updated.'
         redirect_to new_user_work_experience_path(@user)
+      elsif params[:redirect_to] == 'edit_education_path'
+        flash[:success] = 'Education Successfully Updated.'
+        redirect_to new_user_education_path(@user)
       else
         flash[:success] = 'User Profile Successfully Updated.'
         redirect_to edit_user_path(@user)
@@ -44,6 +47,8 @@ class UsersController < ApplicationController
     else
       if params[:redirect_to] == 'edit_work_experience_path'
         redirect_to new_user_work_experience_path(@user, error_messages: @user.errors.full_messages)
+      elsif params[:redirect_to] == 'edit_education_path'
+        redirect_to new_user_education_path(@user, error_messages: @user.errors.full_messages)
       else
         redirect_to edit_user_path(@user, error_messages: @user.errors.full_messages)
       end
@@ -79,8 +84,9 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, work_experiences_attributes: [:id, :job_title, :company_name, :_destroy, 
-                                                                                                                                   :start_month, :start_year, 
-                                                                                                                                   :finish_month, :finish_year, :still_in_role, :description])
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, work_experiences_attributes:
+                                 [:id, :job_title, :company_name, :_destroy, :start_month, :start_year, :finish_month, :finish_year, :still_in_role, :description],
+                                 educations_attributes: [:id, :institution_name, :course_name, :course_completed, :finished_year, :_destroy,
+                                                        :expected_finished_month, :expected_finished_year, :course_highlights])
   end
 end

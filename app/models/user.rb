@@ -13,7 +13,9 @@ class User < ApplicationRecord
 
   belongs_to :company, optional: true
   has_many :work_experiences, inverse_of: :user, dependent: :destroy
+  has_many :educations, inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :work_experiences, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :educations, reject_if: :all_blank, allow_destroy: true
 
   def admin?
     role == 'admin'
