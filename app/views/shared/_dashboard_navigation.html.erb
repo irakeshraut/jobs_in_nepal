@@ -48,6 +48,11 @@
               <i class="ti-home"></i>Edit Work Experiences
             <% end %>
           </li>
+          <li class="<%= controller.controller_name == 'educations' && controller.action_name == 'new' ? 'active' : '' %>">
+            <%= link_to new_user_education_path(current_user) do %>
+              <i class="ti-home"></i>Edit Education
+            <% end %>
+          </li>
         <% end %>
     </div>
   </div>

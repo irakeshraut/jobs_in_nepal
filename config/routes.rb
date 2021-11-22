@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       post :update_password
     end
     resources :work_experiences, only: [:new]
+    resources :educations, only: [:new]
   end
 
   resources :sessions,  only: [:new, :create, :destroy]

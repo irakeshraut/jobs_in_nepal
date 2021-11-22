@@ -21,7 +21,7 @@
             <%= f.text_field :location, placeholder: 'Enter City Name', class: 'form-control' %>
           </div>
           <div class="col-md-3 col-sm-3">
-            <%= f.select :category, Category::LIST.keys.sort, { prompt: '-- Select --' }, class: 'form-control', id: 'j-category' %>
+            <%= f.select :category, Category::LIST.keys.sort, { prompt: '-- Select --' }, class: 'form-control' %>
           </div>
           <div class="col-md-2 col-sm-2">
             <%= f.submit 'Filter', class: 'btn btn-primary full-width' %>

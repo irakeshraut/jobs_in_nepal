@@ -22,3 +22,11 @@ nav.navbar .navbar-brand {
 nav.navbar.bootsnav .navbar-brand {
   display: none !Important;
 }
+
+.select2-results__options {
+  max-height: 500px !Important;
+}
+
+.checkbox {
+  width: 30px !Important;
+}
