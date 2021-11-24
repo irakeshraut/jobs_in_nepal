@@ -5,14 +5,14 @@ class EducationPolicy < ApplicationPolicy
     end
   end
 
-  attr_reader :user, :education
+  attr_reader :user, :user_record
 
-  def initialize(user, education)
+  def initialize(user, user_record)
     @user = user
-    @work_experience = education
+    @user_record = user_record
   end
 
   def new?
-    user.job_seeker?
+    user.job_seeker? && user_record == user
   end
 end

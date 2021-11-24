@@ -5,14 +5,14 @@ class WorkExperiencePolicy < ApplicationPolicy
     end
   end
 
-  attr_reader :user, :work_experience
+  attr_reader :user, :user_record
 
-  def initialize(user, work_experience)
+  def initialize(user, user_record)
     @user = user
-    @work_experience = work_experience
+    @user_record = user_record
   end
 
   def new?
-    user.job_seeker?
+    user.job_seeker? && user_record == user
   end
 end
