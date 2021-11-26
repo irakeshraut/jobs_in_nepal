@@ -58,6 +58,11 @@
               <i class="ti-home"></i>Manage Resume
             <% end %>
           </li>
+          <li class="<%= controller.controller_name == 'cover_letters' && controller.action_name == 'new' ? 'active' : '' %>">
+            <%= link_to new_user_cover_letter_path(current_user) do %>
+              <i class="ti-home"></i>Manage Cover Letter
+            <% end %>
+          </li>
         <% end %>
     </div>
   </div>

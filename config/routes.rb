@@ -15,6 +15,11 @@ Rails.application.routes.draw do
         get :download
       end
     end
+    resources :cover_letters, only: [:new, :create, :destroy] do
+      member do
+        get :download
+      end
+    end
   end
 
   resources :sessions,  only: [:new, :create, :destroy]
