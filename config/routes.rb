@@ -10,6 +10,11 @@ Rails.application.routes.draw do
     end
     resources :work_experiences, only: [:new]
     resources :educations, only: [:new]
+    resources :resumes, only: [:new, :create, :destroy] do
+      member do
+        get :download
+      end
+    end
   end
 
   resources :sessions,  only: [:new, :create, :destroy]

@@ -17,6 +17,8 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :work_experiences, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :educations, reject_if: :all_blank, allow_destroy: true
 
+  has_many_attached :resumes, dependent: :destroy
+
   def admin?
     role == 'admin'
   end

@@ -30,3 +30,15 @@ nav.navbar.bootsnav .navbar-brand {
 .checkbox {
   width: 30px !Important;
 }
+
+.resume {
+  margin: 20px;
+}
+
+.download-btn {
+  margin-left: 20px;
+}
+
+.file-field {
+  margin-top: 30px;
+}

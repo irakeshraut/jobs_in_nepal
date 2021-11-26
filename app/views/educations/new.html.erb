@@ -6,7 +6,7 @@
       </div>
       <div class="dashboard-caption-wrap">
         <%= render 'shared/form_error_message' %>
-        <%= form_for @user do |f| %>
+        <%= form_with model: @user do |f| %>
           <div id='educations'>
             <%= f.fields_for :educations do |education| %>
               <%= render 'education_fields', f: education %>
