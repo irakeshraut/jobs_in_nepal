@@ -2,6 +2,7 @@ class ApplicantsController < ApplicationController
   def new
     @job = Job.find(params[:job_id])
     @user = current_user
+    authorize @user, policy_class: ApplicantPolicy
     @error_messages = params[:error_messages] if params[:error_messages]
     if @job.redirect_link.present?
       redirect_to @job.redirect_link
@@ -11,6 +12,7 @@ class ApplicantsController < ApplicationController
   def create
     @job = Job.find(params[:job_id])
     @user = current_user
+    authorize @user, policy_class: ApplicantPolicy
     applicant = @job.applicants.build
 
     if params[:resume_file]
