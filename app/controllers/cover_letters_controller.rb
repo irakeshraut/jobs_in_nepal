@@ -4,6 +4,7 @@ class CoverLettersController < ApplicationController
   def new
     @user = User.includes(cover_letters_attachments: :blob).find(params[:user_id])
     authorize @user, policy_class: CoverLetterPolicy
+    @error_messages = params[:error_messages] if params[:error_messages]
   end
 
   def create
@@ -13,8 +14,7 @@ class CoverLettersController < ApplicationController
       flash[:success] = 'Cover Letter Attached'
       redirect_to new_user_cover_letter_path(@user)
     else
-      flash[:error] = 'Cover Letter did not Attach.'
-      redirect_to new_user_cover_letter_path(@user, error_messages: @user.error.full_messages)
+      redirect_to new_user_cover_letter_path(@user, error_messages: @user.errors.full_messages)
     end
   end
 
