@@ -14,15 +14,17 @@ class ApplicantsController < ApplicationController
     applicant = @job.applicants.build
 
     if params[:resume_file]
-      @user.resumes.attach(params[:resume_file])
-      applicant.resume_name = "#{@user.resumes.last.filename.to_s} - #{@user.resumes.last.created_at.strftime("%d/%m/%Y")}"
+      if @user.resumes.attach(params[:resume_file])
+        applicant.resume_name = "#{@user.resumes.last.filename.to_s} - #{@user.resumes.last.created_at.strftime("%d/%m/%Y")}"
+      end
     else
       applicant.resume_name = params[:resume]
     end
 
     if params[:cover_letter_file]
-      @user.cover_letters.attach(params[:cover_letter_file])
-      applicant.cover_letter_name = "#{@user.cover_letters.last.filename.to_s} - #{@user.cover_letters.last.created_at.strftime("%d/%m/%Y")}"
+      if @user.cover_letters.attach(params[:cover_letter_file])
+        applicant.cover_letter_name = "#{@user.cover_letters.last.filename.to_s} - #{@user.cover_letters.last.created_at.strftime("%d/%m/%Y")}"
+      end
     else
       applicant.cover_letter_name = params[:cover_letter]
     end
@@ -30,12 +32,11 @@ class ApplicantsController < ApplicationController
     applicant.user_id = @user.id
     applicant.job_id = @job.id
 
-    if applicant.valid? && applicant.save
+    if @user.valid? && applicant.valid? && applicant.save
       flash[:success] = 'Application Submitted.'
       redirect_to root_path
     else
-      flash[:error] = 'Application Submission Failed.'
-      redirect_to new_job_applicant_path(@job, error_messages: applicant.errors.full_messages)
+      redirect_to new_job_applicant_path(@job, error_messages: @user.errors.full_messages)
     end
   end
 end
