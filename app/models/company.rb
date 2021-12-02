@@ -5,6 +5,7 @@ class Company < ApplicationRecord
   has_many :users, dependent: :destroy
   has_one_attached :logo
 
+  validates :logo, attached: true, size: { less_than: 2.megabytes }
   validate :logo_validation
 
   accepts_nested_attributes_for :users
