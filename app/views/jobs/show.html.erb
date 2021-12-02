@@ -39,7 +39,9 @@
       </div>
 
       <div class="ur-detail-btn">
-        <a href="javascript:void(0)" data-toggle="modal" data-target="#apply-job" class="btn btn-warning mrg-bot-10 full-width"><i class="ti-star mrg-r-5"></i>Apply This Job</a><br>
+        <%= link_to new_job_applicant_path(@job), class: 'btn btn-warning mrg-bot-10 full-width' do %>
+          <i class='ti-star mar-r-5'></i>Apply
+        <% end %>
         <a href="#" class="btn btn-info full-width"><i class="ti-linkedin mrg-r-5"></i>Apply With Linkedin</a>
       </div>
 

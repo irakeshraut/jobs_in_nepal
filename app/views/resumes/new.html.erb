@@ -5,9 +5,10 @@
         <h4><i class="ti-lock"></i>Upload Resumes</h4>
       </div>
       <div class="dashboard-caption-wrap">
+        <%= render 'shared/form_error_message' %>
         <% if @user.resumes.attached? %>
           <p><%= @user.resumes.count %> Resume Found</p>
-          <% @user.resumes.each do |resume| %>
+          <% @user.resumes.reverse.each do |resume| %>
             <div>
               <%= link_to resume.filename, download_user_resume_path(@user, resume), class: 'resume' %>
               <div>
@@ -23,7 +24,6 @@
         <% else %>
           <p>No Resume Found</p>
         <% end %>
-        <%= render 'shared/form_error_message' %>
         <%= form_with model: @user, url: user_resumes_path(@user), method: :post do |f| %>
           <div class='row'>
             <div class='col-md-12 col-sm-12'>

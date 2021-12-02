@@ -25,5 +25,7 @@ Rails.application.routes.draw do
   resources :sessions,  only: [:new, :create, :destroy]
   resources :companies, only: [:create, :edit, :update]
   resources :dashboards, only: [:index]
-  resources :jobs, only: [:index, :show, :new, :create]
+  resources :jobs, only: [:index, :show, :new, :create] do
+    resources :applicants, only: [:new, :create]
+  end
 end

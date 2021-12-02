@@ -37,3 +37,7 @@ en:
         phone: 'Business Phone Number'
       job:
         description: 'Job Description'
+  errors:
+    messages:
+      content_type_invalid: "Invalid File Format. Accepted file types: .doc, .docx, .pdf, .txt and .rtf (2MB limit)."
+      file_size_out_of_range: "size is %{file_size}. Maximum allowed file size is 2MB"

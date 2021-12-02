@@ -1,0 +1,65 @@
+<section class="inner-header-title" style="background-image:url(http://via.placeholder.com/1920x850);">
+  <div class="container">
+    <h1>Apply Job</h1>
+  </div>
+</section>
+<div class="clearfix"></div>
+
+<div class="apply-job-box">
+  <% if @job.created_by_admin? %>
+    <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
+  <% elsif @job.user.company.logo.attached? %>
+    <%= image_tag @job.user.company.logo, class: 'img-responsive' %>
+  <% else %>
+    <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
+  <% end %>
+
+  <h4><%= @job.title %></h4>
+  <% if @job.company_name %>
+    <p><%= @job.company_name %></p>
+  <% else %>
+    <p><%= @job.user.company.name %></p>
+  <% end %>
+</div>
+<div class="apply-job-form">
+  <div class='row'>
+    <div class='col-sm-8 col-sm-offset-2'>
+      <%= render 'shared/form_error_message' %>
+    </div>
+  </div>
+  <%= form_with url: job_applicants_path(@job) do |f| %>
+    <div class='row'>
+      <div class='col-sm-4 col-sm-offset-2'>
+        <div class='form-group'>
+          <%= f.label :resume, 'Upload Resume' %>
+          <%= f.file_field :resume_file, class: 'form-control' %>
+        </div>
+      </div>
+      <div class='col-sm-4'>
+        <%= f.label :resume, '(OR) Select Resume' %>
+        <% options =  @user.resumes.includes(:blob).references(:blob).pluck(:filename, :created_at).reverse.map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
+        <%= f.select :resume, options_for_select(options), prompt: '-- Select --', class: 'form-control' %>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-sm-4 col-sm-offset-2'>
+        <div class='form-group'>
+          <%= f.label :cover_letter, 'Upload Cover Letter' %>
+          <%= f.file_field :cover_letter_file, class: 'form-control' %>
+        </div>
+      </div>
+      <div class='col-sm-4'>
+        <%= f.label :cover_letter, '(OR) Select Cover Letter' %>
+        <% options =  @user.cover_letters.includes(:blob).references(:blob).pluck(:filename, :created_at).reverse.map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
+        <%= f.select :cover_letter, options_for_select(options), prompt: '-- Select --', class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row mrg-top-30">
+      <div class="col-md-12 col-sm-12">
+        <div class="form-group text-center">
+          <%= f.submit 'Apply Job', class: 'btn-savepreview' %>
+        </div>	
+      </div>
+    </div>
+  <% end %>
+</div>
