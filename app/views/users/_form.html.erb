@@ -22,6 +22,17 @@
       <i class="theme-cl ti-email"></i>
     </div>
   </div>
+
+  <% if controller.controller_name == 'users' && controller.action_name == 'edit' %>
+    <div class="form-group">
+      <%= f.label :phone_no, 'Phone Number'  %>
+      <div class="input-with-icon">
+        <%= f.phone_field :phone_no, placeholder: 'Enter Your Phone Number', class: 'form-control' %>
+        <i class="theme-cl ti-mobile"></i>
+      </div>
+    </div>
+  <% end %>
+
   <% if controller.controller_name == 'users' && controller.action_name == 'new' %>
     <div class="form-group">
       <%= f.label :password  %>
