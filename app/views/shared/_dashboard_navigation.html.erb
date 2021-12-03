@@ -2,11 +2,20 @@
   <div class="side-dashboard">
     <div class="dashboard-avatar">
       <div class="dashboard-avatar-thumb">
-        <% if current_user.company&.logo&.attached? %>
-          <%= image_tag current_user.company.logo, class: 'img-avatar' %>
+        <% if current_user.employer? %>
+          <% if current_user.company&.logo&.attached? %>
+            <%= image_tag current_user.company.logo, class: 'img-avatar' %>
+          <% else %>
+            <%= image_tag 'https://via.placeholder.com/150', class: 'img-avater' %>
+          <% end %>
         <% else %>
-          <%= image_tag 'https://via.placeholder.com/150', class: 'img-avater' %>
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar, class: 'img-avatar' %>
+          <% else %>
+            <%= image_tag 'https://via.placeholder.com/150', class: 'img-avater' %>
+          <% end %>
         <% end %>
+
       </div>
       <div class="dashboard-avatar-text">
         <h4><%= current_user.full_name %></h4>
