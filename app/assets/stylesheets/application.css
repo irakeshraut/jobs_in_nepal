@@ -42,3 +42,7 @@ nav.navbar.bootsnav .navbar-brand {
 .file-field {
   margin-top: 30px;
 }
+
+.side-dashboard {
+  min-height: 110vh !Important;
+}
