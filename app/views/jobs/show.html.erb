@@ -56,6 +56,12 @@
     <!-- Job Description -->
     <div class="col-md-8 col-sm-12">
       <div class="full-card">
+        <% if !@job.created_by_admin? && @job.user.company.description.present? %>
+          <div class="row row-bottom mrg-0">
+            <h2 class="detail-title">Company Description</h2>
+            <p><%= @job.user.company.description %></p>
+          </div>
+        <% end %>
 
         <div class="row row-bottom mrg-0">
           <h2 class="detail-title">Job Detail</h2>
@@ -72,17 +78,12 @@
           <p><%= @job.description %></p>
         </div>
       </div>
-
     </div>
     <!-- End Job Description -->
 
     <!-- Start Sidebar -->
     <div class="col-md-4 col-sm-12">
       <div class="sidebar right-sidebar">
-        <!-- Job Alert -->
-        <a href="javascript:void(0)" class="btn btn-info full-width mrg-bot-20" data-toggle="modal" data-target="#job-alert">Get Job Alert!</a>
-        <!-- /Job Alert -->
-
         <div class="side-widget">
           <h2 class="side-widget-title">Advertisment</h2>
           <div class="widget-text padd-0">
@@ -155,36 +156,6 @@
           </div>
           <span class="text"><span class="number">17</span> Applicants</span>
         </div>
-
-        <!-- Say Hello -->
-        <div class="sidebar-widgets">
-
-          <div class="ur-detail-wrap">
-            <div class="ur-detail-wrap-header">
-              <h4>Get In Touch</h4>
-            </div>
-            <div class="ur-detail-wrap-body">
-              <form action="">
-                <div class="form-group">
-                  <label>Name</label>
-                  <input type="email" class="form-control">
-                </div>
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="email" class="form-control">
-                </div>
-                <div class="form-group">
-                  <label>Message</label>
-                  <textarea class="form-control"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-            </div>
-          </div>
-
-        </div>
-        <!-- /Say Hello -->
-
       </div>
     </div>
     <!-- End Sidebar -->
@@ -296,265 +267,3 @@
   </div>
 </section>
 <!-- More Jobs End -->
-
-
-<!-- Signin Window Code -->
-<div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-
-        <div class="new-logwrap">
-
-          <div class="form-group">
-            <label>Username</label>
-            <div class="input-with-icon">
-              <input type="text" class="form-control" placeholder="Enter Your Username">
-              <i class="theme-cl ti-user"></i>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Email</label>
-            <div class="input-with-icon">
-              <input type="email" class="form-control" placeholder="Enter Your Email">
-              <i class="theme-cl ti-email"></i>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Password</label>
-            <div class="input-with-icon">
-              <input type="password" class="form-control" placeholder="Enter Your Password">
-              <i class="theme-cl ti-lock"></i>
-            </div>
-          </div>
-
-          <div class="form-groups">
-            <button type="submit" class="btn btn-primary theme-bg full-width">Register</button>
-          </div>
-
-          <div class="forget-account text-center">
-            <a class="theme-cl" href="#">Forget Password?</a>
-          </div>
-
-          <div class="social-devider">
-            <span class="line"></span>
-            <span class="circle">Or</span>
-          </div>
-
-          <div class="social-login row">
-
-            <div class="col-md-6">
-              <a href="#" class="jb-btn-icon social-login-facebook"><i class="fa fa-facebook"></i>Facebook</a>
-            </div>
-
-            <div class="col-md-6">
-              <a href="#" class="jb-btn-icon social-login-google"><i class="fa fa-google-plus"></i>Google</a>
-            </div>
-
-            <div class="col-md-6">
-              <a href="#" class="jb-btn-icon social-login-twitter"><i class="fa fa-twitter"></i>Twitter</a>
-            </div>
-
-            <div class="col-md-6">
-              <a href="#" class="jb-btn-icon social-login-linkedin"><i class="fa fa-linkedin"></i>Linkedin</a>
-            </div>
-
-          </div>
-
-          <div class="register-account text-center">
-            Don't have an account? <a class="theme-cl" href="register.html">Register</a>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>   
-<!-- End Signin Window -->
-
-<!-- Apply Form Code -->
-<div class="modal fade" id="apply-job" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="apply-job-box">
-          <%= image_tag 'com-1.jpg', class: 'img-responsive' %>
-          <h4>Product Designer</h4>
-          <p>Google Pvt.</p>
-        </div>
-        <div class="apply-job-form">
-          <form class="form-inline" method="post">
-            <div class="col-sm-12">
-              <div class="form-group">
-                <input type="text"  name="name" class="form-control" placeholder="Your Name" required="">
-                <input type="email"  name="email" class="form-control" placeholder="Your Email" required="">
-                <textarea class="form-control" placeholder="About You / Paste your CV"></textarea>
-                <div class="fileUpload">
-                  <span>Upload CV</span>
-                  <input type="file" class="upload" />
-                </div>
-                <div class="center">
-                  <button type="submit" id="subscribe" class="submit-btn"> Apply Now </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>   
-<!-- End Apply Form -->
-
-<!-- Job Alert Code -->
-<div class="modal fade" id="job-alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-      <div class="modal-header theme-bg">
-        <h4 class="modal-title light">Register for new job alert</h4>
-      </div>
-
-      <div class="modal-body padd-top-40">
-        <div class="dapply-job-form">
-          <form class="form-inline" method="post">
-            <div class="row">
-
-              <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                  <label>Your Name</label>
-                  <input type="text"  name="name" class="form-control" placeholder="Your Name">
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                  <label>Your Email</label>
-                  <input type="email"  name="name" class="form-control" placeholder="Your Email">
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                  <label>Title</label>
-                  <input type="text"  name="name" class="form-control" placeholder="Job Title">
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                  <label>Sallery From</label>
-                  <input type="text"  name="name" class="form-control" placeholder="Sallery From">
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                  <label>Category</label>
-                  <select id="choose-category" class="form-control">
-                    <option>Choose Category</option>
-                    <option>Automotive</option>
-                    <option>Design & Development</option>
-                    <option>Health & Medical</option>
-                    <option>Education</option>
-                    <option>Agriculture</option>
-                    <option>Marketing</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                  <label>Types</label>
-                  <select id="types" class="form-control">
-                    <option>Job Type</option>
-                    <option>Full Time</option>
-                    <option>Part Time</option>
-                    <option>Contract Base</option>
-                    <option>Freelancers</option>
-                    <option>Others</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                  <label>Levels</label>
-                  <select id="levels" class="form-control">
-                    <option>Choose Levels</option>
-                    <option>Fresher</option>
-                    <option>Junior</option>
-                    <option>Manager</option>
-                    <option>Senior</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                  <label>Locations</label>
-                  <select id="choose-city" class="form-control">
-                    <option>Locations</option>
-                    <option>Chandigarh</option>
-                    <option>London</option>
-                    <option>England</option>
-                    <option>Pratapcity</option>
-                    <option>Ukrain</option>
-                    <option>Wilangana</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-12">
-                <button type="submit" class="submit-btn"> Submit Now </button>
-              </div>
-
-              <div class="col-md-6 col-sm-12">
-                <button type="button" class="dismis-btn" data-dismiss="modal">Close</button>
-              </div>
-
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>   
-<!-- End Job Alert -->
-
-<script type="text/javascript">
-  $('#map_full_width_one').gmap3({
-    map: {
-      options: {
-        zoom: 5,
-        center: [41.785091, -73.968285],
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-          style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-        },
-        mapTypeId: "style1",
-        mapTypeControlOptions: {
-          mapTypeIds: [google.maps.MapTypeId.ROADMAP, "style1"]
-        },
-        navigationControl: true,
-        scrollwheel: false,
-        streetViewControl: true
-      }
-    },
-    marker: {
-      latLng: [40.785091, -73.968285],
-      options: {animation:google.maps.Animation.BOUNCE, icon: 'assets/img/marker.png' }
-    },
-    styledmaptype: {
-      id: "style1",
-      options: {
-        name: "Style 1"
-      },
-
-    }
-  });
-
-</script>

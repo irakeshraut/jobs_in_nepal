@@ -39,6 +39,6 @@ class Job < ApplicationRecord
   end
 
   def created_by_admin?
-    company_name.present? && redirect_link.present? && user.role == 'admin'
+    company_name.present? && redirect_link.present? && user.admin?
   end
 end
