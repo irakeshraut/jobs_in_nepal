@@ -38,7 +38,7 @@ class ApplicantsController < ApplicationController
       flash[:success] = 'Application Submitted.'
       redirect_to root_path
     else
-      redirect_to new_job_applicant_path(@job, error_messages: @user.errors.full_messages)
+      redirect_to new_job_applicant_path(@job, error_messages: @user.errors.full_messages + applicant.errors.full_messages)
     end
   end
 end

@@ -24,10 +24,10 @@ class User < ApplicationRecord
   has_many_attached :resumes, dependent: :destroy 
   has_many_attached :cover_letters, dependent: :destroy
 
-  validates :resumes, attached: true, content_type:  ['application/pdf', 'application/x-ole-storage', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'text/plain', 'application/rtf']
-  validates :resumes, attached: true, size: { less_than: 2.megabytes }
-  validates :cover_letters, attached: true, content_type:  ['application/pdf', 'application/x-ole-storage', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'text/plain', 'application/rtf']
-  validates :cover_letters, attached: true, size: { less_than: 2.megabytes }
+  validates :resumes, content_type:  ['application/pdf', 'application/x-ole-storage', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'text/plain', 'application/rtf']
+  validates :resumes, size: { less_than: 2.megabytes }
+  validates :cover_letters, content_type:  ['application/pdf', 'application/x-ole-storage', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'text/plain', 'application/rtf']
+  validates :cover_letters, size: { less_than: 2.megabytes }
 
   def admin?
     role == 'admin'

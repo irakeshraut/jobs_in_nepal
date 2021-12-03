@@ -37,6 +37,8 @@ en:
         phone: 'Business Phone Number'
       job:
         description: 'Job Description'
+      applicant:
+        resume_name: 'Resume'
   errors:
     messages:
       content_type_invalid: "Invalid File Format. Accepted file types: .doc, .docx, .pdf, .txt and .rtf (2MB limit)."
