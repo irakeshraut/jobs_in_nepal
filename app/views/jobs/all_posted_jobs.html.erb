@@ -10,7 +10,7 @@
 
         <!-- row -->
         <div class="row">
-          <%= form_with url: '#' do |f| %>
+          <%= form_with url: all_posted_jobs_jobs_path, method: :get, local: true do |f| %>
             <div class="col-lg-5 col-md-5 col-sm-12">
               <div class="form-group">
                 <%= f.text_field :title, placeholder: 'Job Title', class: 'form-control' %>
@@ -19,7 +19,7 @@
 
             <div class="col-lg-5 col-md-5 col-sm-12">
               <div class="form-group">
-                <%= f.select :employment_type, options_for_select(Job::STATUS), prompt: '-- Select --' , class: 'form-control' %>
+                <%= f.select :status, options_for_select(Job::STATUS), prompt: '-- Select --' , class: 'form-control' %>
               </div>
             </div>
 

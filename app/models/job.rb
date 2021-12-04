@@ -24,6 +24,7 @@ class Job < ApplicationRecord
   scope :filter_by_title, ->(title) { where("lower(title) like ?", "%#{title.downcase}%") }
   scope :filter_by_category, ->(category) { where(category: category) }
   scope :filter_by_location, ->(location) { where("lower(location) like ?", "%#{location.downcase}%") }
+  scope :filter_by_status, ->(status) { where("lower(status) like ?", "%#{status.downcase}%") }
 
   def salary
     if min_salary.present? && max_salary.present?
