@@ -32,6 +32,32 @@ class JobsController < ApplicationController
     end
   end
 
+  def edit
+    @job = Job.find(params[:id])
+    @error_messages = params[:error_messages] if params[:error_messages]
+  end
+
+  def update
+    @job = Job.find(params[:id])
+    if @job.update(job_params)
+      flash[:success] = 'Job updated successfully.'
+      redirect_to edit_job_path(@job)
+    else
+      redirect_to edit_job_path(@job, error_messages: @job.errors.full_messages)
+    end
+  end
+
+  def destroy
+    job = Job.find(params[:id])
+    job.destroy
+    flash[:success] = 'Job Deleted.'
+    redirect_to all_posted_jobs_jobs_path
+  end
+
+  def all_posted_jobs
+    @jobs = current_user.jobs.order(created_at: :desc).paginate(page: params[:page], per_page: 30)
+  end
+
   private
 
   def job_params
