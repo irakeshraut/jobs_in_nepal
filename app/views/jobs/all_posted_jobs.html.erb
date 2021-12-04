@@ -1,0 +1,80 @@
+<div class="col-lg-9 col-md-8">
+  <div class="dashboard-body">
+    <div class="dashboard-caption">
+
+      <div class="dashboard-caption-header">
+        <h4><i class="ti-briefcase"></i>All Jobs</h4>
+      </div>
+
+      <div class="dashboard-caption-wrap">
+
+        <!-- row -->
+        <div class="row">
+          <%= form_with url: '#' do |f| %>
+            <div class="col-lg-5 col-md-5 col-sm-12">
+              <div class="form-group">
+                <%= f.text_field :title, placeholder: 'Job Title', class: 'form-control' %>
+              </div>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12">
+              <div class="form-group">
+                <%= f.select :employment_type, options_for_select(Job::STATUS), prompt: '-- Select --' , class: 'form-control' %>
+              </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="form-group">
+                <%= f.submit 'Search', class: 'btn btn-primary btn-block' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <!-- row -->
+        <%if @jobs.present? %>
+          <% @jobs.each do |job| %>
+            <ul class="list">
+              <li class="manage-list-row clearfix">
+                <div class="job-info premium-job">
+                  <div class="job-img">
+                    <% if job.user.company.logo.attached? %>
+                      <%= image_tag job.user.company.logo, class: 'attachment-thumbnail', alt: 'Company Logo' %>
+                    <% else %>
+                      <%= image_tag 'https://via.placeholder.com/150', class: 'img-avater' %>
+                    <% end %>
+                  </div>
+                  <div class="job-details">
+                    <h3 class="job-name"><%= link_to(job.title, job) %><span class="cl-danger">$25</span></h3>
+                    <small class="job-company"><i class="ti-home"></i><a href="#"><%= job.category %></a></small>
+                    <small class="job-sallery"><i class="ti-credit-card"></i><%= job.salary %></small>
+                    <small class="job-update"><i class="ti-time"></i>Expired: 6/14/19</small>
+                    <span class="j-type full-time"><%= job.employment_type %></span>
+                  </div>
+                </div>
+                <div class="job-buttons">
+                  <%= link_to edit_job_path(job), class: 'btn btn-gray manage-btn', title: 'Edit' do %>
+                    <i class='ti-pencil-alt'></i>
+                  <% end %>
+
+                  <%= link_to job_path(job), method: :delete, data: { confirm: 'Are you sure ?' }, class: 'btn btn-cancel manage-btn', title: 'Delete' do %>
+                    <i class='ti-close'></i>
+                  <% end %>
+                </div>
+              </li>
+            </ul>
+          <% end %>
+        <% else %>
+          <p>No Jobs Found.</p>
+        <% end %>
+
+        <div class="row">
+          <div class="digg_pagination">
+            <%= will_paginate @jobs %>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

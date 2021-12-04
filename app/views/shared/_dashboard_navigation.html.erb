@@ -50,6 +50,11 @@
               <i class="ti-home"></i>Edit Company
             <% end %>
           </li>
+          <li class="<%= controller.controller_name == 'jobs' && controller.action_name == 'all_posted_jobs' ? 'active' : '' %>">
+            <%= link_to all_posted_jobs_jobs_path do %>
+              <i class="ti-briefcase"></i>All Jobs
+            <% end %>
+          </li>
         <% end %>
         <% if current_user.job_seeker? %>
           <li class="<%= controller.controller_name == 'work_experiences' && controller.action_name == 'new' ? 'active' : '' %>">

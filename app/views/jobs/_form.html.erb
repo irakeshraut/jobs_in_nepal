@@ -1,0 +1,76 @@
+<div class="dashboard-caption-wrap">
+  <%= render 'shared/form_error_message' %>
+  <%= form_with model: @job, local: true do |f| %>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <%= f.label :title, 'Job Title' %>
+          <%= f.text_field :title, placeholder: 'Job Title', class: 'form-control', required: true %>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <%= f.label :employment_type, 'Employment Type' %>
+          <%= f.select :employment_type, Job::TYPE, { prompt: '-- Select --' }, class: 'form-control', required: true %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <%= f.label :category %>
+          <%= f.select :category, Category::LIST.keys.sort, { prompt: '-- Select --' }, class: 'form-control', required: true %>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <%= f.label :location %>
+          <%= f.text_field :location, placeholder: 'Job Title', class: 'form-control', required: true %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <%= f.label :min_salary, 'Minimum Salary' %>
+          <%= f.text_field :min_salary, placeholder: 'Minimum Salary', class: 'form-control' %>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <%= f.label :max_salary, 'Maximum Salary' %>
+          <%= f.text_field :max_salary, placeholder: 'Maximum Salary', class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+    <% if current_user.admin? %>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="form-group">
+            <%= f.label :redirect_link, 'Redirect URL' %>
+            <%= f.text_field :redirect_link, placeholder: 'Enter Redirect URL', class: 'form-control', required: true %>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="form-group">
+            <%= f.label :company_name, 'Company Name' %>
+            <%= f.text_field :company_name, placeholder: 'Enter Company Name', class: 'form-control', required: true %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class='row'>
+      <div class="col-md-12 col-sm-12">
+        <%= f.label :description, 'Job Description' %>
+        <%= f.rich_text_area :description, placeholder: 'Detailed Job Description', class: 'form-control customized-min-height', required: true %>
+      </div>
+    </div>
+    <div class="row mrg-top-30">
+      <div class="col-md-12 col-sm-12">
+        <div class="form-group text-center">
+          <%= f.submit button_text, class: 'btn-savepreview' %>
+        </div>	
+      </div>
+    </div>
+  <% end %>
+</div>
