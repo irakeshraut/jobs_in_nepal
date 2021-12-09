@@ -1,0 +1,94 @@
+<div class="col-lg-9 col-md-8">
+  <div class="dashboard-body">
+    <div class="dashboard-caption">
+
+      <div class="dashboard-caption-header">
+        <h4><i class="ti-user"></i>Applications</h4>
+      </div>
+
+      <div class="dashboard-caption-wrap">
+
+        <!-- row -->
+        <div class="row">
+
+          <%= form_with url: job_applicants_path(@job), method: :get, local: true do |f| %>
+            <div class="col-lg-5 col-md-5 col-sm-12">
+              <div class="form-group">
+                <%= f.text_field :name, placeholder: 'Enter Name', class: 'form-control' %>
+              </div>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12">
+              <div class="form-group">
+                <%= f.select :status, options_for_select(Applicant::STATUS), prompt:  '-- Select --', class: 'form-control' %>
+              </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="form-group">
+                <%= f.submit 'Search', class: 'btn btn-primary btn-block' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <!-- row -->
+
+        <% if @users.present? %>
+          <% @users.each do |user| %>
+            <ul class="list">
+              <li class="manage-list-row clearfix">
+                <div class="job-info">
+                  <div class="job-img">
+                    <% if user.avatar.attached? %>
+                      <%= image_tag user.avatar, class: 'attachment-thumbnail', alt: 'Candidate Avatar' %>
+                    <% else %>
+                      <%= image_tag 'https://via.placeholder.com/150', class: 'img-avater' %>
+                    <% end %>
+                  </div>
+                  <div class="job-details">
+                    <h3 class="job-name"><a class="job_name_tag" href="#"><%= user.full_name %></a></h3>
+                    <small class="job-company"><i class="ti-email"></i><%= user.email %></small>
+                    <small class="job-sallery"><i class="ti-mobile"></i><%= user.phone_no %></small>
+                    <small class="job-sallery"><i class="ti-location-pin"></i>London</small>
+                    <% applicant = @job.applicants.find_by(job_id: @job.id, user_id: user.id) %>
+                    <% if applicant.shortlisted? %>
+                      <div class="shortlisted-can">shortlisted</div>
+                    <% elsif applicant.rejected? %>
+                      <div class="rejected-can">rejected</div>
+                    <% end %>
+                    <div class="candi-skill">
+                      <span class="skill-tag">css</span>
+                      <span class="skill-tag">HTML</span>
+                      <span class="skill-tag">Photoshop</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="job-buttons">
+                  <%= link_to download_resume_job_applicant_path(@job, user), class: 'btn btn-gary manage-btn', title: 'Download Resume' do %>
+                    <i class='ti-download'></i>
+                  <% end %>
+                  <%= link_to shortlist_job_applicant_path(@job, user), class: 'btn btn-shortlist manage-btn', title: 'Shortlist' do %>
+                    <i class='ti-check'></i>
+                  <% end %>
+                  <%= link_to reject_job_applicant_path(@job, user), class: 'btn btn-cancel manage-btn', title: 'Reject' do %>
+                    <i class='ti-close'></i>
+                  <% end %>
+                </div>
+              </li>
+            </ul>
+          <% end %>
+        <% else %>
+          <p>No Applicants Found.</p>
+        <% end %>
+
+        <div class="row">
+          <div class="digg_pagination">
+            <%= will_paginate @users %>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

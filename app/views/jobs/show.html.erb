@@ -39,8 +39,14 @@
       </div>
 
       <div class="ur-detail-btn">
-        <%= link_to new_job_applicant_path(@job), class: 'btn btn-warning mrg-bot-10 full-width' do %>
-          <i class='ti-star mar-r-5'></i>Apply
+        <%if current_user && @job.users.include?(current_user) %>
+          <%= link_to new_job_applicant_path(@job), class: 'btn btn-warning mrg-bot-10 full-width disabled' do %>
+            <i class='ti-star mar-r-5'></i>You Already Applied
+          <% end %>
+        <% else %>
+          <%= link_to new_job_applicant_path(@job), class: 'btn btn-warning mrg-bot-10 full-width' do %>
+            <i class='ti-star mar-r-5'></i>Apply
+          <% end %>
         <% end %>
         <a href="#" class="btn btn-info full-width"><i class="ti-linkedin mrg-r-5"></i>Apply With Linkedin</a>
       </div>

@@ -44,14 +44,18 @@
                     <% end %>
                   </div>
                   <div class="job-details">
-                    <h3 class="job-name"><%= link_to(job.title, job) %><span class="cl-danger">$25</span></h3>
+                    <h3 class="job-name"><%= link_to(job.title, job) %></h3>
                     <small class="job-company"><i class="ti-home"></i><a href="#"><%= job.category %></a></small>
                     <small class="job-sallery"><i class="ti-credit-card"></i><%= job.salary %></small>
-                    <small class="job-update"><i class="ti-time"></i>Expired: 6/14/19</small>
-                    <span class="j-type full-time"><%= job.employment_type %></span>
+                    <small class="job-update"><i class="ti-user"></i><%= pluralize(job.users.count, 'Applicant') %></small>
+                    <div class='btn-wrapper'>
+                      <span class="j-type full-time"><%= job.employment_type %></span>
+                      <span class="j-type margin-left <%= job.status == 'Active' ? 'full-time' : 'part-time' %>"><%= job.status %></span>
+                    </div>
                   </div>
                 </div>
                 <div class="job-buttons">
+                  <%= link_to 'View Applicants', job_applicants_path(job), class: 'btn btn-info' %>
                   <%= link_to edit_job_path(job), class: 'btn btn-gray manage-btn', title: 'Edit' do %>
                     <i class='ti-pencil-alt'></i>
                   <% end %>

@@ -5,18 +5,18 @@ class ApplicantPolicy < ApplicationPolicy
     end
   end
 
-  attr_reader :user, :user_record
+  attr_reader :user, :job
 
-  def initialize(user, user_record)
+  def initialize(user, job)
     @user = user
-    @user_record = user_record
+    @job = job
   end
 
   def new?
-    user.job_seeker?
+    user.job_seeker? && !job.users.include?(user)
   end
 
   def create?
-    user.job_seeker?
+    user.job_seeker? && !job.users.include?(user)
   end
 end
