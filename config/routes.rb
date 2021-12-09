@@ -29,6 +29,12 @@ Rails.application.routes.draw do
     collection do
       get :all_posted_jobs
     end
-    resources :applicants, only: [:new, :create]
+    resources :applicants, only: [:index, :new, :create] do
+      member do
+        get :shortlist
+        get :reject
+        get :download_resume
+      end
+    end
   end
 end
