@@ -46,3 +46,45 @@ nav.navbar.bootsnav .navbar-brand {
 .side-dashboard {
   min-height: 110vh !Important;
 }
+
+.btn-wrapper {
+  display: flex;
+}
+
+.margin-left {
+  margin-left: 10px;
+}
+
+.rejected-can {
+    position: relative;
+    height: 26px;
+    display:inline-block;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    background-color: #F44336;
+    text-align: center;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 0 8px 0 0;
+    margin: 0;
+    padding-left: 34px;
+    line-height: 27px;
+    text-transform:capitalize;
+}
+
+.rejected-can:before {
+    content:"\e646";
+    font-family:'themify';
+    font-size: 14px;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius:4px 0px 0px 4px;
+    line-height: 26px;
+    height: 26px;
+    width: 26px;
+    display: inline-block;
+    background-color: #F44336;
+}
