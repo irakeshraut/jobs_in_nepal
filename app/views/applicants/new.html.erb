@@ -55,6 +55,12 @@
           <%= f.select :cover_letter, options_for_select(options), prompt: '-- Select --', class: 'form-control' %>
         </div>
       </div>
+      <div class='row'>
+        <div class='col-sm-8 col-sm-offset-2'>
+          <%= render "education_and_work_experiences" %>
+        </div>
+      </div>
+
       <div class="row mrg-top-30">
         <div class="col-md-12 col-sm-12">
           <div class="form-group text-center">
@@ -63,5 +69,6 @@
         </div>
       </div>
     <% end %>
+
   </div>
 </div>

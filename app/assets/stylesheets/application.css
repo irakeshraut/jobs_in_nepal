@@ -92,3 +92,8 @@ nav.navbar.bootsnav .navbar-brand {
 .ur-email {
   text-transform: lowercase !Important;
 }
+
+.float-right {
+  float: right;
+  font-size: 15px;
+}
