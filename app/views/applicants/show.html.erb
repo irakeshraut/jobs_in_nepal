@@ -39,9 +39,14 @@
                 <%= link_to shortlist_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-warning mrg-bot-10 full-width' do %>
                   <i class='ti-check marg-r-5'>Shortlist</i>
                 <% end %>
-
-                <%= link_to download_resume_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width' do %>
-                  <i class='ti-download marg-r-5'>Download Resume</i>
+                <% if @resume.present? %>
+                  <%= link_to download_resume_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width' do %>
+                    <i class='ti-download marg-r-5'>Download Resume</i>
+                  <% end %>
+                <% else %>
+                  <%= link_to download_resume_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width disabled' do %>
+                    <i class='ti-download marg-r-5'>No Resume Found</i>
+                  <% end %>
                 <% end %>
               </div>
 
@@ -112,8 +117,14 @@
                       <div class="ur-detail-wrap-body">
                         <ul class="ove-detail-list">
                           <li>
-                            <%= link_to download_resume_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width' do %>
-                              <i class='ti-download marg-r-5'>Download Resume</i>
+                            <% if @resume.present? %>
+                              <%= link_to download_resume_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width' do %>
+                                <i class='ti-download marg-r-5'>Download Resume</i>
+                              <% end %>
+                            <% else %>
+                              <%= link_to download_resume_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width disabled' do %>
+                                <i class='ti-download marg-r-5'>No Resume Found</i>
+                              <% end %>
                             <% end %>
                           </li>
                           <li>

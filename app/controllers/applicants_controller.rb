@@ -3,6 +3,7 @@ class ApplicantsController < ApplicationController
 
   def index
     @job = Job.find(params[:job_id])
+    authorize @job, policy_class: ApplicantPolicy
     @users = @job.users.includes([:avatar_attachment])
     @users = @users.filter_by_name(params[:name]) if params[:name].present?
     @users = @users.filter_by_status(params[:status]) if params[:status].present?
@@ -11,12 +12,18 @@ class ApplicantsController < ApplicationController
 
   def show
     @job = Job.find(params[:job_id])
+    authorize @job, policy_class: ApplicantPolicy
     @user = @job.users.find(params[:id])
     applicant = @job.applicants.find_by(job_id: @job.id, user_id: @user.id)
     if applicant.cover_letter_name.present?
       cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
       @cover_letter = @user.cover_letters.includes(:blob).references(:blob)
         .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).last
+    end
+    if applicant.resume_name.present?
+      resume_name, resume_date = applicant.resume_name.split(' - ')
+      @resume = @user.resumes.includes(:blob).references(:blob)
+        .where(active_storage_blobs: { filename: resume_name, created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).last
     end
   end
 
@@ -65,6 +72,7 @@ class ApplicantsController < ApplicationController
 
   def shortlist
     job = Job.find(params[:job_id])
+    authorize job, policy_class: ApplicantPolicy
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.update(status: 'Shortlisted')
       flash[:success] = 'Applicant Shortlisted.'
@@ -81,6 +89,7 @@ class ApplicantsController < ApplicationController
 
   def reject
     job = Job.find(params[:job_id])
+    authorize job, policy_class: ApplicantPolicy
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.update(status: 'Rejected')
       flash[:success] = 'Applicant Rejected.'
@@ -97,6 +106,7 @@ class ApplicantsController < ApplicationController
 
   def download_resume
     job = Job.find(params[:job_id])
+    authorize job, policy_class: ApplicantPolicy
     user = User.find(params[:id])
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     resume_name, resume_date = applicant.resume_name.split(' - ')
@@ -116,13 +126,19 @@ class ApplicantsController < ApplicationController
 
   def download_cover_letter
     job = Job.find(params[:job_id])
+    authorize job, policy_class: ApplicantPolicy
     user = User.find(params[:id])
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
-    cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
-    cover_letter = user.cover_letters.includes(:blob).references(:blob)
-      .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).last
-    if cover_letter
-      send_data cover_letter.download, filename: cover_letter.filename.to_s
+    if applicant.cover_letter_name.present?
+      cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
+      cover_letter = user.cover_letters.includes(:blob).references(:blob)
+        .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).last
+      if cover_letter
+        send_data cover_letter.download, filename: cover_letter.filename.to_s
+      else
+        flash[:error] = "Unable to find Cover Letter."
+        redirect_to job_applicant_path(job, params[:id])
+      end
     else
       flash[:error] = "Unable to find Cover Letter."
       redirect_to job_applicant_path(job, params[:id])

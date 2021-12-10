@@ -12,11 +12,35 @@ class ApplicantPolicy < ApplicationPolicy
     @job = job
   end
 
+  def index?
+    user.employer? && job.user == user
+  end
+
+  def show?
+    user.employer? && job.user == user
+  end
+
   def new?
     user.job_seeker? && !job.users.include?(user)
   end
 
   def create?
     user.job_seeker? && !job.users.include?(user)
+  end
+
+  def shortlist?
+    user.employer? && job.user == user
+  end
+
+  def reject?
+    user.employer? && job.user == user
+  end
+
+  def download_resume?
+    user.employer? && job.user == user
+  end
+
+  def download_cover_letter?
+    user.employer? && job.user == user
   end
 end
