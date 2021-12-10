@@ -88,3 +88,7 @@ nav.navbar.bootsnav .navbar-brand {
     display: inline-block;
     background-color: #F44336;
 }
+
+.ur-email {
+  text-transform: lowercase !Important;
+}

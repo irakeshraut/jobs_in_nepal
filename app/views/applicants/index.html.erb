@@ -46,7 +46,7 @@
                     <% end %>
                   </div>
                   <div class="job-details">
-                    <h3 class="job-name"><a class="job_name_tag" href="#"><%= user.full_name %></a></h3>
+                    <h3 class="job-name"><a class="job_name_tag" href="#"><%= link_to(user.full_name, job_applicant_path(@job, user)) %></a></h3>
                     <small class="job-company"><i class="ti-email"></i><%= user.email %></small>
                     <small class="job-sallery"><i class="ti-mobile"></i><%= user.phone_no %></small>
                     <small class="job-sallery"><i class="ti-location-pin"></i>London</small>

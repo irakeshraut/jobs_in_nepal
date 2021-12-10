@@ -9,6 +9,17 @@ class ApplicantsController < ApplicationController
     @users = @users.paginate(page: params[:page], per_page: 30)
   end
 
+  def show
+    @job = Job.find(params[:job_id])
+    @user = @job.users.find(params[:id])
+    applicant = @job.applicants.find_by(job_id: @job.id, user_id: @user.id)
+    if applicant.cover_letter_name.present?
+      cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
+      @cover_letter = @user.cover_letters.includes(:blob).references(:blob)
+        .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).last
+    end
+  end
+
   def new
     @job = Job.find(params[:job_id])
     @user = current_user
@@ -57,9 +68,13 @@ class ApplicantsController < ApplicationController
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.update(status: 'Shortlisted')
       flash[:success] = 'Applicant Shortlisted.'
-      redirect_to job_applicants_path(params[:job_id])
     else
       flash[:error] = 'Something went wrong'
+    end
+
+    if params[:redirect_back] == 'job_applicant_path'
+      redirect_to job_applicant_path(job, params[:id])
+    else
       redirect_to job_applicants_path(params[:job_id])
     end
   end
@@ -69,9 +84,13 @@ class ApplicantsController < ApplicationController
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.update(status: 'Rejected')
       flash[:success] = 'Applicant Rejected.'
-      redirect_to job_applicants_path(params[:job_id])
     else
       flash[:error] = 'Something went wrong'
+    end
+
+    if params[:redirect_back] == 'job_applicant_path'
+      redirect_to job_applicant_path(job, params[:id])
+    else
       redirect_to job_applicants_path(params[:job_id])
     end
   end
@@ -87,7 +106,26 @@ class ApplicantsController < ApplicationController
       send_data resume.download, filename: resume.filename.to_s
     else
       flash[:error] = "Unable to find Resume."
-      redirect_to job_applicants_path(params[:job_id])
+      if params[:redirect_back] == 'job_applicant_path'
+        redirect_to job_applicant_path(job, params[:id])
+      else
+        redirect_to job_applicants_path(params[:job_id])
+      end
+    end
+  end
+
+  def download_cover_letter
+    job = Job.find(params[:job_id])
+    user = User.find(params[:id])
+    applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
+    cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
+    cover_letter = user.cover_letters.includes(:blob).references(:blob)
+      .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).last
+    if cover_letter
+      send_data cover_letter.download, filename: cover_letter.filename.to_s
+    else
+      flash[:error] = "Unable to find Cover Letter."
+      redirect_to job_applicant_path(job, params[:id])
     end
   end
 end
