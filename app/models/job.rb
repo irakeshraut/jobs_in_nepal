@@ -43,4 +43,9 @@ class Job < ApplicationRecord
   def created_by_admin?
     company_name.present? && redirect_link.present? && user.admin?
   end
+
+  def similar_jobs
+    jobs = Job.where("lower(title) like ?", self.title.downcase).or(Job.where("lower(category) like?", self.category.downcase)).includes(:user).order(created_at: :desc)
+    jobs.to_a.delete_if {|job| job.id == self.id }
+  end
 end
