@@ -12,6 +12,9 @@ class JobsController < ApplicationController
 
   def show
     @job = Job.find(params[:id])
+    unless @job.views.find_by(ip: request.remote_ip)
+      @job.views.create(ip: request.remote_ip)
+    end
   end
   
   def new

@@ -153,14 +153,14 @@
           <div class="icon text-theme">
             <i class="ti-zoom-in theme-cl"></i>
           </div>
-          <span class="text"><span class="number">1742</span> Views</span>
+          <span class="text"><span class="number"><%= @job.views.count %></span> Views</span>
         </div>
 
         <div class="statistic-item flex-middle">
           <div class="icon text-theme">
             <i class="ti-write theme-cl"></i>
           </div>
-          <span class="text"><span class="number">17</span> Applicants</span>
+          <span class="text"><span class="number"><%= @job.users.count %></span> Applicants</span>
         </div>
       </div>
     </div>

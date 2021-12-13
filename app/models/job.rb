@@ -16,6 +16,7 @@ class Job < ApplicationRecord
   belongs_to :user
   has_many :applicants, dependent: :destroy
   has_many :users, through: :applicants
+  has_many :views, dependent: :destroy
 
   has_rich_text :description
   validates :description, presence: true
