@@ -1,0 +1,39 @@
+<%if jobs.present? %>
+  <% jobs.each do |job| %>
+    <ul class="list">
+      <li class="manage-list-row clearfix">
+        <div class="job-info premium-job">
+          <div class="job-img">
+            <% if job.user.company.logo.attached? %>
+              <%= image_tag job.user.company.logo, class: 'attachment-thumbnail', alt: 'Company Logo' %>
+            <% else %>
+              <%= image_tag 'https://via.placeholder.com/150', class: 'img-avater' %>
+            <% end %>
+          </div>
+          <div class="job-details">
+            <h3 class="job-name"><%= link_to(job.title, job) %></h3>
+            <small class="job-company"><i class="ti-home"></i><a href="#"><%= job.category %></a></small>
+            <small class="job-sallery"><i class="ti-credit-card"></i><%= job.salary %></small>
+            <small class="job-update"><i class="ti-user"></i><%= pluralize(job.users.count, 'Applicant') %></small>
+            <div class='btn-wrapper'>
+              <span class="j-type full-time"><%= job.employment_type %></span>
+              <span class="j-type margin-left <%= job.status == 'Active' ? 'full-time' : 'part-time' %>"><%= job.status %></span>
+            </div>
+          </div>
+        </div>
+        <div class="job-buttons">
+          <%= link_to 'View Applicants', job_applicants_path(job), class: 'btn btn-info' %>
+          <%= link_to edit_job_path(job), class: 'btn btn-gray manage-btn', title: 'Edit' do %>
+            <i class='ti-pencil-alt'></i>
+          <% end %>
+
+          <%= link_to job_path(job), method: :delete, data: { confirm: 'Are you sure ?' }, class: 'btn btn-cancel manage-btn', title: 'Delete' do %>
+            <i class='ti-close'></i>
+          <% end %>
+        </div>
+      </li>
+    </ul>
+  <% end %>
+<% else %>
+  <p>No Jobs Found.</p>
+<% end %>

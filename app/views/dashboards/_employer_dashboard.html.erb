@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="dashboard-stat widget-1">
+      <div class="dashboard-stat-content"><h4><%= @user.jobs.created_today.count %></h4> <span>Job Posted Today</span></div>
+      <div class="dashboard-stat-icon"><i class="ti-location-pin"></i></div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="dashboard-stat widget-2">
+      <div class="dashboard-stat-content"><h4><%= @user.jobs.active.count %></h4> <span>Active Jobs</span></div>
+      <div class="dashboard-stat-icon"><i class="ti-layers"></i></div>
+    </div>	
+  </div>
+
+  <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="dashboard-stat widget-3">
+      <div class="dashboard-stat-content"><h4><%= @user.jobs.expired.count %></h4> <span>Expired Jobs</span></div>
+      <div class="dashboard-stat-icon"><i class="ti-pie-chart"></i></div>
+    </div>	
+  </div>
+
+  <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="dashboard-stat widget-4">
+      <div class="dashboard-stat-content"><h4><%= @user.jobs.count %></h4> <span>Total Jobs</span></div>
+      <div class="dashboard-stat-icon"><i class="ti-bookmark"></i></div>
+    </div>	
+  </div>
+</div>
+
+<!-- Notifications -->
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="dashboard-gravity-list with-icons">
+      <h4>Active Jobs</h4>
+    </div>
+    <%= render 'users/jobs', jobs: @active_jobs %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="dashboard-gravity-list with-icons">
+      <h4>Expired Jobs</h4>
+    </div>
+    <%= render 'users/jobs', jobs: @expired_jobs %>
+  </div>
+</div>

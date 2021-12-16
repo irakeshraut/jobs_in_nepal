@@ -22,6 +22,7 @@ class Job < ApplicationRecord
   validates :description, presence: true
 
   scope :active, -> { where(status: 'Active') }
+  scope :expired, -> { where(status: 'Expired') }
   scope :filter_by_title, ->(title) { where("lower(title) like ?", "%#{title.downcase}%") }
   scope :filter_by_category, ->(category) { where(category: category) }
   scope :filter_by_location, ->(location) { where("lower(location) like ?", "%#{location.downcase}%") }
