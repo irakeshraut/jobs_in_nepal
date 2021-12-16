@@ -1,51 +1,49 @@
-<div class="banner trans" style="background-image:url(http://via.placeholder.com/1920x850);" data-overlay="6">  
-  <div class="container">
-    <div class="banner-caption">
-      <div class="col-md-12 col-sm-12 banner-text">
-        <div class="full-search-2 eclip-search italian-search hero-search-radius">
-          <div class="hero-search-content">
-            <div class="row">
-              <%= form_with url: jobs_path, method: :get, local: true do |f| %>
-                <div class="col-lg-4 col-md-4 col-sm-12 small-padd b-r">
-                  <div class="form-group">
-                    <div class="input-with-icon">
-                      <%= f.text_field :title, placeholder: 'Enter Job Title', class: 'form-control' %>
-                      <i class="ti-search"></i>
-                    </div>
+<section class="banner trans inner-header-title">
+  <div class="banner-caption">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 banner-text">
+          <div class="full-search-2 eclip-search italian-search hero-search-radius">
+            <%= form_with url: jobs_path, method: :get, local: true do |f| %>
+              <div class="col-lg-4 col-md-4 col-sm-12 small-padd b-r">
+                <div class="form-group">
+                  <div class="input-with-icon">
+                    <%= f.text_field :title, placeholder: 'Enter Job Title', class: 'form-control' %>
+                    <i class="ti-search"></i>
                   </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 small-padd b-r">
-                  <div class="form-group">
-                    <div class="input-with-icon">
-                      <%= f.select :category, Category::LIST.keys.sort, { prompt: '-- Select --' }, class: 'form-control' %>
-                      <i class="ti-layers"></i>
-                    </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 small-padd b-r">
+                <div class="form-group">
+                  <div class="input-with-icon">
+                    <%= f.select :category, Category::LIST.keys.sort, { prompt: '-- Select --' }, class: 'form-control' %>
+                    <i class="ti-layers"></i>
                   </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 small-padd b-r">
-                  <div class="form-group">
-                    <div class="input-with-icon">
-                      <%= f.text_field :location, placeholder: 'Enter City Name', class: 'form-control' %>
-                      <i class="ti-location-arrow"></i>
-                    </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 small-padd b-r">
+                <div class="form-group">
+                  <div class="input-with-icon">
+                    <%= f.text_field :location, placeholder: 'Enter City Name', class: 'form-control' %>
+                    <i class="ti-location-arrow"></i>
                   </div>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-12 small-padd">
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-12 small-padd">
+                <div class="form-group">
                   <div class="form-group">
-                    <div class="form-group">
-                      <%= f.submit 'Search', class: 'btn btn-primary search-btn' %>
-                    </div>
+                    <%= f.submit 'Search', class: 'btn btn-primary search-btn' %>
                   </div>
                 </div>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
+</section>
+<div class="clearfix"></div>
 
 <!-- Job List-->
 <section>
