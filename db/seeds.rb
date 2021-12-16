@@ -26,6 +26,15 @@ if candidate_3.nil?
 end
 
 #######################################
+#         Admin
+#######################################
+
+admin = User.find_by(email: 'admin@test.com')
+if admin.nil?
+  User.create(first_name: 'Admin', last_name: 'One', role: 'admin', email: 'admin@test.com', password: 'aaaaaaaa', password_confirmation: 'aaaaaaaa')
+end
+
+#######################################
 #         Companies
 #######################################
 
