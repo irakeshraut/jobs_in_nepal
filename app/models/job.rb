@@ -27,6 +27,10 @@ class Job < ApplicationRecord
   scope :filter_by_location, ->(location) { where("lower(location) like ?", "%#{location.downcase}%") }
   scope :filter_by_status, ->(status) { where("lower(status) like ?", "%#{status.downcase}%") }
 
+  scope :created_today, -> { where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day) }
+  scope :created_this_week, -> { where(created_at: Time.zone.now.beginning_of_week..Time.zone.now.end_of_week) }
+  scope :created_this_month, -> { where(created_at: Time.zone.now.beginning_of_month..Time.zone.now.end_of_month) }
+
   def salary
     if min_salary.present? && max_salary.present?
       "Rs #{number_to_human(min_salary, format: '%n%u', precision: 2, units: { thousand: 'K', million: 'M', billion: 'B' })} -

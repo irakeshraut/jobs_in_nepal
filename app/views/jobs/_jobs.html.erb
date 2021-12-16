@@ -1,0 +1,56 @@
+<% jobs.each do |job| %>
+  <div class="item-click">
+    <article>
+      <div class="brows-job-list">
+        <div class="col-md-6 col-sm-6">
+          <div class="item-fl-box">
+            <div class="brows-job-company-img">
+              <% if job.created_by_admin? %>
+                <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
+              <% elsif job.user.company.logo.attached? %>
+                <%= image_tag job.user.company.logo, class: 'img-responsive' %>
+              <% else %>
+                <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
+              <% end %>
+            </div>
+            <div class="brows-job-position">
+              <h3><%= link_to(job.title, job) %></a></h3>
+              <p>
+              <span>
+                <% if job.created_by_admin? %>
+                  <%= job.company_name %>
+                <% else %>
+                  <%= job.user.company.name %>
+                <% end %>
+              </span><span class="brows-job-sallery"><i class="fa fa-money"></i><%= job.salary %></span>
+              <span class="job-type cl-success bg-trans-success"><%= job.employment_type %></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <div class="brows-job-location">
+            <p><i class="fa fa-map-marker"></i><%= job.location %></p>
+          </div>
+        </div>
+        <% if controller.controller_name == 'jobs' && controller.action_name == 'index' %>
+          <div class="col-md-2 col-sm-2">
+            <div class="brows-job-link">
+              <a href="job-detail-1.html" class="btn btn-default">Apply Now</a>
+            </div>
+          </div>
+        <% elsif controller.controller_name == 'dashboards' && controller.action_name == 'index' %>
+          <% applicant = Applicant.find_by(job_id: job.id, user_id: @user.id)%>
+          <div class="col-md-2 col-sm-2">
+            <div class="brows-job-link">
+              <a href="" class="btn btn-default disabled">Applied On: <%= applicant.created_at.strftime("%d/%m/%Y") %></a>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <% if job.created_at.today? %>
+        <span class="tg-themetag tg-featuretag">New Job</span>
+      <% end %>
+    </article>
+  </div>
+<% end %>
