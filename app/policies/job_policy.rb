@@ -1,9 +1,9 @@
 class JobPolicy < ApplicationPolicy
-  attr_reader :user, :post
+  attr_reader :user, :job
 
-  def initialize(user, post)
+  def initialize(user, job)
     @user = user
-    @post = post
+    @job = job
   end
 
   def new?
@@ -12,5 +12,17 @@ class JobPolicy < ApplicationPolicy
 
   def create?
     user.admin? || user.employer?
+  end
+
+  def edit?
+    (user.admin? || user.employer?) && job.user == user
+  end
+
+  def update?
+    (user.admin? || user.employer?) && job.user == user
+  end
+
+  def destroy?
+    job.user == user
   end
 end

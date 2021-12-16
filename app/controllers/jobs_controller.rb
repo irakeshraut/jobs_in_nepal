@@ -38,11 +38,13 @@ class JobsController < ApplicationController
 
   def edit
     @job = Job.find(params[:id])
+    authorize @job
     @error_messages = params[:error_messages] if params[:error_messages]
   end
 
   def update
     @job = Job.find(params[:id])
+    authorize @job
     if @job.update(job_params)
       flash[:success] = 'Job updated successfully.'
       redirect_to edit_job_path(@job)
@@ -53,6 +55,7 @@ class JobsController < ApplicationController
 
   def destroy
     job = Job.find(params[:id])
+    authorize job
     job.destroy
     flash[:success] = 'Job Deleted.'
     redirect_to all_posted_jobs_jobs_path
