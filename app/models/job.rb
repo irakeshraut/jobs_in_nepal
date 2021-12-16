@@ -50,7 +50,8 @@ class Job < ApplicationRecord
   end
 
   def similar_jobs
-    jobs = Job.where("lower(title) like ?", self.title.downcase).or(Job.where("lower(category) like?", self.category.downcase)).includes(:user).order(created_at: :desc)
+    jobs = Job.where("lower(title) like ?", self.title.downcase).or(Job.where("lower(category) like?", self.category.downcase))
+      .includes(user: { company: [logo_attachment: :blob] }).order(created_at: :desc)
     jobs.to_a.delete_if {|job| job.id == self.id }
   end
 end
