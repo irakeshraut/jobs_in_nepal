@@ -62,7 +62,7 @@
       <ul class="nav navbar-nav navbar-right" data-in="fadeindown" data-out="fadeoutup">
         <% if current_user %>
           <li>
-            <%= link_to dashboards_path do %>
+            <%= link_to user_dashboards_path(current_user) do %>
               <i class="fa fa-tachometer"></i>dashboard
             <% end %>
           </li>

@@ -30,7 +30,7 @@ class JobsController < ApplicationController
     @job.status = 'Active'
     @job.user_id = current_user.id
     if @job.valid? && @job.save
-      redirect_to dashboards_path
+      redirect_to user_dashboards_path(current_user)
     else
       redirect_to new_job_path(error_messages: @job.errors.full_messages)
     end

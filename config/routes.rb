@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     member do
       post :update_password
     end
+    resources :dashboards, only: [:index]
     resources :work_experiences, only: [:new]
     resources :educations, only: [:new]
     resources :resumes, only: [:new, :create, :destroy] do
@@ -24,7 +25,6 @@ Rails.application.routes.draw do
 
   resources :sessions,  only: [:new, :create, :destroy]
   resources :companies, only: [:create, :edit, :update]
-  resources :dashboards, only: [:index]
   resources :jobs do
     collection do
       get :all_posted_jobs

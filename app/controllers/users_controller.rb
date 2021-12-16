@@ -63,7 +63,7 @@ class UsersController < ApplicationController
     if @user
       if @user.update(password_params)
         flash[:success] = 'Password Successfully Updated.'
-        redirect_to dashboards_path
+        redirect_to user_dashboards_path(@user)
       else
         redirect_to edit_user_path(@user, error_messages: @user.errors.full_messages, hide_error_messages: true)
       end
