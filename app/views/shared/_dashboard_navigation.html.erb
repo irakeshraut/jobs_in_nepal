@@ -51,7 +51,7 @@
             <% end %>
           </li>
           <li class="<%= controller.controller_name == 'jobs' && controller.action_name == 'all_posted_jobs' ? 'active' : '' %>">
-            <%= link_to all_posted_jobs_jobs_path do %>
+            <%= link_to all_posted_jobs_user_path(current_user) do %>
               <i class="ti-briefcase"></i>All Jobs
             <% end %>
           </li>

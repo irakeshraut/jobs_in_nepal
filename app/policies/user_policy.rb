@@ -23,4 +23,8 @@ class UserPolicy < ApplicationPolicy
   def update_password?
     user_record == user
   end
+
+  def all_posted_jobs?
+    (user.employer? || user.admin?) && user_record == user
+  end
 end

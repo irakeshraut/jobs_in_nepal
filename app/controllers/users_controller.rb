@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: [:new, :create]
-  layout 'dashboard', only: [:edit, :update]
+  layout 'dashboard', only: [:edit, :update, :all_posted_jobs]
 
   def new
     @user = User.new
@@ -71,6 +71,15 @@ class UsersController < ApplicationController
       flash[:error] = 'Invalid Current Password.'
       redirect_to edit_user_path(old_current_user)
     end
+  end
+
+  def all_posted_jobs
+    user = User.find(params[:id])
+    authorize user
+    @jobs = user.jobs.order(created_at: :desc)
+    @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
+    @jobs = @jobs.filter_by_status(params[:status]) if params[:status].present?
+    @jobs = @jobs.paginate(page: params[:page], per_page: 30)
   end
 
   private

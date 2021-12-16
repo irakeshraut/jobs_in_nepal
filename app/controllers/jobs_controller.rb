@@ -61,13 +61,6 @@ class JobsController < ApplicationController
     redirect_to all_posted_jobs_jobs_path
   end
 
-  def all_posted_jobs
-    @jobs = current_user.jobs.order(created_at: :desc)
-    @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
-    @jobs = @jobs.filter_by_status(params[:status]) if params[:status].present?
-    @jobs = @jobs.paginate(page: params[:page], per_page: 30)
-  end
-
   private
 
   def job_params

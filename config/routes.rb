@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :edit, :update] do
     member do
       post :update_password
+      get :all_posted_jobs
     end
     resources :dashboards, only: [:index]
     resources :work_experiences, only: [:new]
@@ -26,9 +27,6 @@ Rails.application.routes.draw do
   resources :sessions,  only: [:new, :create, :destroy]
   resources :companies, only: [:create, :edit, :update]
   resources :jobs do
-    collection do
-      get :all_posted_jobs
-    end
     resources :applicants, only: [:index, :show, :new, :create] do
       member do
         get :shortlist
