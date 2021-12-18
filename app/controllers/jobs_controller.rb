@@ -15,7 +15,7 @@ class JobsController < ApplicationController
     unless @job.views.find_by(ip: request.remote_ip)
       @job.views.create(ip: request.remote_ip)
     end
-    @similar_jobs = @job.similar_jobs.take(4)
+    @similar_jobs = @job.similar_jobs.shuffle.take(4)
   end
   
   def new

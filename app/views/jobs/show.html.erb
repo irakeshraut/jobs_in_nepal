@@ -10,11 +10,8 @@
 <!-- Candidate Detail Start -->
 <section class="detail-desc">
   <div class="container">
-
     <div class="ur-detail-wrap top-lay">
-
       <div class="ur-detail-box">
-
         <div class="ur-thumb">
           <% if @job.created_by_admin? %>
             <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
@@ -34,8 +31,12 @@
               <%= @job.user.company.name %>
             <% end %>
           </span>
+          <%if @job.expired? %>
+            <div>
+              <p class='label label-danger'>This Job has Expired.</p>
+            </div>
+          <% end %>
         </div>
-
       </div>
 
       <div class="ur-detail-btn">
@@ -175,7 +176,7 @@
 
       <div class="row mrg-0">
         <div class="col-md-12 col-sm-12">
-          <h3>Related Jobs</h3>
+          <h3>Similar Jobs</h3>
         </div>
       </div>
       <div class="row mrg-0">

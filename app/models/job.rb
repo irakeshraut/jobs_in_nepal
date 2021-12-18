@@ -54,4 +54,8 @@ class Job < ApplicationRecord
       .includes(user: { company: [logo_attachment: :blob] }).order(created_at: :desc)
     jobs.to_a.delete_if {|job| job.id == self.id }
   end
+  
+  def expired?
+    status == 'Expired'
+  end
 end
