@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JobsInNepal</title>
+    <title><%= @title || 'Jobs in Nepal - Job Vacancies in Nepal | Jobs In Nepal' %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name='description' content='Jobs in Nepal.'>
+    <meta name='keywords' content="Jobs in Nepal, Job in Nepal, Job vacancy in Nepal, find job in Nepal, Job vacancies in Nepal, Job site in Nepal, Job opportitunity in Nepal,
+    find jobs in Nepal, Job in kathmandu, Job in pokhara, employment, recent jobs in Nepal" />
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'plugins', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'style', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%= favicon_link_tag 'favicon.ico' %>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
