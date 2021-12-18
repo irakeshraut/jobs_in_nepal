@@ -1,28 +1,29 @@
+<%# TODO: remove this when we have lots of jobs and candiates and uncomment this to show newsletter form and some stats %>
 <!-- ============================ before footer ================================== -->
-<div class="before-footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-sm-6">
-        <div class="jb4-form-fields">
-          <div class="input-group">
-            <input type="email" class="form-control" placeholder="enter your email address">
-            <span class="input-group-btn">
-                  <button class="btn theme-bg" type="submit"><span class="fa fa-paper-plane-o"></span></button>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-6 hill">
-        <ul class="job stock-facts">
-          <li><span>2744</span></br>jobs posted</li>
-          <li><span>2365</span></br>jobs posted</li>
-          <li><span>2021</span></br>freelancer</li>
-          <li><span>7542</span></br>companies</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- <div class="before&#45;footer"> -->
+<!--   <div class="container"> -->
+<!--     <div class="row"> -->
+<!--       <div class="col&#45;md&#45;6 col&#45;sm&#45;6"> -->
+<!--         <div class="jb4&#45;form&#45;fields"> -->
+<!--           <div class="input&#45;group"> -->
+<!--             <input type="email" class="form&#45;control" placeholder="enter your email address"> -->
+<!--             <span class="input&#45;group&#45;btn"> -->
+<!--                   <button class="btn theme&#45;bg" type="submit"><span class="fa fa&#45;paper&#45;plane&#45;o"></span></button> -->
+<!--             </span> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--       <div class="col&#45;md&#45;6 col&#45;sm&#45;6 hill"> -->
+<!--         <ul class="job stock&#45;facts"> -->
+<!--           <li><span>2744</span></br>jobs posted</li> -->
+<!--           <li><span>2365</span></br>jobs posted</li> -->
+<!--           <li><span>2021</span></br>freelancer</li> -->
+<!--           <li><span>7542</span></br>companies</li> -->
+<!--         </ul> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
 <!-- ============================ before footer ================================== -->
 
 <!-- ============================ footer start ================================== -->
@@ -34,73 +35,71 @@
           <div class="footer-widget">
             <%= image_tag 'logo-white.png', class: 'img-footer' %>
             <div class="footer-add">
-              <p>collins street west, victoria,</br> australia (au4578).</p>
-              <p><strong>email:</strong></br>hello@jobstock.com</p>
-              <p><strong>call:</strong></br>91 855 742 62548</p>
+              <p>Gaushala, Kathmandu</br> Nepal.</p>
+              <p><strong>email:</strong></br><span class='lowercase'>info@jobsinnepal.com</span></p>
+              <!-- <p><strong>call:</strong></br>91 855 742 62548</p> -->
             </div>
           </div>
         </div>
         <div class="col-lg-2 col-md-2">
           <div class="footer-widget">
-            <h4 class="widget-title">navigations</h4>
+            <h4 class="widget-title">Job Seekers</h4>
             <ul class="footer-menu">
-              <li><a href="home-6.html">new home design</a></li>
-              <li><a href="browse-candidate-list.html">browse candidates</a></li>
-              <li><a href="browse-employer-list.html">browse employers</a></li>
-              <li><a href="advance-search-2.html">advance search</a></li>
-              <li><a href="checkout.html">job with map</a></li>
+              <li><%= link_to 'Register', new_user_path(tab: 'job_seeker') %></li>
+              <li><%= link_to 'Login', login_path %></li>
+              <% if current_user && current_user.job_seeker?%>
+                <li><%= link_to 'Dashboard', user_dashboards_path(current_user) %></li>
+              <% end %>
             </ul>
           </div>
         </div>
 
         <div class="col-lg-2 col-md-2">
           <div class="footer-widget">
-            <h4 class="widget-title">the highlights</h4>
+            <h4 class="widget-title">Employers</h4>
             <ul class="footer-menu">
-              <li><a href="index-2.html">home page 2</a></li>
-              <li><a href="index-3.html">home page 3</a></li>
-              <li><a href="index-4.html">home page 4</a></li>
-              <li><a href="index-5.html">home page 5</a></li>
-              <li><a href="login.html">login</a></li>
+              <li><%= link_to 'Register', new_user_path(tab: 'employer') %></li>
+              <li><%= link_to 'Login', login_path %></li>
+              <% if current_user && current_user.employer? %>
+                <li><%= link_to 'Dashboard', user_dashboards_path(current_user) %></li>
+              <% end %>
             </ul>
           </div>
         </div>
 
         <div class="col-lg-2 col-md-2">
           <div class="footer-widget">
-            <h4 class="widget-title">my account</h4>
+            <h4 class="widget-title">Top Categories</h4>
             <ul class="footer-menu">
-              <li><a href="candidate-dashboard.html">dashboard</a></li>
-              <li><a href="applications.html">applications</a></li>
-              <li><a href="packages.html">packages</a></li>
-              <li><a href="candidate-resume.html">resume.html</a></li>
-              <li><a href="register.html">signup page</a></li>
+              <% @top_categories.each do |top_category| %>
+                <li><%= link_to top_category, jobs_path(category: top_category) %></li>
+              <% end %>
             </ul>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-3">
           <div class="footer-widget">
-            <h4 class="widget-title">download apps</h4>
+            <h4 class="widget-title">Payment Methods</h4>
             <a href="#" class="other-store-link">
               <div class="other-store-app">
                 <div class="os-app-icon">
-                  <i class="ti-android theme-cl"></i>
+                  <!-- <i class="ti&#45;android theme&#45;cl"></i> -->
                 </div>
                 <div class="os-app-caps">
-                  google play
-                  <span>get it now</span>
+                  Payment with Esewa 
+                  <span>(Coming Soon)</span>
                 </div>
               </div>
             </a>
             <a href="#" class="other-store-link">
               <div class="other-store-app">
                 <div class="os-app-icon">
-                  <i class="ti-apple theme-cl"></i>
+                  <!-- <i class="ti&#45;apple theme&#45;cl"></i> -->
                 </div>
                 <div class="os-app-caps">
-                  app store
-                  <span>now it available</span>
+                  Payment with Khalti
+                  <span>(Comming Soon)</span>
                 </div>
               </div>
             </a>
@@ -114,16 +113,17 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6 col-md-6">
-          <p class="mb-0">© 2019 job stock. designd by <a href="https://themezhub.com">themez hub</a> all rights reserved</p>
+          <p class="mb-0">© 2021 <span class='lowercase'>jobsinnepal.com.</span> All rights reserved</p>
         </div>
-        <div class="col-lg-6 col-md-6 text-right">
-          <ul class="footer-bottom-social">
-            <li><a href="#"><i class="ti-facebook"></i></a></li>
-            <li><a href="#"><i class="ti-twitter"></i></a></li>
-            <li><a href="#"><i class="ti-instagram"></i></a></li>
-            <li><a href="#"><i class="ti-linkedin"></i></a></li>
-          </ul>
-        </div>
+        <%# TODO: uncomment this when we have social media presence %>
+        <!-- <div class="col&#45;lg&#45;6 col&#45;md&#45;6 text&#45;right"> -->
+        <!--   <ul class="footer&#45;bottom&#45;social"> -->
+        <!--     <li><a href="#"><i class="ti&#45;facebook"></i></a></li> -->
+        <!--     <li><a href="#"><i class="ti&#45;twitter"></i></a></li> -->
+        <!--     <li><a href="#"><i class="ti&#45;instagram"></i></a></li> -->
+        <!--     <li><a href="#"><i class="ti&#45;linkedin"></i></a></li> -->
+        <!--   </ul> -->
+        <!-- </div> -->
       </div>
     </div>
   </div>
