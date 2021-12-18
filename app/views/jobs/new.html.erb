@@ -4,7 +4,8 @@
       <div class="dashboard-caption-header">
         <h4><i class="ti-ruler-pencil"></i>Post New Job</h4>
       </div>
-      <%= render "form" %>
+      <%= render 'shared/error_messages', object: @job %>
+      <%= render 'form' %>
     </div>
   </div>
 </div>

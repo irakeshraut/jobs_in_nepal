@@ -21,7 +21,6 @@ class JobsController < ApplicationController
   def new
     @job = Job.new
     authorize @job
-    @error_messages = params[:error_messages] if params[:error_messages]
   end
 
   def create
@@ -32,14 +31,13 @@ class JobsController < ApplicationController
     if @job.valid? && @job.save
       redirect_to user_dashboards_path(current_user)
     else
-      redirect_to new_job_path(error_messages: @job.errors.full_messages)
+      render :new
     end
   end
 
   def edit
     @job = Job.find(params[:id])
     authorize @job
-    @error_messages = params[:error_messages] if params[:error_messages]
   end
 
   def update
@@ -49,7 +47,7 @@ class JobsController < ApplicationController
       flash[:success] = 'Job updated successfully.'
       redirect_to edit_job_path(@job)
     else
-      redirect_to edit_job_path(@job, error_messages: @job.errors.full_messages)
+      render :edit
     end
   end
 
