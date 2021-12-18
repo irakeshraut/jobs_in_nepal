@@ -33,20 +33,20 @@
             <p><i class="fa fa-map-marker"></i><%= job.location %></p>
           </div>
         </div>
-        <% if controller.controller_name == 'jobs' && controller.action_name == 'index' %>
-          <div class="col-md-2 col-sm-2">
-            <div class="brows-job-link">
-              <a href="job-detail-1.html" class="btn btn-default">Apply Now</a>
-            </div>
+        <div class="col-md-2 col-sm-2">
+          <div class="brows-job-link">
+            <% if current_user %>
+              <% applicant = Applicant.find_by(job_id: job.id, user_id: current_user.id)%>
+              <% if applicant %>
+                <%= link_to "Applied On: #{applicant.created_at.strftime('%d/%m/%Y')}", '#', class: 'btn btn-default disabled' %>
+              <% else %>
+                <%= link_to 'Apply Now', new_job_applicant_path(job), class: 'btn btn-default' %>
+              <% end %>
+            <% else %>
+              <%= link_to 'Apply Now', new_job_applicant_path(job), class: 'btn btn-default' %>
+            <% end %>
           </div>
-        <% elsif controller.controller_name == 'dashboards' && controller.action_name == 'index' %>
-          <% applicant = Applicant.find_by(job_id: job.id, user_id: @user.id)%>
-          <div class="col-md-2 col-sm-2">
-            <div class="brows-job-link">
-              <a href="" class="btn btn-default disabled">Applied On: <%= applicant.created_at.strftime("%d/%m/%Y") %></a>
-            </div>
-          </div>
-        <% end %>
+        </div>
       </div>
       <% if job.created_at.today? %>
         <span class="tg-themetag tg-featuretag">New Job</span>
