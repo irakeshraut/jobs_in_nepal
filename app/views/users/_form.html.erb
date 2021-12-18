@@ -32,6 +32,8 @@
           <i class="theme-cl ti-mobile"></i>
         </div>
       </div>
+    <% end %>
+    <% if current_user.job_seeker? || current_user.admin? %>
       <div class="form-group">
         <%= f.label :avatar %>
         <div class="input-with-icon">

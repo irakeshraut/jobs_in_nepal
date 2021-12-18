@@ -6,7 +6,6 @@
       <% end %>
       <div class="brows-job-type"><span class="freelanc"><%= job.employment_type %></span></div>
       <div class="job-instructor-thumb">
-        <a href="job-detail-2.html"><%#= image_tag 'com-2', class: 'img-fluid' %></a>
         <% if job.created_by_admin? %>
           <%= image_tag 'https://via.placeholder.com/150', class: 'img-fluid' %>
         <% elsif job.user.company.logo.attached? %>

@@ -1,28 +1,28 @@
 <div class="row">
   <div class="col-lg-3 col-md-6 col-sm-12">
     <div class="dashboard-stat widget-1">
-      <div class="dashboard-stat-content"><h4><%= @user.applied_jobs.created_today.count  %></h4> <span>Jobs Applied Today</span></div>
+      <div class="dashboard-stat-content"><h4><%= @user.jobs.created_today.count %></h4> <span>Job Posted Today</span></div>
       <div class="dashboard-stat-icon"><i class="ti-location-pin"></i></div>
-    </div>	
+    </div>
   </div>
 
   <div class="col-lg-3 col-md-6 col-sm-12">
     <div class="dashboard-stat widget-2">
-      <div class="dashboard-stat-content"><h4><%= @user.applied_jobs.created_this_week.count %></h4> <span>Jobs Applied this week</span></div>
+      <div class="dashboard-stat-content"><h4><%= @user.jobs.active.count %></h4> <span>Active Jobs</span></div>
       <div class="dashboard-stat-icon"><i class="ti-layers"></i></div>
-    </div>	
+    </div>
   </div>
 
   <div class="col-lg-3 col-md-6 col-sm-12">
     <div class="dashboard-stat widget-3">
-      <div class="dashboard-stat-content"><h4><%= @user.applied_jobs.created_this_month.count %></h4> <span>Jobs Applied this month</span></div>
+      <div class="dashboard-stat-content"><h4><%= @user.jobs.expired.count %></h4> <span>Expired Jobs</span></div>
       <div class="dashboard-stat-icon"><i class="ti-pie-chart"></i></div>
     </div>	
   </div>
 
   <div class="col-lg-3 col-md-6 col-sm-12">
     <div class="dashboard-stat widget-4">
-      <div class="dashboard-stat-content"><h4><%= @user.applied_jobs.count %></h4> <span>Total Applied Jobs</span></div>
+      <div class="dashboard-stat-content"><h4><%= @user.jobs.count %></h4> <span>Total Jobs</span></div>
       <div class="dashboard-stat-icon"><i class="ti-bookmark"></i></div>
     </div>	
   </div>
@@ -31,16 +31,17 @@
 <div class="row">
   <div class="col-lg-12 col-md-12">
     <div class="dashboard-gravity-list with-icons">
-      <h4>Recent Applied Jobs</h4>
+      <h4>Active Jobs</h4>
     </div>
-    <%= render 'jobs/jobs', jobs: @applied_jobs %>
+    <%#= render 'users/jobs', jobs: @active_jobs %>
   </div>
 </div>
-<br>
 
 <div class="row">
-  <div class="dashboard-gravity-list with-icons">
-    <h4>Education and Work Experiences</h4>
+  <div class="col-lg-12 col-md-12">
+    <div class="dashboard-gravity-list with-icons">
+      <h4>Expired Jobs</h4>
+    </div>
+    <%#= render 'users/jobs', jobs: @expired_jobs %>
   </div>
-  <%= render "applicants/education_and_work_experiences" %>
 </div>

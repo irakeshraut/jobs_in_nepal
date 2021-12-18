@@ -11,8 +11,7 @@ class JobsController < ApplicationController
   end
 
   def show
-    # @job = Job.find(params[:id])
-    @job = Job.includes(:user).find(params[:id])
+    @job = Job.find(params[:id])
     unless @job.views.find_by(ip: request.remote_ip)
       @job.views.create(ip: request.remote_ip)
     end

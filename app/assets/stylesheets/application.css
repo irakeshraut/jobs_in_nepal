@@ -97,3 +97,7 @@ nav.navbar.bootsnav .navbar-brand {
   float: right;
   font-size: 15px;
 }
+
+.margin-top {
+  margin-top: 20px;
+}

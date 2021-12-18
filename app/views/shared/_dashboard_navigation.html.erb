@@ -50,7 +50,9 @@
               <i class="ti-home"></i>Edit Company
             <% end %>
           </li>
-          <li class="<%= controller.controller_name == 'jobs' && controller.action_name == 'all_posted_jobs' ? 'active' : '' %>">
+        <% end %>
+        <% if current_user.employer? || current_user.admin? %>
+          <li class="<%= controller.controller_name == 'users' && controller.action_name == 'all_posted_jobs' ? 'active' : '' %>">
             <%= link_to all_posted_jobs_user_path(current_user) do %>
               <i class="ti-briefcase"></i>All Jobs
             <% end %>
