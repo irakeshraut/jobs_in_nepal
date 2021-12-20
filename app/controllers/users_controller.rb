@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: [:new, :create]
-  layout 'dashboard', only: [:edit, :update, :all_posted_jobs]
+  layout 'dashboard', only: [:edit, :update, :all_posted_jobs,:edit_password, :update_password]
 
   def new
     @user = User.new
@@ -26,14 +26,13 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     authorize @user
-    @error_messages = params[:error_messages] if params[:error_messages]
-    @hide_error_messages = params[:hide_error_messages] if params[:hide_error_messages]
   end
 
   def update
     @user = User.find(params[:id])
     authorize @user
     if @user.update(user_params)
+      @user.update(user_params)
       if params[:redirect_to] == 'edit_work_experience_path'
         flash[:success] = 'Work Experience Successfully Updated.'
         redirect_to new_user_work_experience_path(@user)
@@ -50,26 +49,35 @@ class UsersController < ApplicationController
       elsif params[:redirect_to] == 'edit_education_path'
         redirect_to new_user_education_path(@user, error_messages: @user.errors.full_messages)
       else
-        redirect_to edit_user_path(@user, error_messages: @user.errors.full_messages)
+        render :edit
       end
     end
   end
 
+  def edit_password
+    @user = User.find(params[:id])
+    authorize @user
+  end
+
   def update_password
     old_current_user = current_user # need to set current_user before using login otherwise current_user will be nil when login fail.
+
     @user = login(old_current_user.email, params[:current_password])
-    authorize @user
+    if @user
+      authorize @user
+    end
 
     if @user
       if @user.update(password_params)
         flash[:success] = 'Password Successfully Updated.'
         redirect_to user_dashboards_path(@user)
       else
-        redirect_to edit_user_path(@user, error_messages: @user.errors.full_messages, hide_error_messages: true)
+        render :edit
       end
     else
+      @user = old_current_user
       flash[:error] = 'Invalid Current Password.'
-      redirect_to edit_user_path(old_current_user)
+      render :edit_password
     end
   end
 

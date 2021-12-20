@@ -6,11 +6,10 @@ class SessionsController < ApplicationController
 
   def create
     @user = login(params[:email], params[:password])
-
     if @user
       redirect_back_or_to(root_path)
     else
-      flash[:error] = 'Login failed: Invalid Email or Password'
+      flash[:error] = 'Login Failed: Invalid Email or Password'
       redirect_to login_path
     end
   end

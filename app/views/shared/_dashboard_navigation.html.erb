@@ -2,24 +2,24 @@
   <div class="side-dashboard">
     <div class="dashboard-avatar">
       <div class="dashboard-avatar-thumb">
-        <% if current_user.employer? %>
-          <% if current_user.company&.logo&.attached? %>
-            <%= image_tag current_user.company.logo, class: 'img-avatar' %>
+        <% if @user.employer? %>
+          <% if @user.company&.logo&.attached? %>
+            <%= image_tag @user.company.logo, class: 'img-avatar' %>
           <% else %>
             <%= image_tag 'https://via.placeholder.com/150', class: 'img-avater' %>
           <% end %>
         <% else %>
-          <% if current_user.avatar.attached? %>
-            <%= image_tag current_user.avatar, class: 'img-avatar' %>
+          <% if @user.avatar.attached? %>
+            <%= image_tag @user.avatar, class: 'img-avatar' %>
           <% else %>
             <%= image_tag 'https://via.placeholder.com/150', class: 'img-avater' %>
           <% end %>
         <% end %>
       </div>
       <div class="dashboard-avatar-text">
-        <h4><%= current_user.full_name %></h4>
-        <% if current_user.company.present? %>
-          <span><%= current_user.company.name %></span>
+        <h4><%= @user.full_name %></h4>
+        <% if @user.company.present? %>
+          <span><%= @user.company.name %></span>
         <% end %>
       </div>
     </div>
@@ -27,11 +27,11 @@
     <div class="dashboard-menu">
       <ul>
         <li class="<%= controller.controller_name == 'dashboards' && controller.action_name == 'index' ? 'active' : '' %>">
-          <%= link_to user_dashboards_path(current_user) do %>
+          <%= link_to user_dashboards_path(@user) do %>
             <i class="ti-ruler-pencil"></i>Dashboard
           <% end %>
         </li>
-        <% if current_user.admin? || current_user.employer? %>
+        <% if @user.admin? || @user.employer? %>
           <li class="<%= controller.controller_name == 'jobs' && controller.action_name == 'new' ? 'active' : '' %>">
             <%= link_to new_job_path do %>
               <i class="ti-ruler-pencil"></i>Post New Job
@@ -39,42 +39,48 @@
           </li>
         <% end %>
         <li class="<%= controller.controller_name == 'users' && controller.action_name == 'edit' ? 'active' : '' %>">
-          <%= link_to edit_user_path(current_user) do %>
+          <%= link_to edit_user_path(@user) do %>
             <i class="ti-user"></i>Edit Profile
           <% end %>
         </li>
-        <% if current_user.employer? %>
+        <li class="<%= controller.controller_name == 'users' && controller.action_name == 'edit_password' ? 'active' : '' %>">
+          <%= link_to edit_password_user_path(@user) do %>
+            <i class="ti-user"></i>Change Password
+          <% end %>
+        </li>
+
+        <% if @user.employer? %>
           <li class="<%= controller.controller_name == 'companies' && controller.action_name == 'edit' ? 'active' : '' %>">
-            <%= link_to edit_company_path(current_user.company) do %>
+            <%= link_to edit_company_path(@user.company) do %>
               <i class="ti-home"></i>Edit Company
             <% end %>
           </li>
         <% end %>
-        <% if current_user.employer? || current_user.admin? %>
+        <% if @user.employer? || @user.admin? %>
           <li class="<%= controller.controller_name == 'users' && controller.action_name == 'all_posted_jobs' ? 'active' : '' %>">
-            <%= link_to all_posted_jobs_user_path(current_user) do %>
+            <%= link_to all_posted_jobs_user_path(@user) do %>
               <i class="ti-briefcase"></i>All Jobs
             <% end %>
           </li>
         <% end %>
-        <% if current_user.job_seeker? %>
+        <% if @user.job_seeker? %>
           <li class="<%= controller.controller_name == 'work_experiences' && controller.action_name == 'new' ? 'active' : '' %>">
-            <%= link_to new_user_work_experience_path(current_user) do %>
+            <%= link_to new_user_work_experience_path(@user) do %>
               <i class="ti-home"></i>Edit Work Experiences
             <% end %>
           </li>
           <li class="<%= controller.controller_name == 'educations' && controller.action_name == 'new' ? 'active' : '' %>">
-            <%= link_to new_user_education_path(current_user) do %>
+            <%= link_to new_user_education_path(@user) do %>
               <i class="ti-home"></i>Edit Education
             <% end %>
           </li>
           <li class="<%= controller.controller_name == 'resumes' && controller.action_name == 'new' ? 'active' : '' %>">
-            <%= link_to new_user_resume_path(current_user) do %>
+            <%= link_to new_user_resume_path(@user) do %>
               <i class="ti-home"></i>Manage Resume
             <% end %>
           </li>
           <li class="<%= controller.controller_name == 'cover_letters' && controller.action_name == 'new' ? 'active' : '' %>">
-            <%= link_to new_user_cover_letter_path(current_user) do %>
+            <%= link_to new_user_cover_letter_path(@user) do %>
               <i class="ti-home"></i>Manage Cover Letter
             <% end %>
           </li>

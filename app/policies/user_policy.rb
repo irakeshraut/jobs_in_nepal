@@ -20,6 +20,10 @@ class UserPolicy < ApplicationPolicy
     user_record == user
   end
 
+  def edit_password?
+    user_record == user
+  end
+
   def update_password?
     user_record == user
   end

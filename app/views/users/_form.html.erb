@@ -1,4 +1,4 @@
-<%= form_with model: @user do |f| %>
+<%= form_with model: @user, local: true do |f| %>
   <div class="form-group">
     <%= f.label :first_name  %>
     <div class="input-with-icon">
@@ -23,8 +23,8 @@
     </div>
   </div>
 
-  <% if controller.controller_name == 'users' && controller.action_name == 'edit' %>
-    <% if current_user.job_seeker? %>
+  <% if controller.controller_name == 'users' && (controller.action_name == 'edit' || controller.action_name = 'update') %>
+    <% if @user.job_seeker? %>
       <div class="form-group">
         <%= f.label :phone_no, 'Phone Number'  %>
         <div class="input-with-icon">
@@ -33,7 +33,7 @@
         </div>
       </div>
     <% end %>
-    <% if current_user.job_seeker? || current_user.admin? %>
+    <% if @user.job_seeker? || @user.admin? %>
       <div class="form-group">
         <%= f.label :avatar %>
         <div class="input-with-icon">

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create, :edit, :update] do
     member do
+      get :edit_password
       post :update_password
       get :all_posted_jobs
     end
