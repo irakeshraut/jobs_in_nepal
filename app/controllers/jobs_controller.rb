@@ -56,7 +56,7 @@ class JobsController < ApplicationController
     authorize job
     job.destroy
     flash[:success] = 'Job Deleted.'
-    redirect_to all_posted_jobs_jobs_path
+    redirect_to all_posted_jobs_user_path(current_user)
   end
 
   private
