@@ -34,7 +34,6 @@ class User < ApplicationRecord
   scope :filter_by_name, ->(name) { where("lower(first_name) || ' ' || lower(last_name) like ?", "%#{name.downcase}%") }
   scope :filter_by_status, ->(status) { where(applicants: { status: status }) }
 
-
   def admin?
     role == 'admin'
   end
