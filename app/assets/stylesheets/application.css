@@ -43,10 +43,6 @@ nav.navbar.bootsnav .navbar-brand {
   margin-top: 30px;
 }
 
-.side-dashboard {
-  min-height: 110vh !Important;
-}
-
 .btn-wrapper {
   display: flex;
 }

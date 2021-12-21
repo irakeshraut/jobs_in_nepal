@@ -32,7 +32,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     authorize @user
     if @user.update(user_params)
-      @user.update(user_params)
       if params[:redirect_to] == 'edit_work_experience_path'
         flash[:success] = 'Work Experience Successfully Updated.'
         redirect_to new_user_work_experience_path(@user)
