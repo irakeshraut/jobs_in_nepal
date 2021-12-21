@@ -31,4 +31,8 @@ class UserPolicy < ApplicationPolicy
   def all_posted_jobs?
     (user.employer? || user.admin?) && user_record == user
   end
+
+  def applied_jobs?
+    user.job_seeker? && user_record == user
+  end
 end

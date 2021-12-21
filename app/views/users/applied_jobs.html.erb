@@ -1,0 +1,16 @@
+<div class="col-lg-9 col-md-8">
+  <div class="dashboard-body">
+    <div class="dashboard-caption">
+      <div class="dashboard-caption-header">
+        <h4><i class="ti-ruler-pencil"></i>Applied Jobs</h4>
+      </div>
+      <div class="dashboard-caption-wrap">
+        <%= render 'jobs/jobs', jobs: @applied_jobs %>
+
+        <div class="digg_pagination">
+          <%= will_paginate @applied_jobs %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

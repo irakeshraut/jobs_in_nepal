@@ -84,6 +84,11 @@
               <i class="ti-home"></i>Manage Cover Letter
             <% end %>
           </li>
+          <li class="<%= controller.controller_name == 'users' && controller.action_name == 'applied_jobs' ? 'active' : '' %>">
+            <%= link_to applied_jobs_user_path(@user) do %>
+              <i class="ti-heart"></i>Applied Jobs
+            <% end %>
+          </li>
         <% end %>
     </div>
   </div>

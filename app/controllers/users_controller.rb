@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: [:new, :create]
-  layout 'dashboard', only: [:edit, :update, :all_posted_jobs,:edit_password, :update_password]
+  layout 'dashboard', only: [:edit, :update, :all_posted_jobs,:edit_password, :update_password, :applied_jobs]
 
   def new
     @user = User.new
@@ -87,6 +87,12 @@ class UsersController < ApplicationController
     @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
     @jobs = @jobs.filter_by_status(params[:status]) if params[:status].present?
     @jobs = @jobs.paginate(page: params[:page], per_page: 30)
+  end
+
+  def applied_jobs
+    @user = User.find(params[:id])
+    authorize @user
+    @applied_jobs = @user.applied_jobs.includes(:user).paginate(page: params[:page], per_page: 30)
   end
 
   private

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get :edit_password
       post :update_password
       get :all_posted_jobs
+      get :applied_jobs
     end
     resources :dashboards, only: [:index]
     resources :work_experiences, only: [:new]
