@@ -17,8 +17,9 @@ class JobsController < ApplicationController
     end
     @similar_jobs = @job.similar_jobs.shuffle.take(4)
   end
-  
+
   def new
+    @user = current_user # needed for dashboard menu
     @job = Job.new
     authorize @job
   end

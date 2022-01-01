@@ -2,6 +2,7 @@ class ApplicantsController < ApplicationController
   layout 'dashboard', except: [:new, :create]
 
   def index
+    @user = current_user # needed for dashboard menu
     @job = Job.find(params[:job_id])
     authorize @job, policy_class: ApplicantPolicy
     @users = @job.users.includes([:avatar_attachment])
@@ -11,18 +12,19 @@ class ApplicantsController < ApplicationController
   end
 
   def show
+    @user = current_user # needed for dashboard menu
     @job = Job.find(params[:job_id])
     authorize @job, policy_class: ApplicantPolicy
-    @user = @job.users.find(params[:id])
-    applicant = @job.applicants.find_by(job_id: @job.id, user_id: @user.id)
+    @applicant_user = @job.users.find(params[:id])
+    applicant = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id)
     if applicant.cover_letter_name.present?
       cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
-      @cover_letter = @user.cover_letters.includes(:blob).references(:blob)
+      @cover_letter = @applicant_user.cover_letters.includes(:blob).references(:blob)
         .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).last
     end
     if applicant.resume_name.present?
       resume_name, resume_date = applicant.resume_name.split(' - ')
-      @resume = @user.resumes.includes(:blob).references(:blob)
+      @resume = @applicant_user.resumes.includes(:blob).references(:blob)
         .where(active_storage_blobs: { filename: resume_name, created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).last
     end
   end

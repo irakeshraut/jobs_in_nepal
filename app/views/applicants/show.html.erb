@@ -14,19 +14,19 @@
               <div class="ur-detail-box">
 
                 <div class="ur-thumb">
-                  <% if @user.avatar.attached? %>
-                    <%= image_tag @user.avatar, class: 'img-responsive', alt: 'User Avatar' %>
+                  <% if @applicant_user.avatar.attached? %>
+                    <%= image_tag @applicant_user.avatar, class: 'img-responsive', alt: 'User Avatar' %>
                   <% else %>
                     <%= image_tag 'https://via.placeholder.com/150', class: 'img-avater' %>
                   <% end %>
                 </div>
                 <div class="ur-caption">
-                  <h4 class="ur-title">Daniel Diwards</h4>
-                  <p class="ur-email"><i class="ti-email mrg-r-5"></i><%= @user.email %></p>
-                  <% if @user.phone_no.present? %>
-                    <p class="ur-phone"><i class="ti-mobile mrg-r-5"></i><%= @user.phone_no %></p>
+                  <h4 class="ur-title"><%= @applicant_user.full_name %></h4>
+                  <p class="ur-email"><i class="ti-email mrg-r-5"></i><%= @applicant_user.email %></p>
+                  <% if @applicant_user.phone_no.present? %>
+                    <p class="ur-phone"><i class="ti-mobile mrg-r-5"></i><%= @applicant_user.phone_no %></p>
                   <% end %>
-                  <% applicant = @job.applicants.find_by(job_id: @job.id, user_id: @user.id) %>
+                  <% applicant = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id) %>
                   <% if applicant.shortlisted? %>
                     <div class="shortlisted-can">shortlisted</div>
                   <% elsif applicant.rejected? %>
@@ -36,15 +36,15 @@
               </div>
 
               <div class="ur-detail-btn">
-                <%= link_to shortlist_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-warning mrg-bot-10 full-width' do %>
+                <%= link_to shortlist_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-warning mrg-bot-10 full-width' do %>
                   <i class='ti-check marg-r-5'>Shortlist</i>
                 <% end %>
                 <% if @resume.present? %>
-                  <%= link_to download_resume_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width' do %>
+                  <%= link_to download_resume_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width' do %>
                     <i class='ti-download marg-r-5'>Download Resume</i>
                   <% end %>
                 <% else %>
-                  <%= link_to download_resume_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width disabled' do %>
+                  <%= link_to download_resume_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width disabled' do %>
                     <i class='ti-download marg-r-5'>No Resume Found</i>
                   <% end %>
                 <% end %>
@@ -62,7 +62,7 @@
             <div class="row">
 
               <div class="col-lg-8 col-md-8">
-                <%= render "education_and_work_experiences" %>
+                <%= render "education_and_work_experiences", user: @applicant_user %>
               </div>
 
               <div class="col-lg-4 col-md-4">
@@ -79,33 +79,33 @@
                         <ul class="ove-detail-list">
                           <li>
                             <% if @resume.present? %>
-                              <%= link_to download_resume_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width' do %>
+                              <%= link_to download_resume_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width' do %>
                                 <i class='ti-download marg-r-5'>Download Resume</i>
                               <% end %>
                             <% else %>
-                              <%= link_to download_resume_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width disabled' do %>
+                              <%= link_to download_resume_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width disabled' do %>
                                 <i class='ti-download marg-r-5'>No Resume Found</i>
                               <% end %>
                             <% end %>
                           </li>
                           <li>
                             <% if @cover_letter.present? %>
-                              <%= link_to download_cover_letter_job_applicant_path(@job, @user), class: 'btn btn-info full-width' do %>
+                              <%= link_to download_cover_letter_job_applicant_path(@job, @applicant_user), class: 'btn btn-info full-width' do %>
                                 <i class='ti-download marg-r-5'>Download Cover Letter</i>
                               <% end %>
                             <% else %>
-                              <%= link_to download_cover_letter_job_applicant_path(@job, @user), class: 'btn btn-info full-width disabled' do %>
+                              <%= link_to download_cover_letter_job_applicant_path(@job, @applicant_user), class: 'btn btn-info full-width disabled' do %>
                                 <i class='ti-download marg-r-5'>No Cover Letter Found</i>
                               <% end %>
                             <% end %>
                           </li>
                           <li>
-                            <%= link_to shortlist_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-warning full-width' do %>
+                            <%= link_to shortlist_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-warning full-width' do %>
                               <i class='ti-check marg-r-5'>Shortlist</i>
                             <% end %>
                           </li>
                           <li>
-                            <%= link_to reject_job_applicant_path(@job, @user, redirect_back: :job_applicant_path), class: 'btn btn-warning full-width' do %>
+                            <%= link_to reject_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-warning full-width' do %>
                               <i class='ti-close marg-r-5'>Reject</i>
                             <% end %>
                           </li>

@@ -22,7 +22,6 @@
       <i class="theme-cl ti-email"></i>
     </div>
   </div>
-
   <% if controller.controller_name == 'users' && (controller.action_name == 'edit' || controller.action_name = 'update') %>
     <% if @user.job_seeker? %>
       <div class="form-group">
@@ -46,8 +45,8 @@
       </div>
     <% end %>
   <% end %>
-
-  <% if controller.controller_name == 'users' && controller.action_name == 'new' %>
+  <%# controller.action_name is not showing correct action thats why I am using params[:action] %>
+  <% if controller.controller_name == 'users' && params[:action] == 'new' %>
     <div class="form-group">
       <%= f.label :password  %>
       <div class="input-with-icon">
@@ -63,7 +62,8 @@
       </div>
     </div>
   <% end %>
-  <% if controller.controller_name == 'users' && controller.action_name == 'new' %>
+  <%# controller.action_name is not showing correct action thats why I am using params[:action] %>
+  <% if controller.controller_name == 'users' && params[:action] == 'new' %>
     <div class="register-account text-center">
       By hitting the <span class="theme-cl">"Register"</span> button, you agree to the <a class="theme-cl" href="#">Terms conditions</a> and <a class="theme-cl" href="#">Privacy Policy</a>
     </div>

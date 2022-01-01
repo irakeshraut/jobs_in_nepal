@@ -1,12 +1,12 @@
 <div class="row-bottom">
   <% if (controller.controller_name == 'applicants' && controller.action_name == 'new') || (controller.controller_name == 'dashboards' && controller.action_name == 'index') %>
-    <h2 class="detail-title">Education<span><%= link_to 'Edit', new_user_education_path(@user), class: 'float-right' %></span></h2>
+    <h2 class="detail-title">Education<span><%= link_to 'Edit', new_user_education_path(user), class: 'float-right' %></span></h2>
   <% else %>
     <h2 class="detail-title">Education</h2>
   <% end %>
-  <% if @user.educations.present? %>
+  <% if user.educations.present? %>
     <ul class="trim-edu-list">
-      <% @user.educations.order(finished_year: :desc).each do |education| %>
+      <% user.educations.order(finished_year: :desc).each do |education| %>
         <li>
           <div class="trim-edu">
             <h4 class="trim-edu-title"><%= education.institution_name %><span class="title-est"><%= education.finished_year ? "Course Finished Year: #{education.finished_year}" : "Expected Finish Time: #{education.expected_finished_month}  #{education.expected_finished_year}" %></span></h4>
@@ -24,13 +24,13 @@
 
 <div class="row-bottom">
   <% if (controller.controller_name == 'applicants' && controller.action_name == 'new') || (controller.controller_name == 'dashboards' && controller.action_name == 'index') %>
-    <h2 class="detail-title">Work Experience<span><%= link_to 'Edit', new_user_work_experience_path(@user), class: 'float-right' %></span></h2>
+    <h2 class="detail-title">Work Experience<span><%= link_to 'Edit', new_user_work_experience_path(user), class: 'float-right' %></span></h2>
   <% else %>
     <h2 class="detail-title">Work Experience</h2>
   <% end %>
-  <% if @user.work_experiences.present? %>
+  <% if user.work_experiences.present? %>
     <ul class="trim-edu-list">
-      <% @user.work_experiences.order(start_year: :desc).each do |work_experience| %>
+      <% user.work_experiences.order(start_year: :desc).each do |work_experience| %>
         <li>
           <div class="trim-edu">
             <h4 class="trim-edu-title"><%= work_experience.company_name %><span class="title-est"><%= "#{work_experience.start_year} - #{work_experience.finish_year || 'Present'}" %></span></h4>
