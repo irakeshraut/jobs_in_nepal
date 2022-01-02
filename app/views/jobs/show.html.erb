@@ -51,11 +51,11 @@
           <% end %>
         <% end %>
         <% if current_user && current_user.bookmarks.where(job_id: @job.id).present? %>
-          <%= link_to bookmarks_path(job_id: @job.id), method: :post, class: 'btn btn-info full-width disabled' do %>
+          <%= link_to user_bookmarks_path(current_user, job_id: @job.id), method: :post, class: 'btn btn-info full-width disabled' do %>
             <i class='ti-heart mrg-r-5'></i>Job Alredy Saved
           <% end %>
         <% else %>
-          <%= link_to bookmarks_path(job_id: @job.id), method: :post, class: 'btn btn-info full-width' do %>
+          <%= link_to user_bookmarks_path(current_user, job_id: @job.id), method: :post, class: 'btn btn-info full-width' do %>
             <i class='ti-heart mrg-r-5'></i>Save Job
           <% end %>
         <% end %>

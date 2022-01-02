@@ -2,14 +2,15 @@ class BookmarksController < ApplicationController
   layout 'dashboard', only: [:index]
 
   def index
-    @user = current_user
+    @user = User.find(params[:user_id])
     @bookmarks = @user.bookmarks
   end
 
   def create
+    user = User.find(params[:user_id])
     job = Job.find(params[:job_id])
-    bookmark = Bookmark.new(job_id: params[:job_id], user_id: current_user.id)
-    if bookmark.save
+    bookmark = user.bookmarks.new(job_id: params[:job_id])
+    if bookmark.valid? && bookmark.save
       flash[:success] = 'Job Saved'
     else
       flash[:error] = 'Unable to Save Job.'
@@ -19,9 +20,10 @@ class BookmarksController < ApplicationController
   end
 
   def destroy
+    user = User.find(params[:user_id])
     bookmark = Bookmark.find(params[:id])
     bookmark.destroy
     flash[:success] = 'Saved Job Deleted.'
-    redirect_to bookmarks_path
+    redirect_to user_bookmarks_path(user)
   end
 end

@@ -44,7 +44,7 @@
                   </div>
                   <div class="col-md-2 col-sm-2">
                     <div class="brows-job-link">
-                      <%= link_to bookmark_path(bookmark), method: :delete, class: 'btn btn-cancel manage-btn', title: 'Delete' do %>
+                      <%= link_to user_bookmark_path(@user, bookmark), method: :delete, class: 'btn btn-cancel manage-btn', title: 'Delete' do %>
                         <i class='ti-close'></i>
                       <% end %>
                     </div>

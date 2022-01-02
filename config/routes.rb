@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get :all_posted_jobs
       get :applied_jobs
     end
+    resources :bookmarks, only: [:index, :create, :destroy]
     resources :dashboards, only: [:index]
     resources :work_experiences, only: [:new]
     resources :educations, only: [:new]
@@ -26,7 +27,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :bookmarks, only: [:index, :create, :destroy]
   resources :sessions,  only: [:new, :create, :destroy]
   resources :companies, only: [:create, :edit, :update]
   resources :jobs do
