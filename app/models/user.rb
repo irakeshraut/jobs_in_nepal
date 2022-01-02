@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :educations, inverse_of: :user, dependent: :destroy
   has_many :applicants, dependent: :destroy
   has_many :applied_jobs, through: :applicants, source: :job
+  has_many :bookmarks, dependent: :destroy
 
   accepts_nested_attributes_for :work_experiences, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :educations, reject_if: :all_blank, allow_destroy: true

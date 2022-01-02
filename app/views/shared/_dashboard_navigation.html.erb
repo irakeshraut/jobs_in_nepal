@@ -86,7 +86,12 @@
           </li>
           <li class="<%= controller.controller_name == 'users' && controller.action_name == 'applied_jobs' ? 'active' : '' %>">
             <%= link_to applied_jobs_user_path(@user) do %>
-              <i class="ti-heart"></i>Applied Jobs
+              <i class="ti-star"></i>Applied Jobs
+            <% end %>
+          </li>
+          <li class="<%= controller.controller_name == 'bookmarks' && controller.action_name == 'index' ? 'active' : '' %>">
+            <%= link_to bookmarks_path do %>
+              <i class="ti-heart"></i>Saved Jobs
             <% end %>
           </li>
         <% end %>

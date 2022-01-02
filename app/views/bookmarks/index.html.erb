@@ -1,0 +1,65 @@
+<div class="col-lg-9 col-md-8">
+  <div class="dashboard-body">
+    <div class="dashboard-caption">
+      <div class="dashboard-caption-header">
+        <h4><i class="ti-ruler-pencil"></i>Saved Jobs</h4>
+      </div>
+      <div class="dashboard-caption-wrap">
+        <% if @bookmarks.present? %>
+          <% @bookmarks.each do |bookmark| %>
+            <div class="item-click">
+              <article>
+                <div class="brows-job-list">
+                  <div class="col-md-6 col-sm-6">
+                    <div class="item-fl-box">
+                      <div class="brows-job-company-img">
+                        <% job = Job.find(bookmark.job_id) %>
+                        <% if job.created_by_admin? %>
+                          <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
+                        <% elsif job.user.company.logo.attached? %>
+                          <%= image_tag job.user.company.logo, class: 'img-responsive' %>
+                        <% else %>
+                          <%= image_tag 'https://via.placeholder.com/150', class: 'img-responsive' %>
+                        <% end %>
+                      </div>
+                      <div class="brows-job-position">
+                        <h3><%= link_to(job.title, job) %></a></h3>
+                        <p>
+                        <span>
+                          <% if job.created_by_admin? %>
+                            <%= job.company_name %>
+                          <% else %>
+                            <%= job.user.company.name %>
+                          <% end %>
+                        </span><span class="brows-job-sallery"><i class="fa fa-money"></i><%= job.salary %></span>
+                        <span class="job-type cl-success bg-trans-success"><%= job.employment_type %></span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-4">
+                    <div class="brows-job-location">
+                      <p><i class="fa fa-map-marker"></i><%= job.location %></p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2">
+                    <div class="brows-job-link">
+                      <%= link_to bookmark_path(bookmark), method: :delete, class: 'btn btn-cancel manage-btn', title: 'Delete' do %>
+                        <i class='ti-close'></i>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+                <% if job.created_at.today? %>
+                  <span class="tg-themetag tg-featuretag">New Job</span>
+                <% end %>
+              </article>
+            </div>
+          <% end %>
+        <% else %>
+          <p>No Saved Job Found.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
