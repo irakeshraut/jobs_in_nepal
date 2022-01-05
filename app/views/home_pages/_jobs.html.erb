@@ -1,39 +1,46 @@
-<% jobs.each do |job| %>
-  <div class="col-md-3 col-sm-6">
-    <div class="job-instructor-layout">
-      <% if job.created_at.today? %>
-        <span class="tg-themetag tg-featuretag">New Job</span>
-      <% end %>
-      <div class="brows-job-type"><span class="freelanc"><%= job.employment_type %></span></div>
-      <div class="job-instructor-thumb">
-        <% if job.created_by_admin? %>
-          <%= image_tag 'https://via.placeholder.com/150', class: 'img-fluid' %>
-        <% elsif job.user.company.logo.attached? %>
-          <%= image_tag job.user.company.logo, class: 'img-fluid' %>
-        <% else %>
-          <%= image_tag 'https://via.placeholder.com/150', class: 'img-fluid' %>
+<%# TODO: remove this if and else statement after going live.%>
+<% if jobs.present? %>
+  <% jobs.each do |job| %>
+    <div class="col-md-3 col-sm-6">
+      <div class="job-instructor-layout">
+        <% if job.created_at.today? %>
+          <span class="tg-themetag tg-featuretag">New Job</span>
         <% end %>
-      </div>
-      <div class="job-instructor-content">
-        <h4 class="instructor-title"><%= link_to(job.title, job) %></h4>
-        <h5 class="instructor-title">
-          <% if job.created_by_admin?  %>
-            <%= job.company_name %>
+        <div class="brows-job-type"><span class="freelanc"><%= job.employment_type %></span></div>
+        <div class="job-instructor-thumb">
+          <% if job.created_by_admin? %>
+            <%= image_tag 'https://via.placeholder.com/150', class: 'img-fluid' %>
+          <% elsif job.user.company.logo.attached? %>
+            <%= image_tag job.user.company.logo, class: 'img-fluid' %>
           <% else %>
-            <%= job.user.company.name %>
+            <%= image_tag 'https://via.placeholder.com/150', class: 'img-fluid' %>
           <% end %>
-        </h5>
-        <div class="instructor-skills">
-          <h5 class="instructor-scount"><%= job.salary %></h5>
         </div>
-      </div>
-      <div class="job-instructor-footer">
-        <div class="instructor-students">
+        <div class="job-instructor-content">
+          <h4 class="instructor-title"><%= link_to(job.title, job) %></h4>
+          <h5 class="instructor-title">
+            <% if job.created_by_admin?  %>
+              <%= job.company_name %>
+            <% else %>
+              <%= job.user.company.name %>
+            <% end %>
+          </h5>
+          <div class="instructor-skills">
+            <h5 class="instructor-scount"><%= job.salary %></h5>
+          </div>
         </div>
-        <div class="instructor-corses">
-          <span class="c-counting"><%= job.location %></span>
+        <div class="job-instructor-footer">
+          <div class="instructor-students">
+          </div>
+          <div class="instructor-corses">
+            <span class="c-counting"><%= job.location %></span>
+          </div>
         </div>
       </div>
     </div>
+  <% end %>
+<% else %>
+  <div class="main-heading">
+    <h2>Coming <span>Soon</span></h2>
   </div>
 <% end %>
