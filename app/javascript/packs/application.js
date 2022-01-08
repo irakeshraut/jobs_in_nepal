@@ -22,3 +22,9 @@ require("@rails/actiontext")
 require("@nathanvda/cocoon")
 require("select2")
 require("packs/select2")
+
+$(document).ready(function() {
+  setTimeout(function(){
+  $('.flash').slideUp(500);
+  }, 5000);
+});
