@@ -2,7 +2,6 @@ class ApplicantsController < ApplicationController
   layout 'dashboard', except: [:new, :create]
 
   def index
-    @user = current_user # needed for dashboard menu
     @job = Job.find(params[:job_id])
     authorize @job, policy_class: ApplicantPolicy
     @users = @job.users.includes([:avatar_attachment])
@@ -12,7 +11,6 @@ class ApplicantsController < ApplicationController
   end
 
   def show
-    @user = current_user # needed for dashboard menu
     @job = Job.find(params[:job_id])
     authorize @job, policy_class: ApplicantPolicy
     @applicant_user = @job.users.find(params[:id])

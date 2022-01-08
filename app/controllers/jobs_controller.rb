@@ -19,7 +19,6 @@ class JobsController < ApplicationController
   end
 
   def new
-    @user = current_user # needed for dashboard menu
     @job = Job.new
     authorize @job
   end
@@ -38,13 +37,11 @@ class JobsController < ApplicationController
   end
 
   def edit
-    @user = current_user # needed for dashboard menu
     @job = Job.find(params[:id])
     authorize @job
   end
 
   def update
-    @user = current_user # needed for dashboard menu
     @job = Job.find(params[:id])
     authorize @job
     if @job.update(job_params)

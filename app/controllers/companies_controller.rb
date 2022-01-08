@@ -13,7 +13,6 @@ class CompaniesController < ApplicationController
   end
 
   def edit
-    @user = current_user # needed for dashboard menu
     @company = Company.find(params[:id])
     authorize @company
     @error_messages = params[:error_messages] if params[:error_messages]
