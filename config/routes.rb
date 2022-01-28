@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   root to: 'home_pages#index'
 
@@ -10,6 +12,7 @@ Rails.application.routes.draw do
       post :update_password
       get :all_posted_jobs
       get :applied_jobs
+      get :activate
     end
     resources :bookmarks, only: [:index, :create, :destroy]
     resources :dashboards, only: [:index]
@@ -39,4 +42,6 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  mount Sidekiq::Web => '/sidekiq'
 end

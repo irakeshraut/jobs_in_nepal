@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create]
+  skip_before_action :require_login, only: [:new, :create, :activate]
   layout 'dashboard', only: [:edit, :update, :all_posted_jobs,:edit_password, :update_password, :applied_jobs]
 
   def new
@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.role = 'job_seeker'
     @company = Company.new
+    flash[:success] = 'Account Created. Please check your email to Activate your account.'
     if @user.valid? && @user.save
       redirect_to login_path
     else
@@ -93,6 +94,16 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     authorize @user
     @applied_jobs = @user.applied_jobs.includes(user: { company: [logo_attachment: :blob] }).paginate(page: params[:page], per_page: 30)
+  end
+
+  def activate
+    if @user = User.load_from_activation_token(params[:id])
+      @user.activate!
+      flash[:success] = 'User successfully activated'
+      redirect_to(login_path)
+    else
+      not_authenticated
+    end
   end
 
   private

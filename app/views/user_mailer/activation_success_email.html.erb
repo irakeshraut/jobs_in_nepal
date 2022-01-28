@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h3> Hello <%= @user.first_name %></h3>
+    <p>
+      You have successfully activated your www.jobsinnepal.com account, your username is: <%= @user.email %>.
+    </p>
+    <p>
+      To login to the site, just follow this link: <%= link_to @url, @url %>.
+    </p>
+    <p>
+      Thanks for joining and have a great day!
+    </p>
+    <p>
+      If you have questions about your account or any other matters, please feel free to contact us at info@jobsinnepal.com.
+    </p>
+<pre>
+with Regards
+Jobs in Nepal
+www.jobsinnepal.com
+info@jobsinnepal.com
+</pre>
+  </body>
+</html>
