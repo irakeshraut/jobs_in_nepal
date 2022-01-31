@@ -1,0 +1,37 @@
+<% @title  = "Password Reset | Jobs in Nepal" %>
+<section class="inner-header-title gray-bg">
+  <div class="container">
+    <h2 class="cl-default">Password Reset</h2>
+  </div>
+</section>
+<div class="clearfix"></div>
+
+<section class="accordion">
+  <div class="container">
+    <div class="row">
+      <div class='col-md-3'></div>
+      <div class="col-md-6 col-sm-6">
+        <div class="sidebar-wrapper">
+          <div class="sidebar-box-header bb-1">
+            <h4>Password Reset</h4>
+          </div>
+
+          <%= form_with url: password_resets_path, local: true do |f| %>
+            <div class="form-group">
+              <%= f.label :email  %>
+              <div class="input-with-icon">
+                <%= f.email_field :email, placeholder: 'Enter Your Email', class: 'form-control', required: true %>
+                <i class="theme-cl ti-email"></i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-center mrg-top-25">
+                <%= f.submit 'Reset Password', class: 'btn btn-primary' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

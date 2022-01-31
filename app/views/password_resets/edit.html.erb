@@ -1,14 +1,11 @@
-<% @title  = "Login | Jobs in Nepal" %>
-<!-- Title Header Start -->
+<% @title  = "Password Reset | Jobs in Nepal" %>
 <section class="inner-header-title gray-bg">
   <div class="container">
-    <h2 class="cl-default">Login</h2>
+    <h2 class="cl-default">Password Reset</h2>
   </div>
 </section>
 <div class="clearfix"></div>
-<!-- Title Header End -->
 
-<!-- Accordion Design Start -->
 <section class="accordion">
   <div class="container">
     <div class="row">
@@ -16,10 +13,12 @@
       <div class="col-md-6 col-sm-6">
         <div class="sidebar-wrapper">
           <div class="sidebar-box-header bb-1">
-            <h4>Login</h4>
+            <h4>Password Reset</h4>
           </div>
 
-          <%= form_with url: sessions_path, local: true do |f| %>
+          <%= render 'shared/error_messages', object: @user %>
+          <%= form_with url: password_reset_path(@token), html: { method: :put }, local: true do |f| %>
+
             <div class="form-group">
               <%= f.label :email  %>
               <div class="input-with-icon">
@@ -30,19 +29,20 @@
             <div class="form-group">
               <%= f.label :password  %>
               <div class="input-with-icon">
-                <%= f.password_field :password, placeholder: 'Enter Your Password', class: 'form-control', required: true %>
+                <%= f.password_field :password, placeholder: 'Enter Your Password (Minimum 8 characters)', class: 'form-control', required: true %>
+                <i class="theme-cl ti-lock"></i>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :password_confirmation  %>
+              <div class="input-with-icon">
+                <%= f.password_field :password_confirmation, placeholder: 'Enter Your Password (Minimum 8 characters)', class: 'form-control', required: true %>
                 <i class="theme-cl ti-lock"></i>
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-12 mrg-top-5">
-                <span class="custom-checkbox">
-                </span> Forgat Password? <%= link_to 'Click Here', new_password_reset_path, class: 'cl-success' %>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-md-12 text-center mrg-top-25">
-                <%= f.submit 'Login', class: 'btn btn-primary' %>
+                <%= f.submit 'Reset Password', class: 'btn btn-primary' %>
               </div>
             </div>
           <% end %>
@@ -51,5 +51,3 @@
     </div>
   </div>
 </section>
-<!-- Accordion Design End -->
-

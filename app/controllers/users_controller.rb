@@ -16,8 +16,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.role = 'job_seeker'
     @company = Company.new
-    flash[:success] = 'Account Created. Please check your email to Activate your account.'
     if @user.valid? && @user.save
+      flash[:success] = 'Account Created. Please check your email to Activate your account.'
       redirect_to login_path
     else
       redirect_to new_user_path(tab: 'job_seeker', error_messages: @user.errors.full_messages)
