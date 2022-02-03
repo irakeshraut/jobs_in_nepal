@@ -46,4 +46,7 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
 
   mount Sidekiq::Web => '/sidekiq'
+
+  get 'terms_and_conditions', to: 'static_pages#terms_and_conditions'
+  get 'privacy_policy', to: 'static_pages#privacy_policy'
 end
