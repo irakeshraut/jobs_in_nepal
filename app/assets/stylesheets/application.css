@@ -106,6 +106,10 @@ nav.navbar.bootsnav .navbar-brand {
   margin-left: 15px;
 }
 
-.lowercase {
-  text-transform: lowercase;
+.terms-and-policy  p {
+  text-align: justify
+}
+
+.terms-and-policy li {
+  text-align: justify
 }

@@ -163,7 +163,7 @@ h3 {font-size: 25px}
 h4 { font-size: 16px;}
 p {
     position: relative;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     line-height: 23px;
     -webkit-transition: .2s ease-in;
     -moz-transition: .2s ease-in;
