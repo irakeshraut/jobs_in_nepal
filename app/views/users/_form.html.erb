@@ -65,7 +65,7 @@
   <%# controller.action_name is not showing correct action thats why I am using params[:action] %>
   <% if controller.controller_name == 'users' && params[:action] == 'new' %>
     <div class="register-account text-center">
-      By hitting the <span class="theme-cl">"Register"</span> button, you agree to the <a class="theme-cl" href="#">Terms conditions</a> and <a class="theme-cl" href="#">Privacy Policy</a>
+      By hitting the <span class="theme-cl">"Register"</span> button, you agree to the <%= link_to 'Terms Conditions', terms_and_conditions_path, class: 'theme-cl' %> and <%= link_to 'Privay Policy', privacy_policy_path, class: 'theme-cl' %>
     </div>
     <div class="form-group">
       <%= f.submit 'Register', class: 'btn btn-primary theme-bg full-width' %>
