@@ -77,3 +77,13 @@ end
 unless company_3.users.include?(employer_3)
   company_3.users << employer_3
 end
+
+#########################################
+#   Activate User
+########################################
+
+User.all.each do |user|
+  user.activation_state = 'active'
+  user.activation_token = nil
+  user.save
+end
