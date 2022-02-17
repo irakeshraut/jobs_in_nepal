@@ -31,6 +31,20 @@
           <i class="theme-cl ti-mobile"></i>
         </div>
       </div>
+      <div class="form-group">
+        <%= f.label :city, 'City'  %>
+        <div class="input-with-icon">
+          <%= f.text_field :city, placeholder: 'Enter Your City Name', class: 'form-control' %>
+          <i class="theme-cl ti-location-arrow"></i>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :skills, 'Skills'  %>
+        <div class="input-with-icon">
+          <%= f.text_field :skills, placeholder: 'Enter Your Skills seperated by comma (e.g html, css, photoshop)', class: 'form-control' %>
+          <i class="theme-cl ti-star"></i>
+        </div>
+      </div>
     <% end %>
     <% if @user.job_seeker? || @user.admin? %>
       <div class="form-group">

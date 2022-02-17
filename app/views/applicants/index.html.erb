@@ -48,7 +48,9 @@
                   <div class="job-details">
                     <h3 class="job-name"><a class="job_name_tag" href="#"><%= link_to(user.full_name, job_applicant_path(@job, user)) %></a></h3>
                     <small class="job-company"><i class="ti-email"></i><%= user.email %></small>
-                    <small class="job-sallery"><i class="ti-mobile"></i><%= user.phone_no %></small>
+                    <% if user.phone_no %>
+                      <small class="job-sallery"><i class="ti-mobile"></i><%= user.phone_no %></small>
+                    <% end %>
                     <small class="job-sallery"><i class="ti-location-pin"></i>London</small>
                     <% applicant = @job.applicants.find_by(job_id: @job.id, user_id: user.id) %>
                     <% if applicant.shortlisted? %>
@@ -56,11 +58,12 @@
                     <% elsif applicant.rejected? %>
                       <div class="rejected-can">rejected</div>
                     <% end %>
-                    <div class="candi-skill">
-                      <span class="skill-tag">css</span>
-                      <span class="skill-tag">HTML</span>
-                      <span class="skill-tag">Photoshop</span>
-                    </div>
+                    <%# TODO: uncomment this line when applicants have skills %>
+                    <!-- <div class="candi&#45;skill"> -->
+                    <!--   <span class="skill&#45;tag">css</span> -->
+                    <!--   <span class="skill&#45;tag">HTML</span> -->
+                    <!--   <span class="skill&#45;tag">Photoshop</span> -->
+                    <!-- </div> -->
                   </div>
                 </div>
                 <div class="job-buttons">
