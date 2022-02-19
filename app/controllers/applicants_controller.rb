@@ -25,6 +25,11 @@ class ApplicantsController < ApplicationController
       @resume = @applicant_user.resumes.includes(:blob).references(:blob)
         .where(active_storage_blobs: { filename: resume_name, created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).last
     end
+    if applicant.viewed_by_employer == false
+      applicant.viewed_by_employer = true
+      applicant.save!
+      ApplicantMailer.application_viewed(@applicant_user, @job, applicant).deliver_later
+    end
   end
 
   def new

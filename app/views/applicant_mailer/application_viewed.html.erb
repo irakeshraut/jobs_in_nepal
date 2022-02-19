@@ -1,0 +1,20 @@
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>Your application for <%= @job.title %> has been viewed by <%= @job.user.company.name %>.</p>
+
+<p>Each employer has their own recruitment process so you may or may not hear back from them. 
+You can keep track of all your applied jobs on your <%= link_to('Applied Jobs', applied_jobs_user_url(@user)) %>.</p>
+
+<p>Here’s a summary of the job you applied for on <%= @applicant.created_at %>:</p>
+
+<p>Job Title: <%= link_to(@job.title, @job) %></p>
+<p>Company Name: <%= @job.user.company.name %></p>
+<p>Company Location: <%= @job.location %></p>
+
+<pre>
+with Regards
+Jobs in Nepal
+www.jobsinnepal.com
+info@jobsinnepal.com
+</pre>
+
