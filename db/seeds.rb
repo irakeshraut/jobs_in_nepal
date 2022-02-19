@@ -83,7 +83,5 @@ end
 ########################################
 
 User.all.each do |user|
-  user.activation_state = 'active'
-  user.activation_token = nil
-  user.save
+  user.activate!
 end
