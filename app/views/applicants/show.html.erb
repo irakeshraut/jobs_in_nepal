@@ -26,6 +26,17 @@
                   <% if @applicant_user.phone_no.present? %>
                     <p class="ur-phone"><i class="ti-mobile mrg-r-5"></i><%= @applicant_user.phone_no %></p>
                   <% end %>
+                  <% if @applicant_user.city.present? %>
+                    <p class="ur-phone"><i class="ti-location-arrow mrg-r-5"></i><%= @applicant_user.city %></p>
+                  <% end %>
+                  <% if @applicant_user.skills.present? %>
+                    <% skills = @applicant_user.skills.split(',').take(5) %>
+                    <div class="candi-skill">
+                      <% skills.each do |skill| %>
+                        <span class="skill-tag"><%= skill %></span>
+                      <% end %>
+                    </div>
+                  <% end %>
                   <% applicant = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id) %>
                   <% if applicant.shortlisted? %>
                     <div class="shortlisted-can">shortlisted</div>

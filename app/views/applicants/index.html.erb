@@ -48,22 +48,26 @@
                   <div class="job-details">
                     <h3 class="job-name"><a class="job_name_tag" href="#"><%= link_to(user.full_name, job_applicant_path(@job, user)) %></a></h3>
                     <small class="job-company"><i class="ti-email"></i><%= user.email %></small>
-                    <% if user.phone_no %>
+                    <% if user.phone_no.present? %>
                       <small class="job-sallery"><i class="ti-mobile"></i><%= user.phone_no %></small>
                     <% end %>
-                    <small class="job-sallery"><i class="ti-location-pin"></i>London</small>
+                    <% if user.city.present? %>
+                      <small class="job-sallery"><i class="ti-location-pin"></i><%= user.city %></small>
+                    <% end %>
                     <% applicant = @job.applicants.find_by(job_id: @job.id, user_id: user.id) %>
                     <% if applicant.shortlisted? %>
                       <div class="shortlisted-can">shortlisted</div>
                     <% elsif applicant.rejected? %>
                       <div class="rejected-can">rejected</div>
                     <% end %>
-                    <%# TODO: uncomment this line when applicants have skills %>
-                    <!-- <div class="candi&#45;skill"> -->
-                    <!--   <span class="skill&#45;tag">css</span> -->
-                    <!--   <span class="skill&#45;tag">HTML</span> -->
-                    <!--   <span class="skill&#45;tag">Photoshop</span> -->
-                    <!-- </div> -->
+                    <% if user.skills.present? %>
+                      <% skills = user.skills.split(',').take(5) %>
+                      <div class="candi-skill">
+                        <% skills.each do |skill| %>
+                          <span class="skill-tag"><%= skill %></span>
+                        <% end %>
+                      </div>
+                    <% end %>
                   </div>
                 </div>
                 <div class="job-buttons">
