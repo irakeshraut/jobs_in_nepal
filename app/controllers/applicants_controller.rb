@@ -102,6 +102,12 @@ class ApplicantsController < ApplicationController
       flash[:error] = 'Something went wrong'
     end
 
+    if applicant.rejected_email_sent == false
+      applicant.rejected_email_sent = true
+      applicant.save!
+      ApplicantMailer.application_rejected(job, applicant).deliver_later
+    end
+
     if params[:redirect_back] == 'job_applicant_path'
       redirect_to job_applicant_path(job, params[:id])
     else

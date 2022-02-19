@@ -1,0 +1,24 @@
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>It appears your application for <strong><%= @job.title %></strong> advertised by <strong><%= @job.user.company.name %></strong> is unlikely to progress further.</p>
+
+<p>Each employer or recuriter has their own process so you may or may not hear back from them. Keep track of all your applied jobs on your <%= link_to 'Applied Jobs', applied_jobs_user_url(@user) %> page.</p>
+
+<hr>
+<p>Here is the job you've applied on <%= @applicant.created_at.strftime("%d/%m/%Y") %></p>
+
+<p>Job Title: <%= link_to @job.title, @job %></p>
+<p>Company Name: <%= @job.user.company.name %></p>
+<p>Company Location: <%= @job.location %></p>
+<hr>
+
+<p>Application insights</p>
+<p><%= @job.applicants.count %> candidates applied for this job.</p>
+<hr>
+
+<pre>
+with Regards
+Jobs in Nepal
+www.jobsinnepal.com
+info@jobsinnepal.com
+</pre>
