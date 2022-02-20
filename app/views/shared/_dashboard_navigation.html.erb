@@ -19,7 +19,7 @@
       <div class="dashboard-avatar-text">
         <h4><%= current_user.full_name %></h4>
         <% if current_user.company.present? %>
-          <span><%= current_user.company.name %></span>
+          <span><%= current_user.company.name.truncate(50) %></span>
         <% end %>
       </div>
     </div>

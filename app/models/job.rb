@@ -1,4 +1,5 @@
 include ActiveSupport::NumberHelper
+include ActionView::Helpers::NumberHelper
 
 class Job < ApplicationRecord
   STATUS = ['Active', 'Expired', 'Close'].freeze
@@ -40,7 +41,19 @@ class Job < ApplicationRecord
     elsif min_salary.present? && max_salary.nil?
       "Rs #{number_to_human(min_salary, format: '%n%u', precision: 2, units: { thousand: 'K', million: 'M', billion: 'B' })}"
     elsif max_salary.present? && min_salary.nil?
-      "Rs #{number_to_human(max, format: '%n%u', precision: 2, units: { thousand: 'K', million: 'M', billion: 'B' })}"
+      "Rs #{number_to_human(max_salary, format: '%n%u', precision: 2, units: { thousand: 'K', million: 'M', billion: 'B' })}"
+    else
+      'Salary Not Mentioned'
+    end
+  end
+
+  def full_salary
+    if min_salary.present? && max_salary.present?
+      "Rs  #{number_with_delimiter(min_salary)} - Rs #{number_with_delimiter(max_salary)}"
+    elsif min_salary.present? && max_salary.nil?
+      "Rs #{number_with_delimiter(min_salary)}"
+    elsif max_salary.present? && min_salary.nil?
+      "Rs #{number_with_delimiter(max_salary)}"
     else
       'Salary Not Mentioned'
     end

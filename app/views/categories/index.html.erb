@@ -6,26 +6,23 @@
   </div>
 </section>
 <div class="clearfix"></div>
+<br>
 
 <div class='container'>
   <div class='row'>
     <div class='col-md-6'>
       <% @categories.first.each do |category| %>
         <% job_count = Job.where(category: category).count %>
-        <div class='card'>
-          <div class='card-body'>
-            <%= link_to("#{category} (#{job_count})", jobs_path(category: category))  %>
-          </div>
+        <div class='statistic-item flex-middle'>
+          <%= link_to("#{category} (#{job_count})", jobs_path(category: category))  %>
         </div>
       <% end %>
     </div>
     <div class='col-md-6'>
       <% @categories.last.each do |category| %>
         <% job_count = Job.where(category: category).count %>
-        <div class='card'>
-          <div class='card-body'>
-            <%= link_to("#{category} (#{job_count})", jobs_path(category: category))  %>
-          </div>
+        <div class='statistic-item flex-middle'>
+          <%= link_to("#{category} (#{job_count})", jobs_path(category: category))  %>
         </div>
       <% end %>
     </div>

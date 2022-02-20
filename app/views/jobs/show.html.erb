@@ -86,7 +86,7 @@
         <div class="row row-bottom mrg-0">
           <h2 class="detail-title">Job Detail</h2>
           <ul class="job-detail-des">
-            <li><span>Salary:</span><%= @job.salary %></li>
+            <li><span>Salary:</span><%= @job.full_salary %></li>
             <li><span>Category:</span><%= @job.category %></li>
             <li><span>Job Type:</span><%= @job.employment_type %></li>
             <li><span>Address:</span><%= @job.location %></li>
@@ -124,16 +124,16 @@
                     <h5>Company</h5>
                     <span>
                       <% if @job.created_by_admin? %>
-                        <%= @job.company_name %>
+                        <%= @job.company_name.truncate(35) %>
                       <% else %>
-                        <%= @job.user.company.name %>
+                        <%= @job.user.company.name.truncate(35) %>
                       <% end %>
                     </span>
                   </li>
                   <li>
                     <i class="ti-wallet"></i>
                     <h5>Offerd Salary</h5>
-                    <span><%= @job.salary %></span>
+                    <span><%= @job.full_salary %></span>
                   </li>
                   <li>
                     <i class="ti-layers"></i>
