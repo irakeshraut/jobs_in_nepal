@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  before_update :setup_activation, if: -> { email_changed? }
+  after_update :send_activation_needed_email!, if: -> { previous_changes["email"].present? }
+
   validates :first_name, presence: true
   validates :last_name,  presence: true
   validates :password, length: { minimum: 8 }, if: -> { new_record? || changes[:crypted_password] }
