@@ -37,6 +37,7 @@ gem 'will_paginate', '~> 3.3'
 gem 'select2-rails'
 gem 'active_storage_validations'
 gem 'sidekiq'
+gem 'rollbar'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
