@@ -49,6 +49,9 @@ class ApplicantsController < ApplicationController
     applicant = @job.applicants.build
 
     if params[:resume_file]
+      if @user.resumes.count >= 10
+        @user.resumes.order(:created_at).first.purge
+      end
       if @user.resumes.attach(params[:resume_file])
         applicant.resume_name = "#{@user.resumes.last.filename.to_s} - #{@user.resumes.last.created_at.strftime("%d/%m/%Y")}"
       end

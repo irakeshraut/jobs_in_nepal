@@ -10,6 +10,9 @@ class ResumesController < ApplicationController
   def create
     @user = User.find(params[:user_id])
     authorize @user, policy_class: ResumePolicy
+    if @user.resumes.count >= 10
+      @user.resumes.order(:created_at).first.purge
+    end
     if @user.resumes.attach(params[:user][:resume])
       flash[:success] = 'Resume Attached'
       redirect_to new_user_resume_path(@user)

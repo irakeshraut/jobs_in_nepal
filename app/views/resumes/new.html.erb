@@ -6,9 +6,10 @@
       </div>
       <div class="dashboard-caption-wrap">
         <%= render 'shared/form_error_message' %>
+        <p class='alert alert-info'>You can upload upto 10 Resumes.</p>
         <% if @user.resumes.attached? %>
           <p><%= @user.resumes.count %> Resume Found</p>
-          <% @user.resumes.reverse.each do |resume| %>
+          <% @user.resumes.order(created_at: :desc).each do |resume| %>
             <div>
               <%= link_to resume.filename, download_user_resume_path(@user, resume), class: 'resume' %>
               <div>
