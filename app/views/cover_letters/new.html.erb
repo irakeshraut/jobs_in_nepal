@@ -6,9 +6,10 @@
       </div>
       <div class="dashboard-caption-wrap">
         <%= render 'shared/form_error_message' %>
+        <p class='alert alert-info'>You can upload upto 10 Cover Letters.</p>
         <% if @user.cover_letters.attached? %>
           <p><%= @user.cover_letters.count %> Cover Letter Found</p>
-          <% @user.cover_letters.reverse.each do |cover_letter| %>
+          <% @user.cover_letters.order(created_at: :desc).each do |cover_letter| %>
             <div>
               <%= link_to cover_letter.filename, download_user_cover_letter_path(@user, cover_letter), class: 'resume' %>
               <div>

@@ -10,6 +10,9 @@ class CoverLettersController < ApplicationController
   def create
     @user = User.find(params[:user_id])
     authorize @user, policy_class: CoverLetterPolicy
+    if @user.cover_letters.count >= 10
+      @user.cover_letters.order(:created_at).first.purge
+    end
     if @user.cover_letters.attach(params[:user][:cover_letter])
       flash[:success] = 'Cover Letter Attached'
       redirect_to new_user_cover_letter_path(@user)

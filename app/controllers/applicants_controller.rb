@@ -60,6 +60,9 @@ class ApplicantsController < ApplicationController
     end
 
     if params[:cover_letter_file]
+      if @user.cover_letters.count >= 10
+        @user.cover_letters.order(:created_at).first.purge
+      end
       if @user.cover_letters.attach(params[:cover_letter_file])
         applicant.cover_letter_name = "#{@user.cover_letters.last.filename.to_s} - #{@user.cover_letters.last.created_at.strftime("%d/%m/%Y")}"
       end
