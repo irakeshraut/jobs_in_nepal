@@ -124,9 +124,9 @@
                     <h5>Company</h5>
                     <span>
                       <% if @job.created_by_admin? %>
-                        <%= @job.company_name.truncate(35) %>
+                        <%= @job.company_name %>
                       <% else %>
-                        <%= @job.user.company.name.truncate(35) %>
+                        <%= @job.user.company.name %>
                       <% end %>
                     </span>
                   </li>
