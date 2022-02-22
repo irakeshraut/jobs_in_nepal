@@ -3,6 +3,11 @@ class CoverLettersController < ApplicationController
 
   def new
     @user = User.includes(cover_letters_attachments: :blob).find(params[:user_id])
+    if @user.cover_letters.size > 0 
+      @cover_letters = @user.cover_letters.order(created_at: :desc).in_groups_of((@user.cover_letters.size/2.0).round, false)
+    else
+      @cover_letters = [[],[]]
+    end
     authorize @user, policy_class: CoverLetterPolicy
     @error_messages = params[:error_messages] if params[:error_messages]
   end
