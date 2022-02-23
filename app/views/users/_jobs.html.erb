@@ -2,7 +2,7 @@
   <% jobs.each do |job| %>
     <ul class="list">
       <li class="manage-list-row clearfix">
-        <div class="job-info premium-job">
+        <div class="job-info <%= job.status == 'Active' ? 'premium-job' : '' %> ">
           <div class="job-img">
             <% if job.created_by_admin? %>
               <%= image_tag 'https://via.placeholder.com/150', class: 'img-fluid' %>
