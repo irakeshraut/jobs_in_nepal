@@ -4,6 +4,11 @@ class ResumesController < ApplicationController
   def new
     @user = User.includes(resumes_attachments: :blob).find(params[:user_id])
     authorize @user, policy_class: ResumePolicy
+    if @user.resumes.size > 0 
+      @resumes = @user.resumes.order(created_at: :desc).in_groups_of((@user.resumes.size/2.0).round, false)
+    else
+      @resumes = [[],[]]
+    end
     @error_messages = params[:error_messages] if params[:error_messages]
   end
 

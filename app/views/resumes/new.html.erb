@@ -9,37 +9,61 @@
         <p class='alert alert-info'>You can upload upto 10 Resumes.</p>
         <% if @user.resumes.attached? %>
           <p><%= @user.resumes.count %> Resume Found</p>
-          <% @user.resumes.order(created_at: :desc).each do |resume| %>
-            <div>
-              <%= link_to resume.filename, download_user_resume_path(@user, resume), class: 'resume' %>
-              <div>
-                <%= link_to download_user_resume_path(@user, resume), class: 'btn btn-primary download-btn', title: 'Download' do %>
-                  <i class="fa fa-download"></i>
-                <% end %>
-                <%= link_to user_resume_path(@user, resume), method: :delete, class: 'btn btn-danger', title: 'Delete' do %>
-                  <i class="fa fa-trash"></i>
-                <% end %>
+        <% else %>
+          <p>No Resume Found.</p>
+        <% end %>
+        <div class='row'>
+          <div class='col-md-6'>
+            <% if @resumes.first.present? %>
+              <% @resumes.first.each do |resume| %>
+                <div class='statistic-item'>
+                  <%= link_to resume.filename, download_user_resume_path(@user, resume), class: 'resume' %>
+                  <div>
+                    <%= link_to download_user_resume_path(@user, resume), class: 'btn btn-primary download-btn', title: 'Download' do %>
+                      <i class="fa fa-download"></i>
+                    <% end %>
+                    <%= link_to user_resume_path(@user, resume), method: :delete, data: { confirm: 'Are you sure ?' }, class: 'btn btn-danger', title: 'Delete' do %>
+                      <i class="fa fa-trash"></i>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+          <div class='col-md-6'>
+            <% if @resumes.second.present? %>
+              <% @resumes.second.each do |resume| %>
+                <div class='statistic-item'>
+                  <%= link_to resume.filename, download_user_resume_path(@user, resume), class: 'resume' %>
+                  <div>
+                    <%= link_to download_user_resume_path(@user, resume), class: 'btn btn-primary download-btn', title: 'Download' do %>
+                      <i class="fa fa-download"></i>
+                    <% end %>
+                    <%= link_to user_resume_path(@user, resume), method: :delete, data: { confirm: 'Are you sure ?' }, class: 'btn btn-danger', title: 'Delete' do %>
+                      <i class="fa fa-trash"></i>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+          <%= form_with model: @user, url: user_resumes_path(@user), method: :post do |f| %>
+            <div class='row'>
+              <div class='col-md-12 col-sm-12'>
+                <div class='statistic-item'>
+                  <%= f.file_field :resume, class: 'form-control file-field' %>
+                </div>
+              </div>
+            </div>
+            <div class='row mrg-top-30'>
+              <div class='col-md-12 col-sm-12'>
+                <div class='form-group text-center'>
+                  <%= f.submit 'Upload Resume', class: 'btn btn-primary theme-bg' %>
+                </div>
               </div>
             </div>
           <% end %>
-        <% else %>
-          <p>No Resume Found</p>
-        <% end %>
-        <%= form_with model: @user, url: user_resumes_path(@user), method: :post do |f| %>
-          <div class='row'>
-            <div class='col-md-12 col-sm-12'>
-              <%= f.file_field :resume, class: 'form-control file-field' %>
-            </div>
-          </div>
-          <div class='row mrg-top-30'>
-            <div class='col-md-12 col-sm-12'>
-              <div class='form-group text-center'>
-                <%= f.submit 'Upload Resume', class: 'btn btn-primary theme-bg' %>
-              </div>
-            </div>
-          </div>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>

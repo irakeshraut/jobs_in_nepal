@@ -22,7 +22,7 @@
                     <%= link_to download_user_cover_letter_path(@user, cover_letter), class: 'btn btn-primary download-btn', title: 'Download' do %>
                       <i class="fa fa-download"></i>
                     <% end %>
-                    <%= link_to user_cover_letter_path(@user, cover_letter), method: :delete, class: 'btn btn-danger', title: 'Delete' do %>
+                    <%= link_to user_cover_letter_path(@user, cover_letter), method: :delete, data: { confirm: 'Are you sure ?' }, class: 'btn btn-danger', title: 'Delete' do %>
                       <i class="fa fa-trash"></i>
                     <% end %>
                   </div>
@@ -39,7 +39,7 @@
                     <%= link_to download_user_cover_letter_path(@user, cover_letter), class: 'btn btn-primary download-btn', title: 'Download' do %>
                       <i class="fa fa-download"></i>
                     <% end %>
-                    <%= link_to user_cover_letter_path(@user, cover_letter), method: :delete, class: 'btn btn-danger', title: 'Delete' do %>
+                    <%= link_to user_cover_letter_path(@user, cover_letter), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Delete' do %>
                       <i class="fa fa-trash"></i>
                     <% end %>
                   </div>
