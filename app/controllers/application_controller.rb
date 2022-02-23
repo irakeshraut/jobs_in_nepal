@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError do
     flash[:error] = "You are not authorized to perform this action."
-    redirect_to root_path
+    redirect_back(fallback_location: root_path)
   end
 
   def set_top_categories
