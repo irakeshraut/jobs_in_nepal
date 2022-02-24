@@ -72,11 +72,12 @@ class UsersController < ApplicationController
         flash[:success] = 'Password Successfully Updated.'
         redirect_to user_dashboards_path(@user)
       else
-        render :edit
+        render :edit_password
       end
     else
-      @user = old_current_user
-      flash[:error] = 'Invalid Current Password.'
+      @current_user = old_current_user
+      @user = @current_user
+      @invalid_current_password = true
       render :edit_password
     end
   end
