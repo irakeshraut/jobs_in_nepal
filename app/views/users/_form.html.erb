@@ -19,82 +19,73 @@
       </div>
     </div>
   </div>
-  <div class="form-group">
-    <%= f.label :email  %>
-    <div class="input-with-icon">
-      <%= f.email_field :email, placeholder: 'Enter Your Email', class: 'form-control', required: true %>
-      <i class="theme-cl ti-email"></i>
+
+  <div class='row'>
+    <div class="col-md-6 col-sm-6">
+      <div class="form-group">
+        <%= f.label :email  %>
+        <div class="input-with-icon">
+          <%= f.email_field :email, placeholder: 'Enter Your Email', class: 'form-control', required: true %>
+          <i class="theme-cl ti-email"></i>
+        </div>
+      </div>
+    </div>
+    <% if @user.job_seeker? %>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <%= f.label :phone_no, 'Phone Number'  %>
+          <div class="input-with-icon">
+            <%= f.phone_field :phone_no, placeholder: 'Enter Your Phone Number', class: 'form-control' %>
+            <i class="theme-cl ti-mobile"></i>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @user.job_seeker? %>
+    <div class='row'>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <%= f.label :city, 'City'  %>
+          <div class="input-with-icon">
+            <%= f.text_field :city, placeholder: 'Enter Your City Name', class: 'form-control' %>
+            <i class="theme-cl ti-location-arrow"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <%= f.label :skills, 'Skills'  %>
+          <div class="input-with-icon">
+            <%= f.text_field :skills, placeholder: 'Enter Your Skills seperated by comma (e.g html, css, photoshop)', class: 'form-control' %>
+            <i class="theme-cl ti-star"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <%= f.label :avatar %>
+          <div class="input-with-icon">
+            <% if @user.avatar.attached? %>
+              <%= image_tag @user.avatar, class: 'img-responsive', style: 'width: 200px; display: block'  %>
+              <%= @user.avatar.filename %>
+            <% end %>
+            <%= f.file_field :avatar, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class='row mrg-top-30'>
+    <div class='col-md-12 col-sm-12'>
+      <div class='form-group text-center'>
+        <%= f.submit 'Update Profile', class: 'btn btn-primary theme-bg' %>
+      </div>
     </div>
   </div>
-  <% if controller.controller_name == 'users' && (controller.action_name == 'edit' || controller.action_name = 'update') %>
-    <% if @user.job_seeker? %>
-      <div class="form-group">
-        <%= f.label :phone_no, 'Phone Number'  %>
-        <div class="input-with-icon">
-          <%= f.phone_field :phone_no, placeholder: 'Enter Your Phone Number', class: 'form-control' %>
-          <i class="theme-cl ti-mobile"></i>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :city, 'City'  %>
-        <div class="input-with-icon">
-          <%= f.text_field :city, placeholder: 'Enter Your City Name', class: 'form-control' %>
-          <i class="theme-cl ti-location-arrow"></i>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :skills, 'Skills'  %>
-        <div class="input-with-icon">
-          <%= f.text_field :skills, placeholder: 'Enter Your Skills seperated by comma (e.g html, css, photoshop)', class: 'form-control' %>
-          <i class="theme-cl ti-star"></i>
-        </div>
-      </div>
-    <% end %>
-    <% if @user.job_seeker? || @user.admin? %>
-      <div class="form-group">
-        <%= f.label :avatar %>
-        <div class="input-with-icon">
-          <% if @user.avatar.attached? %>
-            <%= image_tag @user.avatar, class: 'img-responsive', style: 'width: 200px; display: block'  %>
-            <%= @user.avatar.filename %>
-          <% end %>
-          <%= f.file_field :avatar, class: 'form-control' %>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-  <%# controller.action_name is not showing correct action thats why I am using params[:action] %>
-  <% if controller.controller_name == 'users' && params[:action] == 'new' %>
-    <div class="form-group">
-      <%= f.label :password  %>
-      <div class="input-with-icon">
-        <%= f.password_field :password, placeholder: 'Enter Your Password (Minimum 8 characters)', class: 'form-control', required: true %>
-        <i class="theme-cl ti-lock"></i>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :password_confirmation  %>
-      <div class="input-with-icon">
-        <%= f.password_field :password_confirmation, placeholder: 'Enter Your Password (Minimum 8 characters)', class: 'form-control', required: true %>
-        <i class="theme-cl ti-lock"></i>
-      </div>
-    </div>
-  <% end %>
-  <%# controller.action_name is not showing correct action thats why I am using params[:action] %>
-  <% if controller.controller_name == 'users' && params[:action] == 'new' %>
-    <div class="register-account text-center">
-      By hitting the <span class="theme-cl">"Register"</span> button, you agree to the <%= link_to 'Terms Conditions', terms_and_conditions_path, class: 'theme-cl' %> and <%= link_to 'Privay Policy', privacy_policy_path, class: 'theme-cl' %>
-    </div>
-    <div class="form-group">
-      <%= f.submit 'Register', class: 'btn btn-primary theme-bg full-width' %>
-    </div>
-  <% else %>
-    <div class='row mrg-top-30'>
-      <div class='col-md-12 col-sm-12'>
-        <div class='form-group text-center'>
-          <%= f.submit 'Update Profile', class: 'btn btn-primary theme-bg' %>
-        </div>
-      </div>
-    </div>
-  <% end %>
 <% end %>

@@ -1,0 +1,43 @@
+<%= form_with model: @user, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :first_name  %>
+    <div class="input-with-icon">
+      <%= f.text_field :first_name, placeholder: 'Enter Your First Name', class: 'form-control', required: true %>
+      <i class="theme-cl ti-user"></i>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :last_name  %>
+    <div class="input-with-icon">
+      <%= f.text_field :last_name, placeholder: 'Enter Your Last Name', class: 'form-control', required: true %>
+      <i class="theme-cl ti-user"></i>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :email  %>
+    <div class="input-with-icon">
+      <%= f.email_field :email, placeholder: 'Enter Your Email', class: 'form-control', required: true %>
+      <i class="theme-cl ti-email"></i>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :password  %>
+    <div class="input-with-icon">
+      <%= f.password_field :password, placeholder: 'Enter Your Password (Minimum 8 characters)', class: 'form-control', required: true %>
+      <i class="theme-cl ti-lock"></i>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :password_confirmation  %>
+    <div class="input-with-icon">
+      <%= f.password_field :password_confirmation, placeholder: 'Enter Your Password (Minimum 8 characters)', class: 'form-control', required: true %>
+      <i class="theme-cl ti-lock"></i>
+    </div>
+  </div>
+  <div class="register-account text-center">
+    By hitting the <span class="theme-cl">"Register"</span> button, you agree to the <%= link_to 'Terms Conditions', terms_and_conditions_path, class: 'theme-cl' %> and <%= link_to 'Privay Policy', privacy_policy_path, class: 'theme-cl' %>
+  </div>
+  <div class="form-group">
+    <%= f.submit 'Register', class: 'btn btn-primary theme-bg full-width' %>
+  </div>
+<% end %>
