@@ -6,7 +6,6 @@ class UsersController < ApplicationController
     @user = User.new
     @company = Company.new
     @tab = params[:tab] if params[:tab]
-    @error_messages = params[:error_messages] if params[:error_messages]
     unless @tab
       redirect_to new_user_path(tab: 'job_seeker')
     end
@@ -20,7 +19,8 @@ class UsersController < ApplicationController
       flash[:success] = 'Account Created. Please check your email to Activate your account.'
       redirect_to login_path
     else
-      redirect_to new_user_path(tab: 'job_seeker', error_messages: @user.errors.full_messages)
+      @tab = 'job_seeker'
+      render :new
     end
   end
 

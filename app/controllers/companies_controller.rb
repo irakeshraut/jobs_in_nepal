@@ -5,10 +5,12 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     @company.users.first.role = 'employer'
+    @user = User.new(@company.users.first.attributes)
     if @company.valid? && @company.save
       redirect_to login_path
     else
-      redirect_to new_user_path(tab: 'employer', error_messages: @company.errors.full_messages)
+      @tab = 'employer'
+      render 'users/new'
     end
   end
 
