@@ -5,14 +5,14 @@
         <h4><i class="ti-lock"></i>Edit Educations</h4>
       </div>
       <div class="dashboard-caption-wrap">
-        <%= render 'shared/form_error_message' %>
-        <%= form_with model: @user do |f| %>
+        <%= render 'shared/error_messages', object: @user %>
+        <%= form_with model: @user, local: true do |f| %>
           <div id='educations'>
             <%= f.fields_for :educations do |education| %>
-              <%= render 'education_fields', f: education %>
+              <%= render 'educations/education_fields', f: education %>
             <% end %>
             <div class='links'>
-              <%= link_to_add_association  f, :educations, class: 'btn btn-primary' do %>
+              <%= link_to_add_association  f, :educations, partial: 'educations/education_fields', class: 'btn btn-primary' do %>
                 <i class="fa fa-plus"></i> Add Education
               <% end %>
             </div>
