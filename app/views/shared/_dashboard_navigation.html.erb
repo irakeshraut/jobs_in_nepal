@@ -38,12 +38,12 @@
             <% end %>
           </li>
         <% end %>
-        <li class="<%= controller.controller_name == 'users' && controller.action_name == 'edit' ? 'active' : '' %>">
+        <li class="<%= controller.controller_name == 'users' && (controller.action_name == 'edit' || controller.action_name == 'update') ? 'active' : '' %>">
           <%= link_to edit_user_path(current_user) do %>
             <i class="ti-user"></i>Edit Profile
           <% end %>
         </li>
-        <li class="<%= controller.controller_name == 'users' && controller.action_name == 'edit_password' ? 'active' : '' %>">
+        <li class="<%= controller.controller_name == 'users' && (controller.action_name == 'edit_password' || controller.action_name == 'update_password') ? 'active' : '' %>">
           <%= link_to edit_password_user_path(current_user) do %>
             <i class="ti-user"></i>Change Password
           <% end %>
