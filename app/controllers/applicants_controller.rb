@@ -35,8 +35,8 @@ class ApplicantsController < ApplicationController
   def new
     @job = Job.find(params[:job_id])
     @user = current_user
+    @applicant = Applicant.new # required when we render from create action
     authorize @job, policy_class: ApplicantPolicy
-    @error_messages = params[:error_messages] if params[:error_messages]
     if @job.redirect_link.present?
       redirect_to @job.redirect_link
     end
@@ -46,17 +46,17 @@ class ApplicantsController < ApplicationController
     @job = Job.find(params[:job_id])
     @user = current_user
     authorize @job, policy_class: ApplicantPolicy
-    applicant = @job.applicants.build
+    @applicant = @job.applicants.build
 
     if params[:resume_file]
       if @user.resumes.count >= 10
         @user.resumes.order(:created_at).first.purge
       end
       if @user.resumes.attach(params[:resume_file])
-        applicant.resume_name = "#{@user.resumes.last.filename.to_s} - #{@user.resumes.last.created_at.strftime("%d/%m/%Y")}"
+        @applicant.resume_name = "#{@user.resumes.last.filename.to_s} - #{@user.resumes.last.created_at.strftime("%d/%m/%Y")}"
       end
     else
-      applicant.resume_name = params[:resume]
+      @applicant.resume_name = params[:resume]
     end
 
     if params[:cover_letter_file]
@@ -64,21 +64,21 @@ class ApplicantsController < ApplicationController
         @user.cover_letters.order(:created_at).first.purge
       end
       if @user.cover_letters.attach(params[:cover_letter_file])
-        applicant.cover_letter_name = "#{@user.cover_letters.last.filename.to_s} - #{@user.cover_letters.last.created_at.strftime("%d/%m/%Y")}"
+        @applicant.cover_letter_name = "#{@user.cover_letters.last.filename.to_s} - #{@user.cover_letters.last.created_at.strftime("%d/%m/%Y")}"
       end
     else
-      applicant.cover_letter_name = params[:cover_letter]
+      @applicant.cover_letter_name = params[:cover_letter]
     end
 
-    applicant.user_id = @user.id
-    applicant.job_id = @job.id
+    @applicant.user_id = @user.id
+    @applicant.job_id = @job.id
 
-    if @user.valid? && applicant.valid? && applicant.save
+    if @user.valid? && @applicant.valid? && @applicant.save
       flash[:success] = 'Application Submitted.'
-      ApplicantMailer.application_submitted(@user, @job, applicant).deliver_later
+      ApplicantMailer.application_submitted(@user, @job, @applicant).deliver_later
       redirect_to root_path
     else
-      redirect_to new_job_applicant_path(@job, error_messages: @user.errors.full_messages + applicant.errors.full_messages)
+      render :new
     end
   end
 

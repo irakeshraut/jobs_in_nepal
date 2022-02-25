@@ -1,5 +1,5 @@
 <div class="row-bottom">
-  <% if (controller.controller_name == 'applicants' && controller.action_name == 'new') || (controller.controller_name == 'dashboards' && controller.action_name == 'index') %>
+  <% if (controller.controller_name == 'applicants' && controller.action_name == 'new') || (controller.controller_name == 'dashboards' && controller.action_name == 'index') || (controller.controller_name == 'applicants' && controller.action_name == 'create') %>
     <h2 class="detail-title">Education<span><%= link_to 'Edit', new_user_education_path(user), class: 'float-right' %></span></h2>
   <% else %>
     <h2 class="detail-title">Education</h2>
@@ -23,7 +23,7 @@
 </div>
 
 <div class="row-bottom">
-  <% if (controller.controller_name == 'applicants' && controller.action_name == 'new') || (controller.controller_name == 'dashboards' && controller.action_name == 'index') %>
+  <% if (controller.controller_name == 'applicants' && controller.action_name == 'new') || (controller.controller_name == 'dashboards' && controller.action_name == 'index') || (controller.controller_name == 'applicants' && controller.action_name == 'create') %>
     <h2 class="detail-title">Work Experience<span><%= link_to 'Edit', new_user_work_experience_path(user), class: 'float-right' %></span></h2>
   <% else %>
     <h2 class="detail-title">Work Experience</h2>
