@@ -50,4 +50,7 @@ Rails.application.routes.draw do
 
   get 'terms_and_conditions', to: 'static_pages#terms_and_conditions'
   get 'privacy_policy', to: 'static_pages#privacy_policy'
+
+  # This routing are for render :new when render :new changes the url. we may need to delete some of these in future when we add other actions in controller.
+  get '/users/:user_id/resumes', to: 'resumes#new'
 end

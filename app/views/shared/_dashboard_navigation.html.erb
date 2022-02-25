@@ -74,7 +74,7 @@
               <i class="ti-home"></i>Edit Education
             <% end %>
           </li>
-          <li class="<%= controller.controller_name == 'resumes' && controller.action_name == 'new' ? 'active' : '' %>">
+          <li class="<%= controller.controller_name == 'resumes' && (controller.action_name == 'new' || controller.action_name ==  'create' ) ? 'active' : '' %>">
             <%= link_to new_user_resume_path(current_user) do %>
               <i class="ti-home"></i>Manage Resume
             <% end %>

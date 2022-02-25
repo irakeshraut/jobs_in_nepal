@@ -5,8 +5,8 @@
         <h4><i class="ti-lock"></i>Upload Resumes</h4>
       </div>
       <div class="dashboard-caption-wrap">
-        <%= render 'shared/form_error_message' %>
-        <p class='alert alert-info'>You can upload upto 10 Resumes.</p>
+        <%= render 'shared/error_messages', object: @user %>
+        <p class='alert alert-info'>You can upload upto 10 Resumes. If you upload more than 10 resumes than older resumes will be automatically deleted.</p>
         <% if @user.resumes.attached? %>
           <p><%= @user.resumes.count %> Resume Found</p>
         <% else %>
@@ -47,7 +47,7 @@
               <% end %>
             <% end %>
           </div>
-          <%= form_with model: @user, url: user_resumes_path(@user), method: :post do |f| %>
+          <%= form_with model: @user, url: user_resumes_path(@user), method: :post, local: true do |f| %>
             <div class='row'>
               <div class='col-md-12 col-sm-12'>
                 <div class='statistic-item'>

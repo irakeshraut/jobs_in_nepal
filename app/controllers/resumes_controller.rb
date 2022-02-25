@@ -1,5 +1,5 @@
 class ResumesController < ApplicationController
-  layout 'dashboard', only: [:new]
+  layout 'dashboard', only: [:new, :create]
 
   def new
     @user = User.includes(resumes_attachments: :blob).find(params[:user_id])
@@ -9,11 +9,10 @@ class ResumesController < ApplicationController
     else
       @resumes = [[],[]]
     end
-    @error_messages = params[:error_messages] if params[:error_messages]
   end
 
   def create
-    @user = User.find(params[:user_id])
+    @user = User.includes(resumes_attachments: :blob).find(params[:user_id])
     authorize @user, policy_class: ResumePolicy
     if @user.resumes.count >= 10
       @user.resumes.order(:created_at).first.purge
@@ -22,7 +21,18 @@ class ResumesController < ApplicationController
       flash[:success] = 'Resume Attached'
       redirect_to new_user_resume_path(@user)
     else
-      redirect_to new_user_resume_path(@user, error_messages: @user.errors.full_messages)
+      # when attachment fails, record is still attached to user.resumes with id of nil. @user.resumes.last.destroy is not
+      # reliable so I am looping through all resume to delete the resumes with id of nil. All below code are just setup for render :new
+      @user.resumes.each do |resume|
+        resume.destroy if resume.id.nil?
+      end
+      if @user.resumes.size > 0 
+        @resumes = @user.resumes.order(created_at: :desc).in_groups_of((@user.resumes.size/2.0).round, false)
+      else
+        @resumes = [[],[]]
+      end
+
+      render :new
     end
   end
 
