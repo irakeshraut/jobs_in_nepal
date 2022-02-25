@@ -5,14 +5,14 @@
         <h4><i class="ti-lock"></i>Edit Work Experiences</h4>
       </div>
       <div class="dashboard-caption-wrap">
-        <%= render 'shared/form_error_message' %>
-        <%= form_with model: @user do |f| %>
+        <%= render 'shared/error_messages', object: @user %>
+        <%= form_with model: @user, local: true do |f| %>
           <div id='work_experiences'>
             <%= f.fields_for :work_experiences do |work_experience| %>
               <%= render 'work_experience_fields', f: work_experience %>
             <% end %>
             <div class='links'>
-              <%= link_to_add_association  f, :work_experiences, class: 'btn btn-primary' do %>
+              <%= link_to_add_association  f, :work_experiences, partial: 'work_experience_fields', class: 'btn btn-primary' do %>
                 <i class="fa fa-plus"></i> Add Work Experience
               <% end %>
             </div>
