@@ -9,6 +9,11 @@ class SessionsController < ApplicationController
     if @user
       redirect_back_or_to(root_path)
     else
+      @user = User.find_by(email: params[:email])
+      if @user && @user.activation_state == 'pending'
+        @account_pending = true
+        render :new and return
+      end
       flash[:error] = 'Login Failed: Invalid Email or Password'
       redirect_to login_path
     end
