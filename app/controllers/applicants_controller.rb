@@ -75,6 +75,7 @@ class ApplicantsController < ApplicationController
 
     if @user.valid? && applicant.valid? && applicant.save
       flash[:success] = 'Application Submitted.'
+      ApplicantMailer.application_submitted(@user, @job, applicant).deliver_later
       redirect_to root_path
     else
       redirect_to new_job_applicant_path(@job, error_messages: @user.errors.full_messages + applicant.errors.full_messages)

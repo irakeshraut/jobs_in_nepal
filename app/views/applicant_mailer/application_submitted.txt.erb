@@ -1,0 +1,16 @@
+Hi <%= @user.first_name %>,
+
+Your application for <%= @job.title %> was successfully submitted to <%= @job.user.company.name %>.
+
+Each employer or recruiter has their own process so you may or may not hear back from them. Keep track of all your applied job on your <%= link_to 'Applied Jobs', applied_jobs_user_url(@user)%> page.
+
+Here’s a summary of the job you applied for on <%= @applicant.created_at.strftime("%d/%m/%Y") %>
+
+Job Title: <%= link_to(@job.title, @job) %>
+Company Name: <%= @job.user.company.name %>
+Company Location: <%= @job.location %>
+
+with Regards
+Jobs in Nepal
+www.jobsinnepal.com
+info@jobsinnepal.com
