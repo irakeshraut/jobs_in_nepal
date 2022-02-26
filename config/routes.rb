@@ -54,4 +54,5 @@ Rails.application.routes.draw do
   # This routing are for render :new when render :new changes the url. we may need to delete some of these in future when we add other actions in controller.
   get '/users/:user_id/resumes', to: 'resumes#new'
   get '/users/:id/update_password', to: 'users#edit_password'
+  get '/users/:user_id/cover_letters', to: 'cover_letters#new'
 end
