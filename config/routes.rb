@@ -55,4 +55,5 @@ Rails.application.routes.draw do
   get '/users/:user_id/resumes', to: 'resumes#new'
   get '/users/:id/update_password', to: 'users#edit_password'
   get '/users/:user_id/cover_letters', to: 'cover_letters#new'
+  get '/companies/:id', to: 'companies#edit' # delete this when we implement Companies#show action
 end

@@ -5,8 +5,8 @@
         <h4><i class="ti-lock"></i>Edit Company Details</h4>
       </div>
       <div class="dashboard-caption-wrap">
-        <%= render 'shared/form_error_message' %>
-        <%= form_with model: @company do |f| %>
+        <%= render 'shared/error_messages', object: @company %>
+        <%= form_with model: @company, local: true do |f| %>
           <div class='row'>
             <div class='col-md-6 col-sm-6'>
               <div class="form-group">
@@ -38,7 +38,7 @@
               </div>
             </div>
           </div>
-            <div class='row'>
+          <div class='row'>
             <div class='col-md-12 col-sm-12'>
               <div class="form-group">
                 <%= f.label :logo, 'Business Logo'  %>

@@ -17,7 +17,6 @@ class CompaniesController < ApplicationController
   def edit
     @company = Company.find(params[:id])
     authorize @company
-    @error_messages = params[:error_messages] if params[:error_messages]
   end
 
   def update
@@ -27,7 +26,7 @@ class CompaniesController < ApplicationController
       flash[:success] = 'Company Details Successfully Updated.'
       redirect_to edit_company_path(@company)
     else
-      redirect_to edit_company_path(@company, error_messages: @company.errors.full_messages)
+      render :edit
     end
   end
 
