@@ -1,5 +1,5 @@
 <div class="dashboard-caption-wrap">
-  <%= render 'shared/form_error_message' %>
+  <%= render 'shared/error_messages', object: @job %>
   <%= form_with model: @job, local: true do |f| %>
     <div class="row">
       <div class="col-md-6 col-sm-6">
