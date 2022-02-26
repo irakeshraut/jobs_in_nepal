@@ -30,6 +30,13 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def delete_logo
+    @company = Company.find(params[:id])
+    authorize @company
+    @company.logo.purge
+    redirect_to edit_company_path(@company)
+  end
+
   private
 
   def company_params

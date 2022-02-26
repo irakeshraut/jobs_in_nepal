@@ -19,4 +19,8 @@ class CompanyPolicy < ApplicationPolicy
   def update?
     company.users.first == user
   end
+
+  def delete_logo?
+    company.users.first == user
+  end
 end

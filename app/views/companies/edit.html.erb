@@ -5,6 +5,7 @@
         <h4><i class="ti-lock"></i>Edit Company Details</h4>
       </div>
       <div class="dashboard-caption-wrap">
+        <p class='alert alert-info'>Company details will be attached to all job you post.</p>
         <%= render 'shared/error_messages', object: @company %>
         <%= form_with model: @company, local: true do |f| %>
           <div class='row'>
@@ -42,20 +43,20 @@
             <div class='col-md-12 col-sm-12'>
               <div class="form-group">
                 <%= f.label :logo, 'Business Logo'  %>
-                <div class="input-with-icon">
-                  <% if @company.logo.attached? %>
-                    <%= image_tag @company.logo, class: 'img-responsive', style: 'width: 200px; display: block'  %>
-                    <%= @company.logo.filename %>
+                <% if @company.logo.attached? && @company.logo.persisted? %>
+                  <%= image_tag @company.logo, class: 'img-responsive', style: 'width: 200px; display: block'  %>
+                  <%= link_to delete_logo_company_path(@company), data: { confirm: 'Are you sure?' } do %>
+                    <i class="fa fa-trash"></i> Delete Logo
                   <% end %>
-                  <%= f.file_field :logo, class: 'form-control' %>
-                </div>
+                <% end %>
+                <%= f.file_field :logo, class: 'form-control' %>
               </div>
             </div>
           </div>
           <div class='row'>
             <div class='col-md-12 col-sm-12'>
               <div class="form-group">
-                <%= f.label :description  %>
+                <%= f.label 'Description (Recommended)' %>
                 <div>
                   <%= f.text_area :description, placeholder: 'Enter Description About Company', rows: 10, class: 'form-control' %>
                 </div>

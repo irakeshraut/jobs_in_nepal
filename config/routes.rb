@@ -31,7 +31,11 @@ Rails.application.routes.draw do
   end
 
   resources :sessions,  only: [:new, :create, :destroy]
-  resources :companies, only: [:create, :edit, :update]
+  resources :companies, only: [:create, :edit, :update] do
+    member do
+      get :delete_logo
+    end
+  end
   resources :jobs do
     resources :applicants, only: [:index, :show, :new, :create] do
       member do
