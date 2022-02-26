@@ -32,7 +32,7 @@
           <% end %>
         </li>
         <% if current_user.admin? || current_user.employer? %>
-          <li class="<%= controller.controller_name == 'jobs' && controller.action_name == 'new' ? 'active' : '' %>">
+          <li class="<%= controller.controller_name == 'jobs' && (controller.action_name == 'new' || controller.action_name == 'create') ? 'active' : '' %>">
             <%= link_to new_job_path do %>
               <i class="ti-ruler-pencil"></i>Post New Job
             <% end %>
