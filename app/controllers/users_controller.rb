@@ -45,10 +45,12 @@ class UsersController < ApplicationController
       end
     else
       if params[:redirect_to] == 'edit_work_experience_path'
+        @highlight_work_experience_navigation = true
         render 'work_experiences/new'
       elsif params[:redirect_to] == 'edit_education_path'
-        render 'educations/new'
+        redirect_to new_user_education_path(@user, error_messages: @user.errors.full_messages)
       else
+        @highlight_edit_profile_navigation = true
         render :edit
       end
     end

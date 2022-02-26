@@ -38,7 +38,7 @@
             <% end %>
           </li>
         <% end %>
-        <li class="<%= controller.controller_name == 'users' && (controller.action_name == 'edit' || controller.action_name == 'update') ? 'active' : '' %>">
+        <li class="<%= controller.controller_name == 'users' && (controller.action_name == 'edit' || @highlight_edit_profile_navigation == true) ? 'active' : '' %>">
           <%= link_to edit_user_path(current_user) do %>
             <i class="ti-user"></i>Edit Profile
           <% end %>
@@ -64,7 +64,7 @@
           </li>
         <% end %>
         <% if current_user.job_seeker? %>
-          <li class="<%= controller.controller_name == 'work_experiences' && controller.action_name == 'new' ? 'active' : '' %>">
+          <li class="<%= (controller.controller_name == 'work_experiences' && controller.action_name == 'new') || (@highlight_work_experience_navigation == true) ? 'active' : '' %>">
             <%= link_to new_user_work_experience_path(current_user) do %>
               <i class="ti-home"></i>Edit Work Experiences
             <% end %>
