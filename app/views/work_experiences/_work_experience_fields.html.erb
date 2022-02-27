@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-  <div class='row'>
+  <div class='row finished'>
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
         <%= f.label :finished, 'Finished Month' %>
@@ -52,7 +52,7 @@
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
         <%= f.label :still_in_role %>
-        <%= f.check_box :still_in_role %>
+        <%= f.check_box :still_in_role, class: 'still-in-role' %>
       </div>
     </div>
   </div>
@@ -68,3 +68,23 @@
     <i class="fa fa-trash"></i> Delete
   <% end %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('.still-in-role').each(function() {
+      if(this.checked) {
+        $(this).closest('.row').prev('.finished').hide();
+       } else {
+        $(this).closest('.row').prev('.finished').show();
+       }
+    });
+
+    $('.still-in-role').change(function(){
+      if(this.checked) {
+        $(this).closest('.row').prev('.finished').hide();
+      } else {
+        $(this).closest('.row').prev('.finished').show();
+      }
+    })
+  });
+</script>
