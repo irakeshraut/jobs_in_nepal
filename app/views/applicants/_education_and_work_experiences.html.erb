@@ -33,7 +33,14 @@
       <% user.work_experiences.order(start_year: :desc).each do |work_experience| %>
         <li>
           <div class="trim-edu">
-            <h4 class="trim-edu-title"><%= work_experience.company_name %><span class="title-est"><%= "#{work_experience.start_year} - #{work_experience.finish_year || 'Present'}" %></span></h4>
+            <h4 class="trim-edu-title">
+              <%= work_experience.company_name %>
+                <% if work_experience.still_in_role %>
+                  <span class="title-est"><%= "#{work_experience.start_year} - Present" %></span>
+                <% else %>
+                  <span class="title-est"><%= "#{work_experience.start_year} - #{work_experience.finish_year} (#{work_experience.finish_month})" %></span>
+                <% end %>
+            </h4>
             <strong><%= work_experience.job_title %></strong>
             <p><%= work_experience.description %></p>
           </div>
