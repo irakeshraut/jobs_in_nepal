@@ -23,13 +23,13 @@
   <div class='row'>
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
-        <%= f.label :started, 'Stared Month' %>
+        <%= f.label :started, 'Start Month' %>
         <%= f.select :start_month, WorkExperiencesHelper.months, { prompt: '-- Select --' }, class: 'form-control', required: true %>
       </div>
     </div>
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
-        <%= f.label :started, 'Stared Year' %>
+        <%= f.label :started, 'Start Year' %>
         <%= f.select :start_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control', required: true %>
       </div>
     </div>
