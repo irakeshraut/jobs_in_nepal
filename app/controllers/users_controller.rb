@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.includes(cover_letters_attachments: :blob, resumes_attachments: :blob).find(params[:id])
     authorize @user
     if @user.update(user_params)
       if params[:redirect_to] == 'edit_work_experience_path'

@@ -36,9 +36,9 @@
             <h4 class="trim-edu-title">
               <%= work_experience.company_name %>
                 <% if work_experience.still_in_role %>
-                  <span class="title-est"><%= "#{work_experience.start_year} - Present" %></span>
+                  <span class="title-est"><%= "#{work_experience.start_year} (#{work_experience.start_month}) - Present" %></span>
                 <% else %>
-                  <span class="title-est"><%= "#{work_experience.start_year} - #{work_experience.finish_year} (#{work_experience.finish_month})" %></span>
+                  <span class="title-est"><%= "#{work_experience.start_year} (#{work_experience.start_month}) - #{work_experience.finish_year} (#{work_experience.finish_month})" %></span>
                 <% end %>
             </h4>
             <strong><%= work_experience.job_title %></strong>

@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   belongs_to :company, optional: true
   has_many :jobs, dependent: :destroy
-  has_many :work_experiences, inverse_of: :user, dependent: :destroy
+  has_many :work_experiences, ->{ order("start_year DESC, finish_year DESC") }, inverse_of: :user, dependent: :destroy
   has_many :educations, inverse_of: :user, dependent: :destroy
   has_many :applicants, dependent: :destroy
   has_many :applied_jobs, through: :applicants, source: :job

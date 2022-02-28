@@ -34,6 +34,7 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
     authorize @company
     @company.logo.purge
+    flash[:success] = 'Logo Deleted.'
     redirect_to edit_company_path(@company)
   end
 
