@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get :all_posted_jobs
       get :applied_jobs
       get :activate
+      get :delete_avatar
     end
     resources :bookmarks, only: [:index, :create, :destroy]
     resources :dashboards, only: [:index]

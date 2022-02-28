@@ -1,3 +1,4 @@
+<%= render 'shared/error_messages', object: @user %>
 <%= form_with model: @user, local: true do |f| %>
   <div class='row'>
     <div class="col-md-6 col-sm-6">
@@ -69,13 +70,13 @@
       <div class="col-md-6 col-sm-6">
         <div class="form-group">
           <%= f.label :avatar %>
-          <div class="input-with-icon">
-            <% if @user.avatar.attached? %>
-              <%= image_tag @user.avatar, class: 'img-responsive', style: 'width: 200px; display: block'  %>
-              <%= @user.avatar.filename %>
+          <% if @user.avatar.attached? && @user.avatar.persisted? %>
+            <%= image_tag @user.avatar, class: 'img-responsive', style: 'width: 200px; display: block'  %>
+            <%= link_to delete_avatar_user_path(@user), data: { confirm: 'Are you sure?' } do %>
+              <i class="fa fa-trash"></i> Delete Avatar
             <% end %>
-            <%= f.file_field :avatar, class: 'form-control' %>
-          </div>
+          <% end %>
+          <%= f.file_field :avatar, class: 'form-control' %>
         </div>
       </div>
     </div>

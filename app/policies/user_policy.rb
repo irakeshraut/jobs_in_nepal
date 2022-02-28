@@ -35,4 +35,8 @@ class UserPolicy < ApplicationPolicy
   def applied_jobs?
     user.job_seeker? && user_record == user
   end
+
+  def delete_avatar?
+    user_record == user
+  end
 end

@@ -110,6 +110,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def delete_avatar
+    @user = User.find(params[:id])
+    authorize @user
+    @user.avatar.purge
+    flash[:success] = 'Avatar Deleted.'
+    redirect_to edit_user_path(@user)
+  end
+
   private
 
   def password_params
