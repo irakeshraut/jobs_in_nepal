@@ -23,28 +23,31 @@
                         <% end %>
                       </div>
                       <div class="brows-job-position">
-                        <h3><%= link_to(job.title, job) %></a></h3>
+                        <h3><%= link_to(job.title.truncate(40), job) %></a></h3>
                         <p>
-                        <span>
-                          <% if job.created_by_admin? %>
-                            <%= job.company_name %>
-                          <% else %>
-                            <%= job.user.company.name %>
-                          <% end %>
-                        </span><span class="brows-job-sallery"><i class="fa fa-money"></i><%= job.salary %></span>
-                        <span class="job-type cl-success bg-trans-success"><%= job.employment_type %></span>
+                          <span>
+                            <% if job.created_by_admin? %>
+                              <%= job.company_name.truncate(50) %>
+                            <% else %>
+                              <%= job.user.company.name.truncate(50) %>
+                            <% end %>
+                          </span>
+                        </p>
+                        <p>
+                          <span class="brows-job-sallery"><i class="fa fa-money"></i><%= job.full_salary %></span>
+                          <span class="job-type cl-success bg-trans-success"><%= job.employment_type %></span>
                         </p>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-4 col-sm-4">
                     <div class="brows-job-location">
-                      <p><i class="fa fa-map-marker"></i><%= job.location %></p>
+                      <p><i class="fa fa-map-marker"></i><%= job.location.truncate(50) %></p>
                     </div>
                   </div>
                   <div class="col-md-2 col-sm-2">
                     <div class="brows-job-link">
-                      <%= link_to user_bookmark_path(@user, bookmark), method: :delete, class: 'btn btn-cancel manage-btn', title: 'Delete' do %>
+                      <%= link_to user_bookmark_path(@user, bookmark), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-cancel manage-btn', title: 'Delete' do %>
                         <i class='ti-close'></i>
                       <% end %>
                     </div>
@@ -59,6 +62,10 @@
         <% else %>
           <p>No Saved Job Found.</p>
         <% end %>
+
+        <div class="digg_pagination">
+          <%= will_paginate @bookmarks %>
+        </div>
       </div>
     </div>
   </div>

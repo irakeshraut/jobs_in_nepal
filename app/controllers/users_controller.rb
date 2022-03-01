@@ -97,7 +97,7 @@ class UsersController < ApplicationController
   def applied_jobs
     @user = User.find(params[:id])
     authorize @user
-    @applied_jobs = @user.applied_jobs.includes(user: { company: [logo_attachment: :blob] }).paginate(page: params[:page], per_page: 30)
+    @applied_jobs = @user.applied_jobs.order(created_at: :desc).includes(user: { company: [logo_attachment: :blob] }).paginate(page: params[:page], per_page: 30)
   end
 
   def activate

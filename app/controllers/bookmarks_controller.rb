@@ -4,7 +4,7 @@ class BookmarksController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     authorize @user, policy_class: BookmarkPolicy
-    @bookmarks = @user.bookmarks
+    @bookmarks = @user.bookmarks.order(created_at: :desc).paginate(page: params[:page], per_page: 30)
   end
 
   def create

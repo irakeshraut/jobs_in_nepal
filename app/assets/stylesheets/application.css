@@ -104,12 +104,18 @@ nav.navbar.bootsnav .navbar-brand {
 
 .trix-content {
   margin-left: 15px;
+  margin-right: 15px;
+  text-align: justify;
 }
 
 .terms-and-policy  p {
-  text-align: justify
+  text-align: justify;
 }
 
 .terms-and-policy li {
-  text-align: justify
+  text-align: justify;
+}
+
+.brows-job-sallery {
+  margin-left: 0px !important;
 }

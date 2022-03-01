@@ -42,7 +42,7 @@
 
       <div class="ur-detail-btn">
         <% if current_user && @job.users.include?(current_user) %>
-          <%= link_to new_job_applicant_path(@job), class: 'btn btn-warning mrg-bot-10 full-width disabled' do %>
+          <%= link_to '#', class: 'btn btn-warning mrg-bot-10 full-width disabled' do %>
             <i class='ti-star mar-r-5'></i>You Already Applied
           <% end %>
         <% else %>
@@ -96,6 +96,21 @@
         <div class="row row-bottom mrg-0">
           <h2 class="detail-title">Job Description</h2>
           <p><%= @job.description %></p>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group text-center">
+              <% if current_user && @job.users.include?(current_user) %>
+                <%= link_to '#', class: 'btn btn-warning disabled' do %>
+                  <i class='ti-star mar-r-5'></i>You Already Applied
+                <% end %>
+              <% else %>
+                <%= link_to new_job_applicant_path(@job), class: 'btn btn-warning' do %>
+                  <i class='ti-star mar-r-5'></i>Apply
+                <% end %>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
