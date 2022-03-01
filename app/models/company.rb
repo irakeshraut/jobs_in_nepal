@@ -10,6 +10,8 @@ class Company < ApplicationRecord
 
   accepts_nested_attributes_for :users
 
+  has_rich_text :description
+
   private
 
   def logo_validation
