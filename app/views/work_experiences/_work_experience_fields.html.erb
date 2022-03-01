@@ -38,13 +38,13 @@
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
         <%= f.label :finished, 'Finished Month' %>
-        <%= f.select :finish_month, WorkExperiencesHelper.months, { prompt: '-- Select --' }, class: 'form-control finished-month' %>
+        <%= f.select :finish_month, WorkExperiencesHelper.months, { prompt: '-- Select --' }, class: 'form-control' %>
       </div>
     </div>
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
         <%= f.label :finished, 'Finished Year' %>
-        <%= f.select :finish_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control finished-year' %>
+        <%= f.select :finish_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control' %>
       </div>
     </div>
   </div>
