@@ -86,13 +86,19 @@
       }
     });
 
+    $('select:visible').attr('required', true);
+
     $(".checkbox").change(function() {
       if (this.checked) {
         $(this).closest('.row').next('.expected_finished_time').hide();
         $(this).closest('.row').find('.finished_year').show();
+        $('select:hidden').removeAttr('required');
+        $('select:visible').attr('required', true);
       } else {
         $(this).closest('.row').next('.expected_finished_time').show();
         $(this).closest('.row').find('.finished_year').hide();
+        $('select:hidden').removeAttr('required');
+        $('select:visible').attr('required', true);
       }
     });
   });

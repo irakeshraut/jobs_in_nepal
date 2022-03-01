@@ -2,6 +2,9 @@ class Education < ApplicationRecord
   validates :institution_name, presence: true
   validates :course_name,      presence: true
   validates :course_completed, inclusion: { in:  [true, false] }
+  validates :finished_year, presence: true,  if: :course_completed
+  validates :expected_finish_month, presence: true,  unless: :course_completed
+  validates :expected_finish_year, presence: true, unless: :course_completed
 
   belongs_to :user
 
