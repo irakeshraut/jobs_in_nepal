@@ -32,7 +32,7 @@
     </div>
     <div class='col-md-6 col-sm-6 finished_year'>
       <div class="form-group">
-        <%= f.label :finished_year, 'Finished Year (optional)'  %>
+        <%= f.label :finished_year, 'Finished Year'  %>
         <div class="input-with-icon">
           <%= f.select :finished_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control' %>
           <i class="theme-cl ti-mobile"></i>
@@ -43,18 +43,18 @@
   <div class='row expected_finished_time'>
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
-        <%= f.label :expected_finished_month, 'Expected Finished Month (optional)'  %>
+        <%= f.label :expected_finish_month, 'Expected Finish Month'  %>
         <div class="input-with-icon">
-          <%= f.select :expected_finished_month, WorkExperiencesHelper.months, { prompt: '-- Select --' }, class: 'form-control' %>
+          <%= f.select :expected_finish_month, WorkExperiencesHelper.months, { prompt: '-- Select --' }, class: 'form-control' %>
           <i class="theme-cl ti-mobile"></i>
         </div>
       </div>
     </div>
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
-        <%= f.label :expected_finished_year, 'Expected Finished Year (optional)'  %>
+        <%= f.label :expected_finish_year, 'Expected Finish Year'  %>
         <div class="input-with-icon">
-          <%= f.select :expected_finished_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control' %>
+          <%= f.select :expected_finish_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control' %>
           <i class="theme-cl ti-mobile"></i>
         </div>
       </div>

@@ -9,7 +9,13 @@
       <% user.educations.order(finished_year: :desc).each do |education| %>
         <li>
           <div class="trim-edu">
-            <h4 class="trim-edu-title"><%= education.institution_name %><span class="title-est"><%= education.finished_year ? "Course Finished Year: #{education.finished_year}" : "Expected Finish Time: #{education.expected_finished_month}  #{education.expected_finished_year}" %></span></h4>
+            <h4 class="trim-edu-title"><%= education.institution_name %>
+              <% if education.finished_year %>
+                <span class="title-est">Course Finished Year: <%= education.finished_year %></span></h4>
+              <% else %>
+                <span class="title-est">Expected Finish Time: <%= education.expected_finish_year %> (<%= WorkExperiencesHelper.months.key(education.expected_finish_month) %>)</span></h4>
+              <% end %>
+            </h4>
             <h5 class="trim-edu-title"><%= education.course_name %></h5>
             <strong></strong>
             <p><%= education.course_highlights %></p>

@@ -5,12 +5,12 @@ class Education < ApplicationRecord
 
   belongs_to :user
 
-  before_save :clean_up_course_finished_time
+  before_save :clean_up_course_finish_time
 
-  def clean_up_course_finished_time
+  def clean_up_course_finish_time
     if course_completed
-      self.expected_finished_month = nil
-      self.expected_finished_year = nil
+      self.expected_finish_month = nil
+      self.expected_finish_year = nil
     else
       self.finished_year = nil
     end

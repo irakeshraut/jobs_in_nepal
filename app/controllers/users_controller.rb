@@ -133,6 +133,6 @@ class UsersController < ApplicationController
                                  work_experiences_attributes:
                                  [:id, :job_title, :company_name, :_destroy, :start_month, :start_year, :finish_month, :finish_year, :still_in_role, :description],
                                  educations_attributes: [:id, :institution_name, :course_name, :course_completed, :finished_year, :_destroy,
-                                                        :expected_finished_month, :expected_finished_year, :course_highlights])
+                                                        :expected_finish_month, :expected_finish_year, :course_highlights])
   end
 end

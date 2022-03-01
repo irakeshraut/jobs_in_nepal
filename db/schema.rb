@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_28_154629) do
+ActiveRecord::Schema.define(version: 2022_03_01_051929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -84,8 +84,8 @@ ActiveRecord::Schema.define(version: 2022_02_28_154629) do
     t.string "course_name", null: false
     t.boolean "course_completed", default: true, null: false
     t.integer "finished_year"
-    t.string "expected_finished_month"
-    t.integer "expected_finished_year"
+    t.integer "expected_finish_month"
+    t.integer "expected_finish_year"
     t.text "course_highlights"
     t.uuid "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
