@@ -12,7 +12,7 @@ class JobsController < ApplicationController
 
   def show
     @job = Job.find(params[:id])
-    unless @job.views.find_by(ip: request.remote_ip)
+    if @job.views.where(ip: request.remote_ip).created_today.empty?
       @job.views.create(ip: request.remote_ip)
     end
     @similar_jobs = @job.similar_jobs.shuffle.take(4)
