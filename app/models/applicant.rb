@@ -1,5 +1,5 @@
 class Applicant < ApplicationRecord
-  STATUS = ['Shortlisted', 'Rejected']
+  STATUS = ['Shortlisted', 'Rejected'].freeze
 
   validates :resume_name, presence: true
   belongs_to :job

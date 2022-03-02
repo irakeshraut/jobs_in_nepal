@@ -54,6 +54,10 @@ class ApplicantsController < ApplicationController
       end
       if @user.resumes.attach(params[:resume_file])
         @applicant.resume_name = "#{@user.resumes.last.filename.to_s} - #{@user.resumes.last.created_at.strftime("%d/%m/%Y")}"
+      else
+        @user.resumes.each do |resume|
+          resume.destroy if resume.id.nil?
+        end
       end
     else
       @applicant.resume_name = params[:resume]
@@ -65,6 +69,10 @@ class ApplicantsController < ApplicationController
       end
       if @user.cover_letters.attach(params[:cover_letter_file])
         @applicant.cover_letter_name = "#{@user.cover_letters.last.filename.to_s} - #{@user.cover_letters.last.created_at.strftime("%d/%m/%Y")}"
+      else
+        @user.cover_letters.each do |cover_letter|
+          cover_letter.destroy if cover_letter.id.nil?
+        end
       end
     else
       @applicant.cover_letter_name = params[:cover_letter]
@@ -73,7 +81,8 @@ class ApplicantsController < ApplicationController
     @applicant.user_id = @user.id
     @applicant.job_id = @job.id
 
-    if @user.valid? && @applicant.valid? && @applicant.save
+    # @user.valid? return true and all error dissaper that's why I am using !@user.errors.present?
+    if !@user.errors.present? && @applicant.valid? && @applicant.save
       flash[:success] = 'Application Submitted.'
       ApplicantMailer.application_submitted(@user, @job, @applicant).deliver_later
       redirect_to root_path
