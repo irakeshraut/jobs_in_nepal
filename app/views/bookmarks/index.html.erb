@@ -2,7 +2,7 @@
   <div class="dashboard-body">
     <div class="dashboard-caption">
       <div class="dashboard-caption-header">
-        <h4><i class="ti-ruler-pencil"></i>Saved Jobs</h4>
+        <h4><i class="fa fa-heart"></i>Saved Jobs</h4>
       </div>
       <div class="dashboard-caption-wrap">
         <% if @bookmarks.present? %>
@@ -27,9 +27,9 @@
                         <p>
                           <span>
                             <% if job.created_by_admin? %>
-                              <%= job.company_name.truncate(50) %>
+                              <small class="job-company"><i class="ti-home"></i><a href="#"><%= job.company_name.truncate(50) %></a></small>
                             <% else %>
-                              <%= job.user.company.name.truncate(50) %>
+                              <small class="job-company"><i class="ti-home"></i><a href="#"><%= job.user.company.name.truncate(50) %></a></small>
                             <% end %>
                           </span>
                         </p>

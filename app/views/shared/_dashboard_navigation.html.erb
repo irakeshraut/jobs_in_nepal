@@ -28,73 +28,73 @@
       <ul>
         <li class="<%= controller.controller_name == 'dashboards' && controller.action_name == 'index' ? 'active' : '' %>">
           <%= link_to user_dashboards_path(current_user) do %>
-            <i class="ti-ruler-pencil"></i>Dashboard
+            <i class="fa fa-tachometer"></i>Dashboard
           <% end %>
         </li>
         <% if current_user.admin? || current_user.employer? %>
           <li class="<%= controller.controller_name == 'jobs' && (controller.action_name == 'new' || controller.action_name == 'create') ? 'active' : '' %>">
             <%= link_to new_job_path do %>
-              <i class="ti-ruler-pencil"></i>Post New Job
+              <i class="fa fa-plus"></i>Post New Job
             <% end %>
           </li>
         <% end %>
         <li class="<%= controller.controller_name == 'users' && (controller.action_name == 'edit' || @highlight_edit_profile_navigation == true) ? 'active' : '' %>">
           <%= link_to edit_user_path(current_user) do %>
-            <i class="ti-user"></i>Edit Profile
+            <i class="fa fa-user"></i>Profile
           <% end %>
         </li>
-        <li class="<%= controller.controller_name == 'users' && (controller.action_name == 'edit_password' || controller.action_name == 'update_password') ? 'active' : '' %>">
-          <%= link_to edit_password_user_path(current_user) do %>
-            <i class="ti-user"></i>Change Password
-          <% end %>
-        </li>
-
         <% if current_user.employer? %>
           <li class="<%= controller.controller_name == 'companies' && controller.action_name == 'edit' ? 'active' : '' %>">
             <%= link_to edit_company_path(current_user.company) do %>
-              <i class="ti-home"></i>Edit Company
+              <i class="fa fa-home"></i>Company Detail
             <% end %>
           </li>
         <% end %>
         <% if current_user.employer? || current_user.admin? %>
           <li class="<%= controller.controller_name == 'users' && controller.action_name == 'all_posted_jobs' ? 'active' : '' %>">
             <%= link_to all_posted_jobs_user_path(current_user) do %>
-              <i class="ti-briefcase"></i>All Jobs
+              <i class="fa fa-briefcase"></i>All Jobs
             <% end %>
           </li>
         <% end %>
         <% if current_user.job_seeker? %>
           <li class="<%= (controller.controller_name == 'work_experiences' && controller.action_name == 'new') || (@highlight_work_experience_navigation == true) ? 'active' : '' %>">
             <%= link_to new_user_work_experience_path(current_user) do %>
-              <i class="ti-home"></i>Edit Work Experiences
+              <i class="fa fa-briefcase"></i>Work Experience
             <% end %>
           </li>
           <li class="<%= (controller.controller_name == 'educations' && controller.action_name == 'new') || (@highlight_education_navigation == true) ? 'active' : '' %>">
             <%= link_to new_user_education_path(current_user) do %>
-              <i class="ti-home"></i>Edit Education
+              <i class="fa fa-building"></i>Education
             <% end %>
           </li>
           <li class="<%= controller.controller_name == 'resumes' && (controller.action_name == 'new' || controller.action_name ==  'create' ) ? 'active' : '' %>">
             <%= link_to new_user_resume_path(current_user) do %>
-              <i class="ti-home"></i>Manage Resume
+              <i class="fa fa-file"></i>Resume
             <% end %>
           </li>
           <li class="<%= controller.controller_name == 'cover_letters' && (controller.action_name == 'new' || controller.action_name == 'create') ? 'active' : '' %>">
             <%= link_to new_user_cover_letter_path(current_user) do %>
-              <i class="ti-home"></i>Manage Cover Letter
+              <i class="fa fa-envelope"></i>Cover Letter
             <% end %>
           </li>
           <li class="<%= controller.controller_name == 'users' && controller.action_name == 'applied_jobs' ? 'active' : '' %>">
             <%= link_to applied_jobs_user_path(current_user) do %>
-              <i class="ti-star"></i>Applied Jobs
+              <i class="fa fa-star"></i>Applied Jobs
             <% end %>
           </li>
         <% end %>
         <li class="<%= controller.controller_name == 'bookmarks' && controller.action_name == 'index' ? 'active' : '' %>">
           <%= link_to user_bookmarks_path(current_user) do %>
-            <i class="ti-heart"></i>Saved Jobs
+            <i class="fa fa-heart"></i>Saved Jobs
           <% end %>
         </li>
+        <li class="<%= controller.controller_name == 'users' && (controller.action_name == 'edit_password' || controller.action_name == 'update_password') ? 'active' : '' %>">
+          <%= link_to edit_password_user_path(current_user) do %>
+            <i class="fa fa-lock"></i>Change Password
+          <% end %>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
