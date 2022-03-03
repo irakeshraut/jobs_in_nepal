@@ -81,8 +81,8 @@ class ApplicantsController < ApplicationController
     @applicant.user_id = @user.id
     @applicant.job_id = @job.id
 
-    # @user.valid? return true and all error dissaper that's why I am using !@user.errors.present?
-    if !@user.errors.present? && @applicant.valid? && @applicant.save
+    # @user.valid? return true and all error dissaper that's why I am using !@user.errors.present? first to preserve previous error messages
+    if !@user.errors.present? && @user.valid? && @applicant.valid? && @applicant.save
       flash[:success] = 'Application Submitted.'
       ApplicantMailer.application_submitted(@user, @job, @applicant).deliver_later
       redirect_to root_path

@@ -53,4 +53,27 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def delete_resume_greater_than_10
+    resume_count = self.resumes.count
+    resume_to_delete_count = resume_count - 10
+    if resume_to_delete_count > 0
+      self.resumes.order(created_at: :asc).limit(resume_to_delete_count).destroy_all
+    end
+  end
+
+  # @user.resume.last.destroy is not relialbe that why I am looping througn resumes
+  def delete_resume_with_id_nil
+    self.resumes.each do |resume|
+      resume.destroy if resume.id.nil?
+    end
+  end
+
+  def split_resume_in_group_of_2
+    if self.resumes.size > 0 
+       self.resumes.order(created_at: :desc).in_groups_of((self.resumes.size/2.0).round, false)
+    else
+      [[],[]]
+    end
+  end
 end
