@@ -44,35 +44,32 @@ class ApplicantsController < ApplicationController
 
   def create
     @job = Job.find(params[:job_id])
-    @user = current_user
+    if params[:resume_file] || params[:cover_letter_file]
+      @user = User.includes(resumes_attachments: :blob, cover_letters_attachments: :blob).find(params[:user_id])
+    else
+      @user = User.find(params[:user_id])
+    end
+
     authorize @job, policy_class: ApplicantPolicy
     @applicant = @job.applicants.build
 
     if params[:resume_file]
-      if @user.resumes.count >= 10
-        @user.resumes.order(:created_at).first.purge
-      end
       if @user.resumes.attach(params[:resume_file])
         @applicant.resume_name = "#{@user.resumes.last.filename.to_s} - #{@user.resumes.last.created_at.strftime("%d/%m/%Y")}"
+        @user.delete_resumes_greater_than_10
       else
-        @user.resumes.each do |resume|
-          resume.destroy if resume.id.nil?
-        end
+        @user.delete_resumes_with_id_nil
       end
     else
       @applicant.resume_name = params[:resume]
     end
 
     if params[:cover_letter_file]
-      if @user.cover_letters.count >= 10
-        @user.cover_letters.order(:created_at).first.purge
-      end
       if @user.cover_letters.attach(params[:cover_letter_file])
         @applicant.cover_letter_name = "#{@user.cover_letters.last.filename.to_s} - #{@user.cover_letters.last.created_at.strftime("%d/%m/%Y")}"
+        @user.delete_cover_letters_greater_than_10
       else
-        @user.cover_letters.each do |cover_letter|
-          cover_letter.destroy if cover_letter.id.nil?
-        end
+        @user.delete_cover_letters_with_id_nil
       end
     else
       @applicant.cover_letter_name = params[:cover_letter]
@@ -81,8 +78,8 @@ class ApplicantsController < ApplicationController
     @applicant.user_id = @user.id
     @applicant.job_id = @job.id
 
-    # @user.valid? return true and all error dissaper that's why I am using !@user.errors.present? first to preserve previous error messages
-    if !@user.errors.present? && @user.valid? && @applicant.valid? && @applicant.save
+    # @user.valid? return true and all error dissaper that's why I am using !@user.errors.present? to preserve previous error messages
+    if !@user.errors.present? && @applicant.valid? && @applicant.save
       flash[:success] = 'Application Submitted.'
       ApplicantMailer.application_submitted(@user, @job, @applicant).deliver_later
       redirect_to root_path
