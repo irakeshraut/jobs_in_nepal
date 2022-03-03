@@ -54,7 +54,7 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def delete_resume_greater_than_10
+  def delete_resumes_greater_than_10
     resume_count = self.resumes.count
     resume_to_delete_count = resume_count - 10
     if resume_to_delete_count > 0
@@ -62,16 +62,39 @@ class User < ApplicationRecord
     end
   end
 
-  # @user.resume.last.destroy is not relialbe that why I am looping througn resumes
-  def delete_resume_with_id_nil
+  # @user.resumes.last.destroy is not relialbe that why I am looping througn resumes
+  def delete_resumes_with_id_nil
     self.resumes.each do |resume|
       resume.destroy if resume.id.nil?
     end
   end
 
-  def split_resume_in_group_of_2
+  def split_resumes_in_group_of_2
     if self.resumes.size > 0 
        self.resumes.order(created_at: :desc).in_groups_of((self.resumes.size/2.0).round, false)
+    else
+      [[],[]]
+    end
+  end
+
+  def delete_cover_letters_greater_than_10
+    cover_letter_count = self.cover_letters.count
+    cover_letter_to_delete_count = cover_letter_count - 10
+    if cover_letter_to_delete_count > 0
+      self.cover_letters.order(created_at: :asc).limit(cover_letter_to_delete_count).destroy_all
+    end
+  end
+
+  # @user.cover_letters.last.destroy is not relialbe that why I am looping througn cover_letters
+  def delete_cover_letters_with_id_nil
+    self.cover_letters.each do |cover_letter|
+      cover_letter.destroy if cover_letter.id.nil?
+    end
+  end
+
+  def split_cover_letters_in_group_of_2
+    if self.cover_letters.size > 0 
+       self.cover_letters.order(created_at: :desc).in_groups_of((self.cover_letters.size/2.0).round, false)
     else
       [[],[]]
     end

@@ -4,35 +4,20 @@ class CoverLettersController < ApplicationController
   def new
     @user = User.includes(cover_letters_attachments: :blob).find(params[:user_id])
     authorize @user, policy_class: CoverLetterPolicy
-    if @user.cover_letters.size > 0 
-      @cover_letters = @user.cover_letters.order(created_at: :desc).in_groups_of((@user.cover_letters.size/2.0).round, false)
-    else
-      @cover_letters = [[],[]]
-    end
+    @cover_letters = @user.split_cover_letters_in_group_of_2
   end
 
   def create
     @user = User.includes(cover_letters_attachments: :blob).find(params[:user_id])
     authorize @user, policy_class: CoverLetterPolicy
-    if @user.cover_letters.count >= 10
-      @user.cover_letters.order(:created_at).first.purge
-    end
     if @user.cover_letters.attach(params[:user][:cover_letter])
       flash[:success] = 'Cover Letter Attached'
+      @user.delete_cover_letters_greater_than_10
       redirect_to new_user_cover_letter_path(@user)
     else
-      # when attachment fails, record is still attached to user.cover_letters with id of nil. @user.cover_letters.last.destroy 
-      # is not reliable so I am looping through all cover_letters to delete the cover_letters with id of nil. 
-      # All below code are just setup for render :new
-      @user.cover_letters.each do |cover_letter|
-        cover_letter.destroy if cover_letter.id.nil?
-      end
-      if @user.cover_letters.size > 0 
-        @cover_letters = @user.cover_letters.order(created_at: :desc).in_groups_of((@user.cover_letters.size/2.0).round, false)
-      else
-        @cover_letters = [[],[]]
-      end
-
+      # when cover letter attach fails, cover letter is still attached with id nil
+      @user.delete_cover_letters_with_id_nil
+      @cover_letters = @user.split_cover_letters_in_group_of_2
       render :new
     end
   end

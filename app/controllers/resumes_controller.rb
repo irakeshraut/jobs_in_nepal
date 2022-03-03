@@ -4,7 +4,7 @@ class ResumesController < ApplicationController
   def new
     @user = User.includes(resumes_attachments: :blob).find(params[:user_id])
     authorize @user, policy_class: ResumePolicy
-    @resumes = @user.split_resume_in_group_of_2
+    @resumes = @user.split_resumes_in_group_of_2
   end
 
   def create
@@ -12,13 +12,12 @@ class ResumesController < ApplicationController
     authorize @user, policy_class: ResumePolicy
     if @user.resumes.attach(params[:user][:resume])
       flash[:success] = 'Resume Attached'
-      @user.delete_resume_greater_than_10
+      @user.delete_resumes_greater_than_10
       redirect_to new_user_resume_path(@user)
     else
       # when resume attach fails, resume is still attached with id nil
-      @user.delete_resume_with_id_nil
-      @resumes = @user.split_resume_in_group_of_2
-
+      @user.delete_resumes_with_id_nil
+      @resumes = @user.split_resumes_in_group_of_2
       render :new
     end
   end
