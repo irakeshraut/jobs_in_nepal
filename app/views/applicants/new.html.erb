@@ -39,7 +39,7 @@
         </div>
         <div class='col-sm-4'>
           <%= f.label :resume, '(OR) Select Resume' %>
-          <% options =  @user.resumes.includes(:blob).references(:blob).pluck(:filename, :created_at).reverse.map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
+          <% options =  @user.resumes.order(created_at: :desc).includes(:blob).references(:blob).pluck(:filename, :created_at).map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
           <%= f.select :resume, options_for_select(options), prompt: '-- Select --', class: 'form-control' %>
         </div>
       </div>
@@ -52,7 +52,7 @@
         </div>
         <div class='col-sm-4'>
           <%= f.label :cover_letter, '(OR) Select Cover Letter (Optional)' %>
-          <% options =  @user.cover_letters.includes(:blob).references(:blob).pluck(:filename, :created_at).reverse.map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
+          <% options =  @user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob).pluck(:filename, :created_at).map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
           <%= f.select :cover_letter, options_for_select(options), prompt: '-- Select --', class: 'form-control' %>
         </div>
       </div>

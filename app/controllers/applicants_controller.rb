@@ -17,13 +17,13 @@ class ApplicantsController < ApplicationController
     applicant = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id)
     if applicant.cover_letter_name.present?
       cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
-      @cover_letter = @applicant_user.cover_letters.includes(:blob).references(:blob)
-        .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).last
+      @cover_letter = @applicant_user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob)
+        .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).first
     end
     if applicant.resume_name.present?
       resume_name, resume_date = applicant.resume_name.split(' - ')
-      @resume = @applicant_user.resumes.includes(:blob).references(:blob)
-        .where(active_storage_blobs: { filename: resume_name, created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).last
+      @resume = @applicant_user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
+        .where(active_storage_blobs: { filename: resume_name, created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).first
     end
     if applicant.viewed_by_employer == false
       applicant.viewed_by_employer = true
@@ -55,7 +55,9 @@ class ApplicantsController < ApplicationController
 
     if params[:resume_file]
       if @user.resumes.attach(params[:resume_file])
-        @applicant.resume_name = "#{@user.resumes.last.filename.to_s} - #{@user.resumes.last.created_at.strftime("%d/%m/%Y")}"
+        # @user.resumes.last is not reliable that why I am using order
+        resume = @user.resumes.order(created_at: :desc).first
+        @applicant.resume_name = "#{resume.filename.to_s} - #{resume.created_at.strftime("%d/%m/%Y")}"
         @user.delete_resumes_greater_than_10
       else
         @user.delete_resumes_with_id_nil
@@ -66,7 +68,9 @@ class ApplicantsController < ApplicationController
 
     if params[:cover_letter_file]
       if @user.cover_letters.attach(params[:cover_letter_file])
-        @applicant.cover_letter_name = "#{@user.cover_letters.last.filename.to_s} - #{@user.cover_letters.last.created_at.strftime("%d/%m/%Y")}"
+        # @user.cover_letters.last is not reliable that why I am using order
+        cover_letter = @user.cover_letters.order(created_at: :desc).first
+        @applicant.cover_letter_name = "#{cover_letter.filename.to_s} - #{cover_letter.created_at.strftime("%d/%m/%Y")}"
         @user.delete_cover_letters_greater_than_10
       else
         @user.delete_cover_letters_with_id_nil
@@ -134,8 +138,8 @@ class ApplicantsController < ApplicationController
     user = User.find(params[:id])
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     resume_name, resume_date = applicant.resume_name.split(' - ')
-    resume = user.resumes.includes(:blob).references(:blob)
-      .where(active_storage_blobs: { filename: resume_name, created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).last
+    resume = user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
+      .where(active_storage_blobs: { filename: resume_name, created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).first
     if resume
       send_data resume.download, filename: resume.filename.to_s
     else
@@ -155,8 +159,8 @@ class ApplicantsController < ApplicationController
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.cover_letter_name.present?
       cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
-      cover_letter = user.cover_letters.includes(:blob).references(:blob)
-        .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).last
+      cover_letter = user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob)
+        .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).first
       if cover_letter
         send_data cover_letter.download, filename: cover_letter.filename.to_s
       else
