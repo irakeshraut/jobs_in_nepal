@@ -129,7 +129,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :phone_no, :avatar, :password, :password_confirmation, :city, :skills,
+    params.require(:user).permit(:first_name, :last_name, :email, :phone_no, :avatar, :password, :password_confirmation, :city, :skills, :profile_visible, :visible_resume_name,
                                  work_experiences_attributes:
                                  [:id, :job_title, :company_name, :_destroy, :start_month, :start_year, :finish_month, :finish_year, :still_in_role, :description],
                                  educations_attributes: [:id, :institution_name, :course_name, :course_completed, :finished_year, :_destroy,

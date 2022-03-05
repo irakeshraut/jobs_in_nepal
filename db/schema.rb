@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_091608) do
+ActiveRecord::Schema.define(version: 2022_03_04_122229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -131,6 +131,8 @@ ActiveRecord::Schema.define(version: 2022_03_02_091608) do
     t.integer "access_count_to_reset_password_page", default: 0
     t.string "city"
     t.string "skills"
+    t.boolean "profile_visible", default: false, null: false
+    t.string "visible_resume_name"
     t.index ["activation_token"], name: "index_users_on_activation_token"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true

@@ -34,9 +34,15 @@ class User < ApplicationRecord
   validates :cover_letters, content_type:  ['application/pdf', 'application/x-ole-storage', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'text/plain', 'application/rtf']
   validates :cover_letters, size: { less_than: 2.megabytes }
   validates :avatar, size: { less_than: 2.megabytes }
+  validates :profile_visible, inclusion: { in:  [true, false] }
+  validates :visible_resume_name, presence: true, if: :profile_visible
+  validates :phone_no, presence: true, if: :profile_visible
+  validates :skills, presence: true, if: :profile_visible
 
   scope :filter_by_name, ->(name) { where("lower(first_name) || ' ' || lower(last_name) like ?", "%#{name.downcase}%") }
   scope :filter_by_status, ->(status) { where(applicants: { status: status }) }
+
+  before_save :clean_up_visible_resume_name
 
   def admin?
     role == 'admin'
@@ -58,7 +64,19 @@ class User < ApplicationRecord
     resume_count = self.resumes.count
     resume_to_delete_count = resume_count - 10
     if resume_to_delete_count > 0
-      self.resumes.order(created_at: :asc).limit(resume_to_delete_count).destroy_all
+      if self.profile_visible
+        visible_resume_name, resume_created_date = self.visible_resume_name.split(' - ')
+        visible_resume = self.resumes.includes(:blob).references(:blob).order(created_at: :desc)
+          .where(active_storage_blobs: { filename: visible_resume_name, created_at: Date.parse(resume_created_date).beginning_of_day..Date.parse(resume_created_date).end_of_day }).first
+        oldest_resume = self.resumes.includes(:blob).references(:blob).order(created_at: :desc).last
+        if visible_resume == oldest_resume
+          self.resumes.where.not(id: visible_resume.id).order(created_at: :asc).limit(resume_to_delete_count).destroy_all
+        else
+          self.resumes.order(created_at: :asc).limit(resume_to_delete_count).destroy_all
+        end
+      else
+        self.resumes.order(created_at: :asc).limit(resume_to_delete_count).destroy_all
+      end
     end
   end
 
@@ -97,6 +115,12 @@ class User < ApplicationRecord
        self.cover_letters.order(created_at: :desc).in_groups_of((self.cover_letters.size/2.0).round, false)
     else
       [[],[]]
+    end
+  end
+
+  def clean_up_visible_resume_name
+    unless profile_visible
+      self.visible_resume_name = nil
     end
   end
 end

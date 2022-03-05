@@ -6,6 +6,12 @@
       </div>
       <div class="dashboard-caption-wrap">
         <%= render 'shared/error_messages', object: @user %>
+        <% if @trying_to_delete_visible_resume %>
+          <p class='alert alert-danger'>You are trying to delete Resume which is attached to your profile. In order to delete this resume you can go to <%= link_to 'Profile Page', edit_user_path(@user) %>
+          and select another resume to be visible or you can make your profile invisible to Employers/Recuriters.
+          </p>
+        <% end %>
+
         <p class='alert alert-info'>You can upload upto 10 Resumes. If you upload more than 10 resumes than older resumes will be automatically deleted.</p>
         <% if @user.resumes.attached? %>
           <p><%= @user.resumes.count %> Resume Found</p>

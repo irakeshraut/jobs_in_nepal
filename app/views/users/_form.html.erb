@@ -36,7 +36,7 @@
         <div class="form-group">
           <%= f.label :phone_no, 'Phone Number'  %>
           <div class="input-with-icon">
-            <%= f.phone_field :phone_no, placeholder: 'Enter Your Phone Number', class: 'form-control' %>
+            <%= f.phone_field :phone_no, placeholder: 'Enter Your Phone Number', class: 'form-control', id: 'phone_no' %>
             <i class="theme-cl ti-mobile"></i>
           </div>
         </div>
@@ -59,7 +59,7 @@
         <div class="form-group">
           <%= f.label :skills, 'Skills (Recommended)'  %>
           <div class="input-with-icon">
-            <%= f.text_field :skills, placeholder: 'Enter Your Skills seperated by comma (e.g html, css, photoshop)', class: 'form-control' %>
+            <%= f.text_field :skills, placeholder: 'Enter Your Skills seperated by comma (e.g html, css, photoshop)', class: 'form-control', id: 'skills' %>
             <i class="theme-cl ti-star"></i>
           </div>
         </div>
@@ -80,6 +80,27 @@
         </div>
       </div>
     </div>
+
+    <div class='row'>
+      <div class='col-md-12'>
+        <div class='form-group'>
+          <%= f.check_box :profile_visible, id: 'profile-visible-checkbox' %> Make my profile visible/searchable by Employer and Recuriters.
+        </div>
+      </div>
+    </div>
+
+    <div class='row' id='select-resume'>
+      <div class='col-md-6'>
+        <div class='form-group'>
+          <%= f.label :visible_resume_name, 'Select Resume' %>
+          <% options =  @user.resumes.order(created_at: :desc).includes(:blob).references(:blob).pluck(:filename, :created_at).map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
+          <% if options.empty? %>
+            <p class='alert alert-danger'>You haven't uploaded any Resume yet. Please upload your resume from <%= link_to 'Resume Page', new_user_resume_path(@user) %> and then come back and select the resume you want to make it visible.</p>
+          <% end %>
+          <%= f.select :visible_resume_name, options, { include_blank: '-- Select --' } , class: 'form-control', id: 'select-resume-options' %>
+        </div>
+      </div>
+    </div>
   <% end %>
 
   <div class='row mrg-top-30'>
@@ -90,3 +111,33 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  $(document).ready(function() {
+    if ($('#profile-visible-checkbox').is(':checked')) {
+      $('#select-resume').show();
+      $('#select-resume-options').attr('required', true);
+      $('#phone_no').attr('required', true);
+      $('#skills').attr('required', true);
+    } else {
+      $('#select-resume').hide();
+      $('#select-resume-options').removeAttr('required');
+      $('#phone_no').removeAttr('required');
+      $('#skills').removeAttr('required');
+    }
+ 
+    $('#profile-visible-checkbox').change(function() {
+      if (this.checked) {
+        $('#select-resume').show();
+        $('#select-resume-options').attr('required', true);
+        $('#phone_no').attr('required', true);
+        $('#skills').attr('required', true);
+      } else {
+        $('#select-resume').hide();
+        $('#select-resume-options').removeAttr('required');
+        $('#phone_no').removeAttr('required');
+        $('#skills').removeAttr('required');
+      }
+    })
+  });
+</script>
