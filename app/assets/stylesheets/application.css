@@ -119,3 +119,9 @@ nav.navbar.bootsnav .navbar-brand {
 .brows-job-sallery {
   margin-left: 0px !important;
 }
+
+@media (max-width: 1000px) {
+  .nav-tabs.modern-tabs >li >a {
+    padding: 1.7rem !important;
+  }    
+}
