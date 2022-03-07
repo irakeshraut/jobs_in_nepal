@@ -123,5 +123,20 @@ nav.navbar.bootsnav .navbar-brand {
 @media (max-width: 1000px) {
   .nav-tabs.modern-tabs >li >a {
     padding: 1.7rem !important;
-  }    
+  }
+
+  img.logo {
+    padding-left: 40px !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding-bottom: 10px;
+  }
 }
+
+img.logo{
+  padding-top: 25px;
+  width: 210px !important;
+}
+
