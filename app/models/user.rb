@@ -38,6 +38,7 @@ class User < ApplicationRecord
   validates :visible_resume_name, presence: true, if: :profile_visible
   validates :phone_no, presence: true, if: :profile_visible
   validates :skills, presence: true, if: :profile_visible
+  validates :city, presence: true, if: :profile_visible
 
   scope :filter_by_name, ->(name) { where("lower(first_name) || ' ' || lower(last_name) like ?", "%#{name.downcase}%") }
   scope :filter_by_status, ->(status) { where(applicants: { status: status }) }

@@ -50,7 +50,7 @@
         <div class="form-group">
           <%= f.label :city, 'City'  %>
           <div class="input-with-icon">
-            <%= f.text_field :city, placeholder: 'Enter Your City Name', class: 'form-control' %>
+            <%= f.text_field :city, placeholder: 'Enter Your City Name', class: 'form-control', id: 'city' %>
             <i class="theme-cl ti-location-arrow"></i>
           </div>
         </div>
@@ -119,11 +119,13 @@
       $('#select-resume-options').attr('required', true);
       $('#phone_no').attr('required', true);
       $('#skills').attr('required', true);
+      $('#city').attr('required', true);
     } else {
       $('#select-resume').hide();
       $('#select-resume-options').removeAttr('required');
       $('#phone_no').removeAttr('required');
       $('#skills').removeAttr('required');
+      $('#city').removeAttr('required');
     }
  
     $('#profile-visible-checkbox').change(function() {
@@ -132,11 +134,13 @@
         $('#select-resume-options').attr('required', true);
         $('#phone_no').attr('required', true);
         $('#skills').attr('required', true);
+        $('#city').attr('required', true);
       } else {
         $('#select-resume').hide();
         $('#select-resume-options').removeAttr('required');
         $('#phone_no').removeAttr('required');
         $('#skills').removeAttr('required');
+        $('#city').removeAttr('required');
       }
     })
   });
