@@ -27,10 +27,18 @@ class JobPolicy < ApplicationPolicy
   end
 
   def close_job?
-    user.employer? && job.user == user && !job.expired?
+    (user.admin? || user.employer?) && job.user == user && !job.expired?
   end
 
   def reopen_job?
-    user.employer? && job.user == user && !job.expired?
+    (user.admin? || user.employer?) && job.user == user && !job.expired?
+  end
+
+  def closed_by_admin?
+    user.admin? && !job.expired?
+  end
+
+  def reopened_by_admin?
+    user.admin? && !job.expired?
   end
 end

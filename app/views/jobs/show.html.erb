@@ -78,6 +78,16 @@
             <i class='ti-check mrg-r-5'></i>Re-open Job
           <% end %>
         <% end %>
+        <% if current_user && current_user.admin? && @job.active? && @job.user != current_user %>
+          <%= link_to closed_by_admin_job_path(@job), class: 'btn btn-danger full-width' do %>
+            <i class='ti-close mrg-r-5'></i>Close by Admin
+          <% end %>
+        <% end %>
+        <% if current_user && current_user.admin? && @job.closed_by_admin && @job.closed? && @job.user != current_user %>
+          <%= link_to reopened_by_admin_job_path(@job), class: 'btn btn-primary full-width' do %>
+            <i class='ti-check mrg-r-5'></i>Re-open by Admin
+          <% end %>
+        <% end %>
       </div>
     </div>
 

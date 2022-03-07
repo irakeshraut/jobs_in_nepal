@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     member do
       get :close_job
       get :reopen_job
+      get :closed_by_admin
+      get :reopened_by_admin
     end
     resources :applicants, only: [:index, :show, :new, :create] do
       member do

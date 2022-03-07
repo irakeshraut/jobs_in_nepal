@@ -78,6 +78,26 @@ class JobsController < ApplicationController
     redirect_to job
   end
 
+  def closed_by_admin
+    job = Job.find(params[:id])
+    authorize job
+    job.status = 'Closed'
+    job.closed_by_admin = true
+    job.save
+    flash[:success] = 'Job has been closed by Admin.'
+    redirect_to job
+  end
+
+  def reopened_by_admin
+    job = Job.find(params[:id])
+    authorize job
+    job.status = 'Active'
+    job.closed_by_admin = nil
+    job.save
+    flash[:success] = 'Job has been Re-opened by Admin.'
+    redirect_to job
+  end
+
   private
 
   def job_params
