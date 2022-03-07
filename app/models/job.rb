@@ -2,7 +2,7 @@ include ActiveSupport::NumberHelper
 include ActionView::Helpers::NumberHelper
 
 class Job < ApplicationRecord
-  STATUS = ['Active', 'Expired', 'Close'].freeze
+  STATUS = ['Active', 'Expired', 'Closed'].freeze
   TYPE   = ['Full Time', 'Part Time', 'Casual', 'Contract', 'Freelance'].freeze
 
   validates :title,           presence: true
@@ -33,6 +33,18 @@ class Job < ApplicationRecord
   scope :created_today, -> { where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day) }
   scope :created_this_week, -> { where(created_at: Time.zone.now.beginning_of_week..Time.zone.now.end_of_week) }
   scope :created_this_month, -> { where(created_at: Time.zone.now.beginning_of_month..Time.zone.now.end_of_month) }
+
+  def active?
+    status == 'Active'
+  end
+
+  def expired?
+    status == 'Expired'
+  end
+
+  def closed?
+    status == 'Closed'
+  end
 
   def salary
     if min_salary.present? && max_salary.present?
@@ -67,9 +79,5 @@ class Job < ApplicationRecord
     jobs = Job.where("lower(title) like ?", self.title.downcase).or(Job.where("lower(category) like?", self.category.downcase))
       .includes(user: { company: [logo_attachment: :blob] }).order(created_at: :desc)
     jobs.to_a.delete_if {|job| job.id == self.id }
-  end
-  
-  def expired?
-    status == 'Expired'
   end
 end

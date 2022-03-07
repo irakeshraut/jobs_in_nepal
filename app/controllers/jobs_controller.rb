@@ -60,6 +60,24 @@ class JobsController < ApplicationController
     redirect_to all_posted_jobs_user_path(current_user)
   end
 
+  def close_job
+    job = Job.find(params[:id])
+    authorize job
+    job.status = 'Closed'
+    job.save
+    flash[:success] = 'Job has been closed.'
+    redirect_to job
+  end
+
+  def reopen_job
+    job = Job.find(params[:id])
+    authorize job
+    job.status = 'Active'
+    job.save
+    flash[:success] = 'Job has been Re-opened.'
+    redirect_to job
+  end
+
   private
 
   def job_params

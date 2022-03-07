@@ -25,4 +25,12 @@ class JobPolicy < ApplicationPolicy
   def destroy?
     job.user == user
   end
+
+  def close_job?
+    user.employer? && job.user == user && !job.expired?
+  end
+
+  def reopen_job?
+    user.employer? && job.user == user && !job.expired?
+  end
 end

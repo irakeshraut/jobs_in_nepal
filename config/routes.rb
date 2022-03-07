@@ -38,6 +38,10 @@ Rails.application.routes.draw do
     end
   end
   resources :jobs do
+    member do
+      get :close_job
+      get :reopen_job
+    end
     resources :applicants, only: [:index, :show, :new, :create] do
       member do
         get :shortlist
