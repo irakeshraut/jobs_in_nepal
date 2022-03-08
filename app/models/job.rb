@@ -24,13 +24,13 @@ class Job < ApplicationRecord
   validates :description, presence: true
 
   scope :active, -> { where(status: 'Active') }
+  scope :closed, -> { where(status: 'Closed') }
   scope :expired, -> { where(status: 'Expired') }
   scope :filter_by_title, ->(title) { where("lower(title) like ?", "%#{title.downcase}%") }
   scope :filter_by_category, ->(category) { where(category: category) }
   scope :filter_by_location, ->(location) { where("lower(location) like ?", "%#{location.downcase}%") }
   scope :filter_by_status, ->(status) { where("lower(status) like ?", "%#{status.downcase}%") }
 
-  scope :created_today, -> { where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day) }
   scope :created_this_week, -> { where(created_at: Time.zone.now.beginning_of_week..Time.zone.now.end_of_week) }
   scope :created_this_month, -> { where(created_at: Time.zone.now.beginning_of_month..Time.zone.now.end_of_month) }
 
