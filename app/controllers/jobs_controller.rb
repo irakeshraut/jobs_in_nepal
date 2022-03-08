@@ -15,7 +15,7 @@ class JobsController < ApplicationController
     if @job.views.where(ip: request.remote_ip).created_today.empty?
       @job.views.create(ip: request.remote_ip)
     end
-    @similar_jobs = @job.similar_jobs.shuffle.take(4)
+    @similar_jobs = @job.similar_jobs
   end
 
   def new

@@ -139,3 +139,7 @@ img.logo{
   padding-top: 25px;
   width: 210px !important;
 }
+
+.ur-detail-btn {
+  max-width: 330px;
+}
