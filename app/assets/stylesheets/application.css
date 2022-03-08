@@ -143,3 +143,7 @@ img.logo{
 .ur-detail-btn {
   max-width: 330px;
 }
+
+input:focus, input:hover, textarea:focus, textarea:hover, select:hover, .select2-container--focus, trix-editor:hover, trix-editor:focus, .select2:hover {
+  border: 1px solid #11b719 !important;
+}
