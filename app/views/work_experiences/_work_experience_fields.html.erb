@@ -6,7 +6,7 @@
         <%= f.label :job_tile, 'Job Title'  %>
         <div class="input-with-icon">
           <%= f.text_field :job_title, placeholder: 'Enter Job Title', class: 'form-control', required: true %>
-          <i class="theme-cl ti-home"></i>
+          <i class="theme-cl ti-pencil"></i>
         </div>
       </div>
     </div>
@@ -15,7 +15,7 @@
         <%= f.label :company_name, 'Company Name'  %>
         <div class="input-with-icon">
           <%= f.text_field :company_name, placeholder: 'Enter Company Name', class: 'form-control', required: true %>
-          <i class="theme-cl ti-mobile"></i>
+          <i class="theme-cl ti-home"></i>
         </div>
       </div>
     </div>
@@ -24,13 +24,19 @@
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
         <%= f.label :started, 'Start Month' %>
-        <%= f.select :start_month, WorkExperiencesHelper.months, { prompt: '-- Select --' }, class: 'form-control', required: true %>
+        <div class="input-with-icon">
+          <%= f.select :start_month, WorkExperiencesHelper.months, { prompt: '-- Select --' }, class: 'form-control', required: true %>
+          <i class="theme-cl ti-calendar"></i>
+        </div>
       </div>
     </div>
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
         <%= f.label :started, 'Start Year' %>
-        <%= f.select :start_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control', required: true %>
+        <div class="input-with-icon">
+          <%= f.select :start_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control', required: true %>
+          <i class="theme-cl ti-calendar"></i>
+        </div>
       </div>
     </div>
   </div>
@@ -38,13 +44,19 @@
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
         <%= f.label :finished, 'Finished Month' %>
-        <%= f.select :finish_month, WorkExperiencesHelper.months, { prompt: '-- Select --' }, class: 'form-control' %>
+        <div class="input-with-icon">
+          <%= f.select :finish_month, WorkExperiencesHelper.months, { prompt: '-- Select --' }, class: 'form-control' %>
+          <i class="theme-cl ti-calendar"></i>
+        </div>
       </div>
     </div>
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
         <%= f.label :finished, 'Finished Year' %>
-        <%= f.select :finish_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control' %>
+        <div class="input-with-icon">
+          <%= f.select :finish_year, WorkExperiencesHelper.years, { prompt: '-- Select --' }, class: 'form-control' %>
+          <i class="theme-cl ti-calendar"></i>
+        </div>
       </div>
     </div>
   </div>
