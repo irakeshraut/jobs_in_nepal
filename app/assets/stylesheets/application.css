@@ -135,7 +135,7 @@ nav.navbar.bootsnav .navbar-brand {
   }
 }
 
-img.logo{
+img.logo {
   padding-top: 25px;
   width: 210px !important;
 }
@@ -144,6 +144,6 @@ img.logo{
   max-width: 330px;
 }
 
-input:focus, input:hover, textarea:focus, textarea:hover, select:hover, .select2-container--focus, trix-editor:hover, trix-editor:focus, .select2:hover {
+input:focus, input:hover, textarea:focus, textarea:hover, select:hover, select:focus, .select2-container--focus, trix-editor:hover, trix-editor:focus, .select2:hover {
   border: 1px solid #11b719 !important;
 }
