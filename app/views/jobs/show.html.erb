@@ -49,6 +49,10 @@
           <%= link_to '#', class: 'btn btn-warning mrg-bot-10 full-width disabled' do %>
             <i class='ti-star mar-r-5'></i>You Already Applied
           <% end %>
+        <% elsif !@job.active? %>
+          <%= link_to '#', class: 'btn btn-warning mrg-bot-10 full-width disabled' do %>
+            <i class='ti-star mar-r-5'></i>Apply
+          <% end %>
         <% else %>
           <%= link_to new_job_applicant_path(@job), class: 'btn btn-warning mrg-bot-10 full-width' do %>
             <i class='ti-star mar-r-5'></i>Apply
@@ -127,6 +131,10 @@
               <% if current_user && @job.users.include?(current_user) %>
                 <%= link_to '#', class: 'btn btn-warning disabled' do %>
                   <i class='ti-star mar-r-5'></i>You Already Applied
+                <% end %>
+              <% elsif !@job.active? %>
+                <%= link_to '#', class: 'btn btn-warning disabled' do %>
+                  <i class='ti-star mar-r-5'></i>Apply
                 <% end %>
               <% else %>
                 <%= link_to new_job_applicant_path(@job), class: 'btn btn-warning' do %>
