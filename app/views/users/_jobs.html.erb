@@ -19,7 +19,11 @@
             <small class="job-update"><i class="ti-user"></i><%= pluralize(job.users.count, 'Applicant') %></small>
             <div class='btn-wrapper'>
               <span class="j-type full-time"><%= job.employment_type %></span>
-              <span class="j-type margin-left <%= job.status == 'Active' ? 'full-time' : 'part-time' %>"><%= job.status %></span>
+              <% if job.closed_by_admin %>
+                <span class="j-type margin-left part-time">Closed by Admin</span>
+              <% else %>
+                <span class="j-type margin-left <%= job.status == 'Active' ? 'full-time' : 'part-time' %>"><%= job.status %></span>
+              <% end %>
             </div>
           </div>
         </div>
