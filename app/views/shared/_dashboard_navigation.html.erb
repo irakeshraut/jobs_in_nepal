@@ -95,6 +95,11 @@
               <i class="fa fa-briefcase"></i>Employer Jobs (today)
             <% end %>
           </li>
+          <li class="<%= controller.controller_name == 'dashboards' && controller.action_name == 'jobs_posted_by_employer_today' ? 'active' : '' %>">
+            <%= link_to all_jobs_posted_by_admin_and_employers_user_dashboards_path(current_user) do %>
+              <i class="fa fa-briefcase"></i>All Jobs (admin + employers)
+            <% end %>
+          </li>
         <% end %>
         <li class="<%= controller.controller_name == 'users' && (controller.action_name == 'edit_password' || controller.action_name == 'update_password') ? 'active' : '' %>">
           <%= link_to edit_password_user_path(current_user) do %>

@@ -21,4 +21,13 @@ class DashboardsController < ApplicationController
     @jobs = @jobs.filter_by_status(params[:status]) if params[:status].present?
     @jobs = @jobs.paginate(page: params[:page], per_page: 30)
   end
+
+  def all_jobs_posted_by_admin_and_employers
+    @user = User.find(params[:user_id])
+    authorize @user, policy_class: DashboardPolicy
+    @jobs = Job.all.order(created_at: :desc).includes(user: { company: [logo_attachment: :blob] })
+    @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
+    @jobs = @jobs.filter_by_status(params[:status]) if params[:status].present?
+    @jobs = @jobs.paginate(page: params[:page], per_page: 30)
+  end
 end

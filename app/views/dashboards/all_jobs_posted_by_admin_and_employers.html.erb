@@ -1,0 +1,39 @@
+<div class="col-lg-9 col-md-8">
+  <div class="dashboard-body">
+    <div class="dashboard-caption">
+      <div class="dashboard-caption-header">
+        <h4><i class="fa fa-briefcase"></i>All Jobs (admin + employers)</h4>
+      </div>
+      <div class="dashboard-caption-wrap">
+
+        <div class="row">
+          <%= form_with url: all_jobs_posted_by_admin_and_employers_user_dashboards_path(current_user), method: :get, local: true do |f| %>
+            <div class="col-lg-5 col-md-5 col-sm-12">
+              <div class="form-group">
+                <%= f.text_field :title, placeholder: 'Job Title', class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12">
+              <div class="form-group">
+                <%= f.select :status, options_for_select(Job::STATUS), prompt: '-- Select --' , class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="form-group">
+                <%= f.submit 'Search', class: 'btn btn-primary btn-block' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <%= render "users/jobs", jobs: @jobs %>
+
+        <div class="row">
+          <div class="digg_pagination">
+            <%= will_paginate @jobs %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

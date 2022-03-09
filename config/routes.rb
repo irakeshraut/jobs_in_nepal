@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :dashboards, only: [:index] do
       collection do
         get :jobs_posted_by_employers_today
+        get :all_jobs_posted_by_admin_and_employers
       end
     end
     resources :work_experiences, only: [:new]
