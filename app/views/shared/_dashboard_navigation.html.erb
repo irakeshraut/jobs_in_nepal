@@ -89,6 +89,13 @@
             <i class="fa fa-heart"></i>Saved Jobs
           <% end %>
         </li>
+        <% if current_user.admin? %>
+          <li class="<%= controller.controller_name == 'dashboards' && controller.action_name == 'jobs_posted_by_employer_today' ? 'active' : '' %>">
+            <%= link_to jobs_posted_by_employers_today_user_dashboards_path(current_user) do %>
+              <i class="fa fa-briefcase"></i>Employer Jobs (today)
+            <% end %>
+          </li>
+        <% end %>
         <li class="<%= controller.controller_name == 'users' && (controller.action_name == 'edit_password' || controller.action_name == 'update_password') ? 'active' : '' %>">
           <%= link_to edit_password_user_path(current_user) do %>
             <i class="fa fa-lock"></i>Change Password

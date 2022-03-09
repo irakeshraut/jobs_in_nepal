@@ -11,4 +11,14 @@ class DashboardsController < ApplicationController
       @expired_jobs = @user.jobs.expired.order(created_at: :desc).take(10)
     end
   end
+
+  def jobs_posted_by_employers_today
+    @user = User.find(params[:user_id])
+    authorize @user, policy_class: DashboardPolicy
+    @jobs = Job.joins(:user).where(users: { role: 'employer' }).created_today.order(created_at: :desc)
+      .includes(user: { company: [logo_attachment: :blob] })
+    @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
+    @jobs = @jobs.filter_by_status(params[:status]) if params[:status].present?
+    @jobs = @jobs.paginate(page: params[:page], per_page: 30)
+  end
 end

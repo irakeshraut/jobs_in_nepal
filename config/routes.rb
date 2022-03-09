@@ -16,7 +16,11 @@ Rails.application.routes.draw do
       get :delete_avatar
     end
     resources :bookmarks, only: [:index, :create, :destroy]
-    resources :dashboards, only: [:index]
+    resources :dashboards, only: [:index] do
+      collection do
+        get :jobs_posted_by_employers_today
+      end
+    end
     resources :work_experiences, only: [:new]
     resources :educations, only: [:new]
     resources :resumes, only: [:new, :create, :destroy] do

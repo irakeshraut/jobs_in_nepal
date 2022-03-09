@@ -15,4 +15,8 @@ class DashboardPolicy < ApplicationPolicy
   def index?
     user_record == user
   end
+
+  def jobs_posted_by_employers_today?
+    user_record == user && user.admin?
+  end
 end

@@ -15,7 +15,8 @@
           <div class="job-details">
             <h3 class="job-name"><%= link_to(job.title.truncate(90), job) %></h3>
             <small class="job-company"><i class="ti-home"></i><a href="#"><%= job.category %></a></small>
-            <small class="job-sallery"><i class="ti-credit-card"></i><%= job.salary %></small>
+            <small class="job-sallery"><i class="ti-credit-card"></i><%= job.full_salary %></small>
+            <small class="job-update"><i class="ti-eye"></i><%= pluralize(job.views.count, 'View') %></small>
             <small class="job-update"><i class="ti-user"></i><%= pluralize(job.users.count, 'Applicant') %></small>
             <div class='btn-wrapper'>
               <span class="j-type full-time"><%= job.employment_type %></span>
@@ -27,16 +28,18 @@
             </div>
           </div>
         </div>
-        <div class="job-buttons">
-          <%= link_to 'View Applicants', job_applicants_path(job), class: 'btn btn-info' %>
-          <%= link_to edit_job_path(job), class: 'btn btn-gray manage-btn', title: 'Edit' do %>
-            <i class='ti-pencil-alt'></i>
-          <% end %>
+        <% if job.user == @user %>
+          <div class="job-buttons">
+            <%= link_to 'View Applicants', job_applicants_path(job), class: 'btn btn-info' %>
+            <%= link_to edit_job_path(job), class: 'btn btn-gray manage-btn', title: 'Edit' do %>
+              <i class='ti-pencil-alt'></i>
+            <% end %>
 
-          <%= link_to job_path(job), method: :delete, data: { confirm: 'Are you sure ?' }, class: 'btn btn-cancel manage-btn', title: 'Delete' do %>
-            <i class='ti-close'></i>
-          <% end %>
-        </div>
+            <%= link_to job_path(job), method: :delete, data: { confirm: 'Are you sure ?' }, class: 'btn btn-cancel manage-btn', title: 'Delete' do %>
+              <i class='ti-close'></i>
+            <% end %>
+          </div>
+        <% end %>
       </li>
     </ul>
   <% end %>
