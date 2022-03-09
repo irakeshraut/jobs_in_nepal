@@ -1,0 +1,15 @@
+Hi <%= @company_user.first_name %>,
+
+Candidate <%= @applicant_user.full_name %> have applied for job <%= @job.title %>.
+
+You can view <%= @applicant_user.full_name %> application by clicking <%= link_to 'here', job_applicant_url(@job, @applicant_user) %> or you can view all applicants by clicking <%= link_to 'All Applicants', job_applicants_url(@job) %>.
+
+Here’s a summary of the job that was created on <%= @job.created_at.strftime("%d/%m/%Y") %>
+Job Title: <%= link_to(@job.title, @job) %>
+Total Views: <%= @job.views.count %>
+Total Applicants: <%= @job.applicants.count %>
+
+with Regards
+Jobs in Nepal
+www.jobsinnepal.com
+info@jobsinnepal.com

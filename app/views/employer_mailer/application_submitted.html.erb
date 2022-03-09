@@ -1,0 +1,19 @@
+<p>Hi <%= @company_user.first_name %>,</p>
+
+<p>Candidate <strong><%= @applicant_user.full_name %></strong> have applied for job <strong><%= @job.title %></strong>.</p>
+
+<p>You can view <strong><%= @applicant_user.full_name %></strong> application by clicking <%= link_to 'here', job_applicant_url(@job, @applicant_user) %> or you can view all applicants by clicking <%= link_to 'All Applicants', job_applicants_url(@job) %>.</p>
+
+<hr>
+<p>Here’s a summary of the job that was created on <%= @job.created_at.strftime("%d/%m/%Y") %></p>
+<p>Job Title: <%= link_to(@job.title, @job) %></p>
+<p>Total Views: <%= @job.views.count %></p>
+<p>Total Applicants: <%= @job.applicants.count %></p>
+<hr>
+
+<pre>
+with Regards
+Jobs in Nepal
+www.jobsinnepal.com
+info@jobsinnepal.com
+</pre>
