@@ -15,7 +15,7 @@ class DashboardsController < ApplicationController
   def jobs_posted_by_employers_today
     @user = User.find(params[:user_id])
     authorize @user, policy_class: DashboardPolicy
-    @jobs = Job.joins(:user).where(users: { role: 'employer' }).created_today.order(created_at: :desc)
+    @jobs = Job.created_by_employers.created_today.order(created_at: :desc)
       .includes(user: { company: [logo_attachment: :blob] })
     @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
     @jobs = @jobs.filter_by_status(params[:status]) if params[:status].present?

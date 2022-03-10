@@ -30,6 +30,7 @@ class Job < ApplicationRecord
   scope :filter_by_category, ->(category) { where(category: category) }
   scope :filter_by_location, ->(location) { where("lower(location) like ?", "%#{location.downcase}%") }
   scope :filter_by_status, ->(status) { where("lower(status) like ?", "%#{status.downcase}%") }
+  scope :created_by_employers, -> { joins(:user).where(users: { role: 'employer' }) }
 
   scope :created_this_week, -> { where(created_at: Time.zone.now.beginning_of_week..Time.zone.now.end_of_week) }
   scope :created_this_month, -> { where(created_at: Time.zone.now.beginning_of_month..Time.zone.now.end_of_month) }
