@@ -6,6 +6,8 @@ class Education < ApplicationRecord
   validates :expected_finish_month, presence: true,  unless: :course_completed
   validates :expected_finish_year, presence: true, unless: :course_completed
 
+  has_rich_text :course_highlights
+
   belongs_to :user
 
   before_save :clean_up_course_finish_time
