@@ -365,7 +365,7 @@ Rails.application.config.sorcery.configure do |config|
     # Activation success email method on your mailer class.
     # Default: `:activation_success_email`
     #
-    # user.activation_success_email_method_name =
+    user.activation_success_email_method_name = nil
 
     # Do you want to prevent users who did not activate by email from logging in?
     # Default: `true`

@@ -7,6 +7,8 @@ class WorkExperience < ApplicationRecord
   validates :finish_month, presence: true, unless: :still_in_role
   validates :finish_year, presence: true, unless: :still_in_role
 
+  has_rich_text :description
+
   belongs_to :user
 
   before_save :clean_up_work_experience_finish_time
