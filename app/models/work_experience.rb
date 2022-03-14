@@ -12,11 +12,16 @@ class WorkExperience < ApplicationRecord
   belongs_to :user
 
   before_save :clean_up_work_experience_finish_time
+  before_save :delete_empty_description
 
   def clean_up_work_experience_finish_time
     if still_in_role
       self.finish_month = nil
       self.finish_year = nil
     end
+  end
+
+  def delete_empty_description
+    self.description.destroy if self.description.body.blank?
   end
 end

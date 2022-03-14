@@ -12,11 +12,17 @@ class Company < ApplicationRecord
 
   has_rich_text :description
 
+  before_save :delete_empty_description
+
   private
 
   def logo_validation
     if logo.attached? && !logo.image?
       errors[:base] << 'Logo must be Image type.'
     end
+  end
+
+  def delete_empty_description
+    self.description.destroy if self.description.body.blank?
   end
 end
