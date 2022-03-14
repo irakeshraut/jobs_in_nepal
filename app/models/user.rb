@@ -42,6 +42,8 @@ class User < ApplicationRecord
 
   scope :filter_by_name, ->(name) { where("lower(first_name) || ' ' || lower(last_name) like ?", "%#{name.downcase}%") }
   scope :filter_by_status, ->(status) { where(applicants: { status: status }) }
+  scope :with_rich_text_course_highlights, -> { includes(educations: :rich_text_course_highlights) }
+  scope :with_rich_text_description, -> { includes(work_experiences: :rich_text_description) }
 
   before_save :clean_up_visible_resume_name
 

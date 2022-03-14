@@ -3,6 +3,9 @@ class DashboardsController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
+    if @user.job_seeker?
+      @user = User.includes(educations: :rich_text_course_highlights, work_experiences: :rich_text_description).find(params[:user_id])
+    end
     authorize @user, policy_class: DashboardPolicy
     @applied_jobs = @user.applied_jobs.includes(user: { company: [logo_attachment: :blob] }).order(created_at: :desc).take(10) if @user.job_seeker?
     if @user.employer? || @user.admin?

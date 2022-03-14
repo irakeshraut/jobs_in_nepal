@@ -15,7 +15,7 @@ class CompaniesController < ApplicationController
   end
 
   def edit
-    @company = Company.find(params[:id])
+    @company = Company.includes([:rich_text_description]).find(params[:id])
     authorize @company
   end
 
