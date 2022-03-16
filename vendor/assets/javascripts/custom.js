@@ -193,48 +193,48 @@ All custom js files contents are below
 	$('#types').select2();
 	
 	// --------- Job List --------
-	var options = {
-		// url: "./assets/js/resources/joblist.json",
-
-		getValue: "name",
-
-		list: {
-			match: {
-				enabled: true
-			}
-		}
-	};
-	
-	// --------- Companies --------
-	var options = {
-		// url: "./assets/js/resources/companies.json",
-
-		getValue: "name",
-
-		list: {
-			match: {
-				enabled: true
-			}
-		}
-	};
-
-	$("#companies").easyAutocomplete(options);
-	
-	// --------- Location --------
-	var options = {
-		// url: "./assets/js/resources/location.json",
-
-		getValue: "name",
-
-		list: {
-			match: {
-				enabled: true
-			}
-		}
-	};
-
-	$("#location").easyAutocomplete(options);
-		
+	// var options = {
+	// 	// url: "./assets/js/resources/joblist.json",
+        //
+	// 	getValue: "name",
+        //
+	// 	list: {
+	// 		match: {
+	// 			enabled: true
+	// 		}
+	// 	}
+	// };
+	//
+	// // --------- Companies --------
+	// var options = {
+	// 	// url: "./assets/js/resources/companies.json",
+        //
+	// 	getValue: "name",
+        //
+	// 	list: {
+	// 		match: {
+	// 			enabled: true
+	// 		}
+	// 	}
+	// };
+        //
+	// $("#companies").easyAutocomplete(options);
+	//
+	// // --------- Location --------
+	// var options = {
+	// 	// url: "./assets/js/resources/location.json",
+        //
+	// 	getValue: "name",
+        //
+	// 	list: {
+	// 		match: {
+	// 			enabled: true
+	// 		}
+	// 	}
+	// };
+        //
+	// $("#location").easyAutocomplete(options);
+	// 	
 	// Styles ------------------
     function csselem() {
         $(".slideshow-container .slideshow-item").css({

@@ -10112,15 +10112,20 @@ ul.detail-footer-social li {
 }
 .dashboard-avatar-thumb {
     width: 110px;
-    height: 110px;
+    /* height: 110px; */
+    height: 80px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 50%;
     display: table;
     margin: 0 auto 10px;
-    border: 5px solid #e9ecf3;
+    object-fit: contain;
+    /* border: 5px solid #e9ecf3; */
 }
 .dashboard-avatar-thumb img {
-    border-radius: 50%;
-    max-width: 110px;
+    /* border-radius: 50%; */
+    max-width: 280px;
 }
 .dashboard-avatar-text h4 {
     font-size: 18px;
@@ -10716,7 +10721,7 @@ ul.list {
 }
 .manage-list-row .job-info .job-img img {
     display: block;
-	max-width:70px;
+    max-width:70px;
 }
 .manage-list-row .job-details {
     display: inline-block;

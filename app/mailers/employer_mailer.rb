@@ -3,6 +3,6 @@ class EmployerMailer < ApplicationMailer
     @company_user = company_user
     @job  = job
     @applicant_user = applicant_user
-    mail(to: user.email, subject: "You have new job applicant")
+    mail(to: @company_user.email, subject: "You have new job applicant")
   end
 end

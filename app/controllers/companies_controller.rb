@@ -7,6 +7,7 @@ class CompaniesController < ApplicationController
     @company.users.first.role = 'employer'
     @user = User.new(@company.users.first.attributes)
     if @company.valid? && @company.save
+      flash[:success] = 'Account Created. Please check your email to Activate your account.'
       redirect_to login_path
     else
       @tab = 'employer'

@@ -147,3 +147,10 @@ img.logo {
 input:focus, input:hover, textarea:focus, textarea:hover, select:hover, select:focus, .select2-container--focus, trix-editor:hover, trix-editor:focus, .select2:hover {
   border: 1px solid #11b719 !important;
 }
+
+.img-logo {
+  min-height: 80px !important;
+  max-height: 80px !important;
+  max-width: 200px !important;
+  object-fit: contain !important;
+}

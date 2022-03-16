@@ -44,6 +44,7 @@ class User < ApplicationRecord
   scope :filter_by_status, ->(status) { where(applicants: { status: status }) }
   scope :with_rich_text_course_highlights, -> { includes(educations: :rich_text_course_highlights) }
   scope :with_rich_text_description, -> { includes(work_experiences: :rich_text_description) }
+  scope :with_description_and_course_highlights, -> { includes(educations: :rich_text_course_highlights, work_experiences: :rich_text_description) }
 
   before_save :clean_up_visible_resume_name
 

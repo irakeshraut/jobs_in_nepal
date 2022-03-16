@@ -4,7 +4,7 @@ class ApplicantsController < ApplicationController
   def index
     @job = Job.find(params[:job_id])
     authorize @job, policy_class: ApplicantPolicy
-    @users = @job.users.includes([:avatar_attachment])
+    @users = @job.users.includes([avatar_attachment: :blob])
     @users = @users.filter_by_name(params[:name]) if params[:name].present?
     @users = @users.filter_by_status(params[:status]) if params[:status].present?
     @users = @users.paginate(page: params[:page], per_page: 30)
@@ -13,7 +13,7 @@ class ApplicantsController < ApplicationController
   def show
     @job = Job.find(params[:job_id])
     authorize @job, policy_class: ApplicantPolicy
-    @applicant_user = @job.users.find(params[:id])
+    @applicant_user = @job.users.with_description_and_course_highlights.find(params[:id])
     applicant = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id)
     if applicant.cover_letter_name.present?
       cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
@@ -34,7 +34,7 @@ class ApplicantsController < ApplicationController
 
   def new
     @job = Job.find(params[:job_id])
-    @user = current_user
+    @user = User.with_description_and_course_highlights.find(current_user.id)
     @applicant = Applicant.new # required when we render from create action
     authorize @job, policy_class: ApplicantPolicy
     if @job.redirect_link.present?
