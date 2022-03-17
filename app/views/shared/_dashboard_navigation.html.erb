@@ -90,12 +90,12 @@
           <% end %>
         </li>
         <% if current_user.admin? %>
-          <li class="<%= controller.controller_name == 'dashboards' && controller.action_name == 'jobs_posted_by_employer_today' ? 'active' : '' %>">
+          <li class="<%= controller.controller_name == 'dashboards' && controller.action_name == 'jobs_posted_by_employers_today' ? 'active' : '' %>">
             <%= link_to jobs_posted_by_employers_today_user_dashboards_path(current_user) do %>
               <i class="fa fa-briefcase"></i>Employer Jobs (today)
             <% end %>
           </li>
-          <li class="<%= controller.controller_name == 'dashboards' && controller.action_name == 'jobs_posted_by_employer_today' ? 'active' : '' %>">
+          <li class="<%= controller.controller_name == 'dashboards' && controller.action_name == 'all_jobs_posted_by_admin_and_employers' ? 'active' : '' %>">
             <%= link_to all_jobs_posted_by_admin_and_employers_user_dashboards_path(current_user) do %>
               <i class="fa fa-briefcase"></i>All Jobs (admin + employers)
             <% end %>
