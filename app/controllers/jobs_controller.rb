@@ -3,7 +3,7 @@ class JobsController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
 
   def index
-    @jobs = Job.active.order(created_at: :desc)
+    @jobs = Job.active.order(job_type: :asc, created_at: :desc).limit(48)
     created_by_employer = @jobs.created_by_employers
     if created_by_employer.present?
       @jobs = @jobs.includes(user: { company: [logo_attachment: :blob] })
@@ -32,6 +32,12 @@ class JobsController < ApplicationController
     authorize @job
     @job.status = 'Active'
     @job.user_id = current_user.id
+    # TODO: remove below code of setting job_type when we start taking payments and put options for job type in job new form
+    if @job.created_by_employer?
+      @job.job_type = 1 # Top Job
+    else
+      @job.job_type = 3 # Normal Job(created by Admin)
+    end
     if @job.valid? && @job.save
       flash[:success] = 'Job Posted'
       redirect_to user_dashboards_path(current_user)

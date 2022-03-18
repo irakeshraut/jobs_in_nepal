@@ -57,6 +57,9 @@
       <% if job.created_at.today? %>
         <span class="tg-themetag tg-featuretag">New Job</span>
       <% end %>
+      <% if job.job_type == 1 or job.job_type == 2 %>
+        <span class="tg-themetag tg-featuretag"><%= Job::JOB_TYPE.key(job.job_type) %></span>
+      <% end %>
     </article>
   </div>
 <% end %>

@@ -4,6 +4,7 @@ include ActionView::Helpers::NumberHelper
 class Job < ApplicationRecord
   STATUS = ['Active', 'Expired', 'Closed'].freeze
   TYPE   = ['Full Time', 'Part Time', 'Casual', 'Contract', 'Freelance'].freeze
+  JOB_TYPE = { 'Top Job' => 1, 'Hot Job' => 2, 'Normal Job' => 3 }
 
   validates :title,           presence: true
   validates :category,        presence: true
@@ -13,6 +14,8 @@ class Job < ApplicationRecord
   validates :status,          presence: true
   validates :status,          inclusion: { in: Job::STATUS }
   validates :user,            presence: true
+  validates :job_type,        presence: true
+  validates :job_type,        inclusion: { in: [1,2,3] }
 
   belongs_to :user
   has_many :applicants, dependent: :destroy
@@ -31,6 +34,10 @@ class Job < ApplicationRecord
   scope :filter_by_location, ->(location) { where("lower(location) like ?", "%#{location.downcase}%") }
   scope :filter_by_status, ->(status) { where("lower(status) like ?", "%#{status.downcase}%") }
   scope :created_by_employers, -> { joins(:user).where(users: { role: 'employer' }) }
+
+  scope :hot_jobs, -> { where(job_type: 1) }
+  scope :top_jobs, -> { where(job_type: 2) }
+  scope :normal_jobs, -> { where(job_type: 3) }
 
   def active?
     status == 'Active'
@@ -71,6 +78,10 @@ class Job < ApplicationRecord
 
   def created_by_admin?
     company_name.present? && redirect_link.present? && user.admin?
+  end
+
+  def created_by_employer?
+    user.employer?
   end
 
   def similar_jobs
