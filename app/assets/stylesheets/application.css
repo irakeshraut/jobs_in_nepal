@@ -154,3 +154,12 @@ input:focus, input:hover, textarea:focus, textarea:hover, select:hover, select:f
   max-width: 200px !important;
   object-fit: contain !important;
 }
+
+.flash {
+  position: fixed;
+  bottom:0%;
+  /* right: 0%; */
+  width:100%;
+  z-index: 555;
+}
+
