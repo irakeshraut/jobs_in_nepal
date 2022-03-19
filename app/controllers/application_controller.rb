@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   before_action :require_login
   before_action :set_top_categories
+  before_action :redirect_www_to_non_www
 
   rescue_from Pundit::NotAuthorizedError do
     flash[:error] = "You are not authorized to perform this action."
@@ -13,6 +14,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def redirect_www_to_non_www
+    if request.host == 'www.jobsinnepal.com'
+      redirect_to 'https://jobsinnepal.com' + request.fullpath, status: 301
+    end
+  end
 
   def not_authenticated
     redirect_to login_path, success: "Please login first"
