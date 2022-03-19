@@ -23,6 +23,8 @@ require("@nathanvda/cocoon")
 require("select2")
 require("packs/select2")
 
+// uncoment below code if you want to hide flash message after 5 seconds
+
 // $(document).on('turbolinks:load', function() {
 //   setTimeout(function() {
 //   $('.flash').slideUp(500);
