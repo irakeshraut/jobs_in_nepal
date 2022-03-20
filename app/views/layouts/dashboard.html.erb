@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title><%= @title || 'Jobs in Nepal - Job Vacancies in Nepal | Jobs in Nepal' %></title>
+    <title><%= @title || 'Search and Post Jobs in Nepal | Jobs in Nepal' %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,14 +10,7 @@
     <%= stylesheet_link_tag 'style', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V4GREBGHMZ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-V4GREBGHMZ');
-    </script>
+    <%= render "shared/google_analytics" if Rails.env.production? %>
 
     <%= favicon_link_tag 'favicon.ico' %>
 
