@@ -158,8 +158,28 @@ input:focus, input:hover, textarea:focus, textarea:hover, select:hover, select:f
 .flash {
   position: fixed;
   bottom:0%;
-  /* right: 0%; */
   width:100%;
   z-index: 555;
 }
 
+.main-heading h1 >span {
+  color:#11b719;
+}
+
+.main-heading h1 {
+  color:#252d40;
+  position:relative;
+  font-weight:600;
+  margin-top:0px;
+  margin-bottom:10px;
+
+  font-size: 36px;
+  line-height: 48px;
+}
+
+.inner-header-title h1 {
+  font-size: 50px !important;
+  margin:0 !important;
+  line-height: 48px !important;
+  font-weight: 500 !important;
+}
