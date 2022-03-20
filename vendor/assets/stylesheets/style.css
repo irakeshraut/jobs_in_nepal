@@ -1076,7 +1076,7 @@ body .select2-search--dropdown {
     padding: 0;
 }
 .select2-search--dropdown .select2-search__field {
-    background: url(search.png)right 8px top 14px no-repeat #fff;
+    /* background: url(search.png)right 8px top 14px no-repeat #fff; */
     padding-right: 30px;
 }
 body .select2-container--default .select2-search--dropdown .select2-search__field {
