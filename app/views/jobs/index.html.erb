@@ -1,3 +1,9 @@
+<% if params[:category].present? %>
+  <% @title  = "#{params[:category]} jobs in Nepal | Jobs in Nepal" %>
+<% else %>
+  <% @title  = "Search and Apply Jobs in Nepal | Jobs in Nepal" %>
+<% end %>
+
 <!-- Title Header Start -->
 <section class="inner-header-title">
   <div class="container">
