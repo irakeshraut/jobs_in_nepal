@@ -1,30 +1,30 @@
 <div class="row">
   <div class="col-lg-3 col-md-6 col-sm-12">
     <div class="dashboard-stat widget-1">
-      <div class="dashboard-stat-content"><h4><%= @user.jobs.active.count %></h4> <span>Active Jobs</span></div>
+      <div class="dashboard-stat-content"><h4><%= Job.created_by_admin.active.created_today.count %></h4> <span>Jobs by Admin (today)</span></div>
       <div class="dashboard-stat-icon"><i class="ti-location-pin"></i></div>
     </div>
   </div>
 
   <div class="col-lg-3 col-md-6 col-sm-12">
     <div class="dashboard-stat widget-2">
-      <div class="dashboard-stat-content"><h4><%= @user.jobs.closed.count %></h4> <span>Closed Jobs</span></div>
+      <div class="dashboard-stat-content"><h4><%= Job.created_by_employers.active.created_today.count %></h4> <span>Jobs by Employer (today)</span></div>
       <div class="dashboard-stat-icon"><i class="ti-layers"></i></div>
     </div>
   </div>
 
   <div class="col-lg-3 col-md-6 col-sm-12">
     <div class="dashboard-stat widget-3">
-      <div class="dashboard-stat-content"><h4><%= @user.jobs.expired.count %></h4> <span>Expired Jobs</span></div>
+      <div class="dashboard-stat-content"><h4><%= Job.active.created_this_week.count %></h4> <span>Total Jobs (week)</span></div>
       <div class="dashboard-stat-icon"><i class="ti-pie-chart"></i></div>
     </div>
   </div>
 
   <div class="col-lg-3 col-md-6 col-sm-12">
     <div class="dashboard-stat widget-4">
-      <div class="dashboard-stat-content"><h4><%= @user.jobs.count %></h4> <span>Total Jobs</span></div>
+      <div class="dashboard-stat-content"><h4><%= Job.active.created_this_month.count %></h4> <span>Total Jobs (month)</span></div>
       <div class="dashboard-stat-icon"><i class="ti-bookmark"></i></div>
-    </div>	
+    </div>
   </div>
 </div>
 
