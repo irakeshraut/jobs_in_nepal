@@ -63,12 +63,12 @@
             <i class='ti-heart mrg-r-5'></i>Job Alredy Saved
           <% end %>
         <% elsif current_user && !current_user.bookmarks.where(job_id: @job.id).present? %>
-          <%= link_to user_bookmarks_path(current_user, job_id: @job.id), method: :post, rel: 'noindex', class: 'btn btn-info mrg-bot-10 full-width' do %>
+          <%= link_to user_bookmarks_path(current_user, job_id: @job.id), method: :post, class: 'btn btn-info mrg-bot-10 full-width' do %>
             <i class='ti-heart mrg-r-5'></i>Save Job
           <% end %>
         <% else %>
           <%# This is hack, if user is not logged in then send user id as 0 %>
-          <%= link_to user_bookmarks_path(0, job_id: @job.id), method: :post, class: 'btn btn-info mrg-bot-10 full-width' do %>
+          <%= link_to user_bookmarks_path(0, job_id: @job.id), method: :post, rel: 'noindex', class: 'btn btn-info mrg-bot-10 full-width' do %>
             <i class='ti-heart mrg-r-5'></i>Save Job
           <% end %>
         <% end %>
