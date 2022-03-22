@@ -213,3 +213,11 @@ input:focus, input:hover, textarea:focus, textarea:hover, select:hover, select:f
   width: auto;
   display: inline-block;
 }
+
+@media (max-width: 1000px) {
+  .job-buttons {
+    margin-right: 10px !important;
+    margin-left: 5px !important;
+  }
+}
+
