@@ -120,6 +120,11 @@ nav.navbar.bootsnav .navbar-brand {
   margin-left: 0px !important;
 }
 
+img.logo {
+  padding-top: 25px;
+  width: 210px !important;
+}
+
 @media (max-width: 1000px) {
   .nav-tabs.modern-tabs >li >a {
     padding: 1.7rem !important;
@@ -133,11 +138,6 @@ nav.navbar.bootsnav .navbar-brand {
 
     padding-bottom: 10px;
   }
-}
-
-img.logo {
-  padding-top: 25px;
-  width: 210px !important;
 }
 
 .ur-detail-btn {
@@ -182,4 +182,34 @@ input:focus, input:hover, textarea:focus, textarea:hover, select:hover, select:f
   margin:0 !important;
   line-height: 48px !important;
   font-weight: 500 !important;
+}
+
+@media (max-width: 1000px) {
+  .inner-header-title h1 {
+    font-size: 30px !important;
+  }
+}
+
+.job-instructor-content h2 {
+  font-size: 16px !important;
+}
+
+.job-instructor-content h3 {
+  font-size: 14px !important;
+}
+
+@media (max-width: 1000px) {
+  .job-instructor-content h2 {
+    font-size: 15px !important;
+  }
+}
+
+.brows-job-position h2 {
+  font-size:17px;
+  padding: 0;
+  margin-bottom: 5px;
+  line-height: 1.4;
+  position: relative;
+  width: auto;
+  display: inline-block;
 }
