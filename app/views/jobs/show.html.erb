@@ -54,7 +54,7 @@
             <i class='ti-star mar-r-5'></i>Apply
           <% end %>
         <% else %>
-          <%= link_to new_job_applicant_path(@job), class: 'btn btn-warning mrg-bot-10 full-width' do %>
+          <%= link_to new_job_applicant_path(@job), rel: 'noindex', class: 'btn btn-warning mrg-bot-10 full-width' do %>
             <i class='ti-star mar-r-5'></i>Apply
           <% end %>
         <% end %>
@@ -63,7 +63,7 @@
             <i class='ti-heart mrg-r-5'></i>Job Alredy Saved
           <% end %>
         <% elsif current_user && !current_user.bookmarks.where(job_id: @job.id).present? %>
-          <%= link_to user_bookmarks_path(current_user, job_id: @job.id), method: :post, class: 'btn btn-info mrg-bot-10 full-width' do %>
+          <%= link_to user_bookmarks_path(current_user, job_id: @job.id), method: :post, rel: 'noindex', class: 'btn btn-info mrg-bot-10 full-width' do %>
             <i class='ti-heart mrg-r-5'></i>Save Job
           <% end %>
         <% else %>
@@ -137,7 +137,7 @@
                   <i class='ti-star mar-r-5'></i>Apply
                 <% end %>
               <% else %>
-                <%= link_to new_job_applicant_path(@job), class: 'btn btn-warning' do %>
+                <%= link_to new_job_applicant_path(@job), rel: 'noindex', class: 'btn btn-warning' do %>
                   <i class='ti-star mar-r-5'></i>Apply
                 <% end %>
               <% end %>
