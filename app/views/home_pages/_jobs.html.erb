@@ -20,7 +20,7 @@
           <% end %>
         </div>
         <div class="job-instructor-content">
-          <h2 class="instructor-title"><%= link_to(job.title.truncate(25), job) %></h2>
+          <h2 class="instructor-title"><%= link_to(job.title.truncate(21), job) %></h2>
           <h3 class="instructor-title">
             <% if job.created_by_admin?  %>
               <%= job.company_name.truncate(25) %>
