@@ -1,5 +1,10 @@
 <% if params[:category].present? %>
   <% @title  = "#{params[:category]} jobs in Nepal | Jobs in Nepal" %>
+  <% if @category_count > 0 %>
+    <% @description = "#{@category_count} #{params[:category]} #{'job'.pluralize(@category_count)} in Nepal. Search and Apply for #{params[:category]} jobs in Nepal." %>
+  <% else %>
+    <% @description = "#{params[:category]} jobs in Nepal. Search and Apply for #{params[:category]} jobs in Nepal." %>
+  <% end %>
 <% else %>
   <% @title  = "Search and Apply Jobs in Nepal | Jobs in Nepal" %>
 <% end %>

@@ -12,6 +12,7 @@ class JobsController < ApplicationController
     @jobs = @jobs.filter_by_category(params[:category]) if params[:category].present?
     @jobs = @jobs.filter_by_location(params[:location]) if params[:location].present?
     @jobs = @jobs.paginate(page: params[:page], per_page: 30)
+    @category_count = @jobs.filter_by_category(params[:category]).count if params[:category].present?
   end
 
   def show
