@@ -13,6 +13,7 @@ class JobsController < ApplicationController
     @jobs = @jobs.filter_by_location(params[:location]) if params[:location].present?
     @jobs = @jobs.paginate(page: params[:page], per_page: 30)
     @category_count = @jobs.filter_by_category(params[:category]).count if params[:category].present?
+    # this is to solve soft 404 error on google search console
     if @jobs.count == 0
       render :index, status: 404
     end
