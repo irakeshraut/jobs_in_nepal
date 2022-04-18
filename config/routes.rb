@@ -61,6 +61,13 @@ Rails.application.routes.draw do
 
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :categories, only: [:index]
+  resources :admin_areas, only: [:index] do
+    collection do
+      get :expire_jobs
+      get :delete_admin_expired_jobs
+      get :delete_all_expired_jobs
+    end
+  end
 
   mount Sidekiq::Web => '/sidekiq'
 

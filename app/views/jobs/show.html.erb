@@ -56,7 +56,7 @@
           <% end %>
         <% elsif !@job.active? %>
           <%= link_to '#', class: 'btn btn-warning mrg-bot-10 full-width disabled' do %>
-            <i class='ti-star mar-r-5'></i>Apply
+            <i class='ti-star mar-r-5'></i>Expired Job
           <% end %>
         <% else %>
           <%= link_to new_job_applicant_path(@job), rel: 'noindex', class: 'btn btn-warning mrg-bot-10 full-width' do %>
@@ -139,7 +139,7 @@
                 <% end %>
               <% elsif !@job.active? %>
                 <%= link_to '#', class: 'btn btn-warning disabled' do %>
-                  <i class='ti-star mar-r-5'></i>Apply
+                  <i class='ti-star mar-r-5'></i>Expired Job
                 <% end %>
               <% else %>
                 <%= link_to new_job_applicant_path(@job), rel: 'noindex', class: 'btn btn-warning' do %>

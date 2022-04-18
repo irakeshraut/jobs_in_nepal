@@ -100,6 +100,11 @@
               <i class="fa fa-briefcase"></i>All Jobs (admin + employers)
             <% end %>
           </li>
+          <li class="<%= controller.controller_name == 'admin_areas' && controller.action_name == 'index' ? 'active' : '' %>">
+            <%= link_to admin_areas_path do %>
+              <i class="fa fa-user"></i>Admin Areas
+            <% end %>
+          </li>
         <% end %>
         <li class="<%= controller.controller_name == 'users' && (controller.action_name == 'edit_password' || controller.action_name == 'update_password') ? 'active' : '' %>">
           <%= link_to edit_password_user_path(current_user) do %>

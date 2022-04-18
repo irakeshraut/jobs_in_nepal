@@ -15,7 +15,7 @@ class UserPolicy < ApplicationPolicy
   def edit?
     user_record == user
   end
-  
+
   def update?
     user_record == user
   end

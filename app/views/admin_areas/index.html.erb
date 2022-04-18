@@ -1,0 +1,22 @@
+<div class="col-lg-9 col-md-8">
+  <div class="dashboard-body">
+    <div class="dashboard-caption">
+      <div class="dashboard-caption-header">
+        <h4><i class="fa fa-tachometer"></i>Admin Area</h4>
+      </div>
+      <div class="dashboard-caption-wrap">
+        <div class="alert alert-info">
+          <%= "#{@old_jobs.count} jobs need to be expired." %>
+        </div>
+
+        <div class="alert alert-info">
+          <%= "#{Job.expired.count} expired jobs." %>
+        </div>
+
+        <%= link_to 'Expire Jobs', expire_jobs_admin_areas_path, class: 'btn btn-warning' %>
+        <%= link_to 'Delete Expired Jobs(Admin)', delete_admin_expired_jobs_admin_areas_path, class: 'btn btn-danger' %>
+        <%= link_to 'Delete Expired Jobs(All)', delete_all_expired_jobs_admin_areas_path, class: 'btn btn-danger' %>
+      </div>
+    </div>
+  </div>
+</div>
