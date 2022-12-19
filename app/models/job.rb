@@ -52,13 +52,6 @@ class Job < ApplicationRecord
     status == 'Closed'
   end
 
-  def salary
-    return 'Salary Not Mentioned' if min_salary.blank? && max_salary.blank?
-    return formatted_salary if min_salary.present? && max_salary.present?
-
-    salary_without_zero(min_salary.presence || max_salary.presence)
-  end
-
   def created_by_admin?
     company_name.present? && redirect_link.present? && user.admin?
   end
@@ -72,15 +65,5 @@ class Job < ApplicationRecord
        .where('lower(title) like :title OR lower(category) like :category',
               title: title.downcase, category: category.downcase)
        .where.not(id:).active.order(created_at: :desc).limit(4)
-  end
-
-  private
-
-  def salary_without_zero(salary)
-    number_to_currency(salary)&.gsub(/\.00$/, '')
-  end
-
-  def formatted_salary
-    "#{salary_without_zero(min_salary)} - #{salary_without_zero(max_salary)}"
   end
 end

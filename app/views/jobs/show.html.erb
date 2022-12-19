@@ -119,7 +119,7 @@
         <div class="row row-bottom mrg-0">
           <h2 class="detail-title">Job Detail</h2>
           <ul class="job-detail-des">
-            <li><span>Salary:</span><%= @job.salary %></li>
+            <li><span>Salary:</span><%= salary(@job) %></li>
             <li><span>Category:</span><%= @job.category %></li>
             <li><span>Job Type:</span><%= @job.employment_type %></li>
             <li><span>Address:</span><%= @job.location %></li>
@@ -185,7 +185,7 @@
                   <li>
                     <i class="ti-wallet"></i>
                     <h5>Offerd Salary</h5>
-                    <span><%= @job.salary %></span>
+                    <span><%= salary(@job) %></span>
                   </li>
                   <li>
                     <i class="ti-layers"></i>
@@ -235,10 +235,9 @@
 </section>
 <!-- Job full detail End -->
 
-<%if @similar_jobs.present? %>
+<% if @similar_jobs.present? %>
   <section class="padd-top-20">
     <div class="container">
-
       <div class="row mrg-0">
         <div class="col-md-12 col-sm-12">
           <h3>Similar Jobs</h3>
@@ -246,6 +245,7 @@
       </div>
       <div class="row mrg-0">
         <%= render 'home_pages/jobs', jobs: @similar_jobs %>
+      </div>
     </div>
   </section>
 <% end %>

@@ -4,6 +4,7 @@ class Applicant < ApplicationRecord
   STATUS = %w[Shortlisted Rejected].freeze
 
   validates :resume_name, presence: true
+
   belongs_to :job
   belongs_to :user
 
