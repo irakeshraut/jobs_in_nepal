@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  include Pundit
+  include Pundit::Authorization
+
   before_action :require_login
   before_action :set_top_categories
   before_action :redirect_www_to_non_www

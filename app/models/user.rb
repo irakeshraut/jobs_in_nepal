@@ -33,13 +33,9 @@ class User < ApplicationRecord
   has_many_attached :cover_letters, dependent: :destroy
   has_one_attached :avatar, dependent: :destroy
 
-  validates :resumes,
-            content_type: ['application/pdf', 'application/x-ole-storage',
-                           'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'text/plain', 'application/rtf']
+  validates :resumes, content_type: Document::VALID_TYPES
   validates :resumes, size: { less_than: 2.megabytes }
-  validates :cover_letters,
-            content_type: ['application/pdf', 'application/x-ole-storage',
-                           'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'text/plain', 'application/rtf']
+  validates :cover_letters, content_type: Document::VALID_TYPES
   validates :cover_letters, size: { less_than: 2.megabytes }
   validates :avatar, size: { less_than: 2.megabytes }
   validates :profile_visible, inclusion: { in: [true, false] }
@@ -74,6 +70,7 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  # TODO: move all deleting logics to service objects
   def delete_resumes_greater_than_10
     resume_count = resumes.count
     resume_to_delete_count = resume_count - 10
@@ -102,6 +99,7 @@ class User < ApplicationRecord
     end
   end
 
+  # TODO: this doesn't belong in ActiveRecord'
   def split_resumes_in_group_of_2
     if resumes.size.positive?
       resumes.order(created_at: :desc).in_groups_of((resumes.size / 2.0).round, false)
@@ -110,6 +108,7 @@ class User < ApplicationRecord
     end
   end
 
+  # TODO: move to service objects
   def delete_cover_letters_greater_than_10
     cover_letter_count = cover_letters.count
     cover_letter_to_delete_count = cover_letter_count - 10
@@ -125,6 +124,7 @@ class User < ApplicationRecord
     end
   end
 
+  # TODO: this doesn't belong in ActiveRecord
   def split_cover_letters_in_group_of_2
     if cover_letters.size.positive?
       cover_letters.order(created_at: :desc).in_groups_of((cover_letters.size / 2.0).round, false)
@@ -133,6 +133,7 @@ class User < ApplicationRecord
     end
   end
 
+  # TODO: try to delete this before save, callbacks are not good, this will update everytime when user are updated.
   def clean_up_visible_resume_name
     self.visible_resume_name = nil unless profile_visible
   end
