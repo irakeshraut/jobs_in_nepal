@@ -2,7 +2,7 @@
 
 module JobApplicant
   class Search
-    include Query
+    include BaseQuery
 
     attr_reader :params
 

@@ -12,19 +12,11 @@ class ApplicantsController < ApplicationController
 
   def show
     @applicant_user = @job.users.with_description_and_course_highlights.find(params[:id])
-    applicant = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id)
-    if applicant.cover_letter_name.present?
-      cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
-      @cover_letter = @applicant_user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob)
-                                     .where(active_storage_blobs: { filename: cover_letter_name,
-                                                                    created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).first
-    end
-    if applicant.resume_name.present?
-      resume_name, resume_date = applicant.resume_name.split(' - ')
-      @resume = @applicant_user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
-                               .where(active_storage_blobs: { filename: resume_name,
-                                                              created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).first
-    end
+    applicant       = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id)
+
+    @cover_letter = JobApplicant::FindCoverLetter.call(@applicant_user, applicant)
+    @resume       = JobApplicant::FindResume.call(@applicant_user, applicant)
+
     return if applicant.viewed_by_employer == true
 
     applicant.update!(viewed_by_employer: true)
@@ -126,7 +118,7 @@ class ApplicantsController < ApplicationController
 
   def download_resume
     user = User.find(params[:id])
-    applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
+    applicant = @job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     resume_name, resume_date = applicant.resume_name.split(' - ')
     resume = user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
                  .where(active_storage_blobs: { filename: resume_name,
@@ -145,7 +137,7 @@ class ApplicantsController < ApplicationController
 
   def download_cover_letter
     user = User.find(params[:id])
-    applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
+    applicant = @job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.cover_letter_name.present?
       cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
       cover_letter = user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob)

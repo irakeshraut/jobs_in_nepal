@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Query
+module BaseQuery
   extend ActiveSupport::Concern
 
   module ClassMethods
