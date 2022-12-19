@@ -1,4 +1,6 @@
-Rails.application.configure do
+# frozen_string_literal: true
+
+Rails.application.configure do # rubocop:disable Metrics/BlockLength
   config.after_initialize do
     Bullet.enable        = true
     Bullet.alert         = true
@@ -80,12 +82,12 @@ Rails.application.configure do
   #   :enable_starttls_auto => true
   # }
   ActionMailer::Base.smtp_settings = {
-    :user_name            => 'apikey',
-    :password             => ENV['SENDGRID_API_KEY'],
-    :domain               => 'https://jobsinnepal.com',
-    :address              => 'smtp.sendgrid.net',
-    :port                 => 587,
-    :authentication       => :plain,
-    :enable_starttls_auto => true
+    user_name: 'apikey',
+    password: ENV['SENDGRID_API_KEY'],
+    domain: 'https://jobsinnepal.com',
+    address: 'smtp.sendgrid.net',
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true
   }
 end

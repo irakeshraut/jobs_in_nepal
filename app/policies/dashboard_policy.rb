@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DashboardPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve

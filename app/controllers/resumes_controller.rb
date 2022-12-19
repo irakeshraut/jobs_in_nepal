@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ResumesController < ApplicationController
   layout 'dashboard'
 
@@ -38,7 +40,8 @@ class ResumesController < ApplicationController
       resume_filename = "#{resume.filename} - #{resume.created_at.strftime('%d/%m/%Y')}"
       if resume_filename == @user.visible_resume_name
         resume_count = @user.resumes.includes(:blob).references(:blob)
-          .where(active_storage_blobs: { filename: visible_resume_name, created_at: Date.parse(resume_created_date).beginning_of_day..Date.parse(resume_created_date).end_of_day }).count
+                            .where(active_storage_blobs: { filename: visible_resume_name,
+                                                           created_at: Date.parse(resume_created_date).beginning_of_day..Date.parse(resume_created_date).end_of_day }).count
         if resume_count == 1
           @trying_to_delete_visible_resume = true
           @resumes = @user.split_resumes_in_group_of_2
@@ -47,7 +50,7 @@ class ResumesController < ApplicationController
       end
     end
     resume.purge
-    flash[:success] ='Resume Deleted'
+    flash[:success] = 'Resume Deleted'
     redirect_to new_user_resume_path(@user)
   end
 end

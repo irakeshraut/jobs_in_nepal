@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class JobPolicy < ApplicationPolicy
   attr_reader :user, :job
 

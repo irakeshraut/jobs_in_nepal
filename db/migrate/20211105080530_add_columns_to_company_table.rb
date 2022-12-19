@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class AddColumnsToCompanyTable < ActiveRecord::Migration[6.0]
   def change
-    add_column :companies, :url,  :string
+    add_column :companies, :url, :string
   end
 end

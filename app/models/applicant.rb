@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Applicant < ApplicationRecord
-  STATUS = ['Shortlisted', 'Rejected'].freeze
+  STATUS = %w[Shortlisted Rejected].freeze
 
   validates :resume_name, presence: true
   belongs_to :job

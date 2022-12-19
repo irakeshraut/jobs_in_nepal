@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class CompaniesController < ApplicationController
   skip_before_action :require_login, only: [:create]
-  layout 'dashboard', only: [:edit, :update]
+  layout 'dashboard', only: %i[edit update]
 
   def create
     @company = Company.new(company_params)
@@ -42,8 +44,8 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    params.require(:company).permit(:name, :phone, :url, :description, :logo, users_attributes: 
-                                    [:first_name, :last_name, :email, :password, 
-                                     :password_confirmation, :company_id])
+    params.require(:company).permit(:name, :phone, :url, :description, :logo, users_attributes:
+                                    %i[first_name last_name email password
+                                       password_confirmation company_id])
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Company < ApplicationRecord
   validates :name, presence: true
   validates :phone, presence: true
@@ -17,12 +19,12 @@ class Company < ApplicationRecord
   private
 
   def logo_validation
-    if logo.attached? && !logo.image?
-      errors[:base] << 'Logo must be Image type.'
-    end
+    return unless logo.attached? && !logo.image?
+
+    errors[:base] << 'Logo must be Image type.'
   end
 
   def delete_empty_description
-    self.description.destroy if self.description.body.blank?
+    description.destroy if description.body.blank?
   end
 end

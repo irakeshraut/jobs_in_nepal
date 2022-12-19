@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class WorkExperience < ApplicationRecord
   validates :job_title, presence: true
   validates :company_name, presence: true
-  validates :still_in_role, inclusion: { in:  [true, false] }
+  validates :still_in_role, inclusion: { in: [true, false] }
   validates :start_month, presence: true
   validates :start_year, presence: true
   validates :finish_month, presence: true, unless: :still_in_role
@@ -15,13 +17,13 @@ class WorkExperience < ApplicationRecord
   before_save :delete_empty_description
 
   def clean_up_work_experience_finish_time
-    if still_in_role
-      self.finish_month = nil
-      self.finish_year = nil
-    end
+    return unless still_in_role
+
+    self.finish_month = nil
+    self.finish_year = nil
   end
 
   def delete_empty_description
-    self.description.destroy if self.description.body.blank?
+    description.destroy if description.body.blank?
   end
 end

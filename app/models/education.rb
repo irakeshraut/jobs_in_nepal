@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Education < ApplicationRecord
   validates :institution_name, presence: true
   validates :course_name,      presence: true
-  validates :course_completed, inclusion: { in:  [true, false] }
-  validates :finished_year, presence: true,  if: :course_completed
-  validates :expected_finish_month, presence: true,  unless: :course_completed
+  validates :course_completed, inclusion: { in: [true, false] }
+  validates :finished_year, presence: true, if: :course_completed
+  validates :expected_finish_month, presence: true, unless: :course_completed
   validates :expected_finish_year, presence: true, unless: :course_completed
 
   has_rich_text :course_highlights
@@ -23,6 +25,6 @@ class Education < ApplicationRecord
   end
 
   def delete_empty_course_highlights
-    self.course_highlights.destroy if self.course_highlights.body.blank?
+    course_highlights.destroy if course_highlights.body.blank?
   end
 end

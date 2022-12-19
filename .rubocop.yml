@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'bin/bundle'
+Style/Documentation:
+  Enabled: false
+Lint/MissingSuper:
+  Exclude:
+    - 'app/policies/**/*'

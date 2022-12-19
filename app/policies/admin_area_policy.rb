@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdminAreaPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve

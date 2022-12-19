@@ -15,7 +15,7 @@
           <div class="job-details">
             <h3 class="job-name"><%= link_to(job.title.truncate(90), job) %></h3>
             <small class="job-company"><i class="ti-home"></i><a href="#"><%= job.category %></a></small>
-            <small class="job-sallery"><i class="ti-credit-card"></i><%= job.full_salary %></small>
+            <small class="job-sallery"><i class="ti-credit-card"></i><%= job.salary %></small>
             <small class="job-update"><i class="ti-eye"></i><%= pluralize(job.views.count, 'View') %></small>
             <small class="job-update"><i class="ti-user"></i><%= pluralize(job.users.count, 'Applicant') %></small>
             <div class='btn-wrapper'>

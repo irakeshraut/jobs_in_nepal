@@ -1,4 +1,6 @@
-Rails.application.configure do
+# frozen_string_literal: true
+
+Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -51,7 +53,7 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -80,8 +82,8 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
+    logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
@@ -123,12 +125,12 @@ Rails.application.configure do
   #   :enable_starttls_auto => true
   # }
   ActionMailer::Base.smtp_settings = {
-    :user_name            => 'apikey',
-    :password             => ENV['SENDGRID_API_KEY'],
-    :domain               => 'https://jobsinnepal.com',
-    :address              => 'smtp.sendgrid.net',
-    :port                 => 587,
-    :authentication       => :plain,
-    :enable_starttls_auto => true
+    user_name: 'apikey',
+    password: ENV['SENDGRID_API_KEY'],
+    domain: 'https://jobsinnepal.com',
+    address: 'smtp.sendgrid.net',
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true
   }
 end

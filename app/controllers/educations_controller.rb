@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EducationsController < ApplicationController
   layout 'dashboard', only: [:new]
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WorkExperiencesController < ApplicationController
   layout 'dashboard', only: [:new]
 

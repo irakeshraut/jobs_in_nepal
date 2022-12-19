@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CoverLettersController < ApplicationController
-  layout 'dashboard', only: [:new, :create]
+  layout 'dashboard', only: %i[new create]
 
   def new
     @user = User.includes(cover_letters_attachments: :blob).find(params[:user_id])
@@ -34,7 +36,7 @@ class CoverLettersController < ApplicationController
     authorize @user, policy_class: CoverLetterPolicy
     cover_letter = @user.cover_letters.find(params[:id])
     cover_letter.purge
-    flash[:success] ='Cover Letter Deleted'
+    flash[:success] = 'Cover Letter Deleted'
     redirect_to new_user_cover_letter_path(@user)
   end
 end

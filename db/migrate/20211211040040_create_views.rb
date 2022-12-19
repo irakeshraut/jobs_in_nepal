@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateViews < ActiveRecord::Migration[6.0]
   def change
     create_table :views, id: :uuid do |t|
@@ -5,7 +7,7 @@ class CreateViews < ActiveRecord::Migration[6.0]
       t.references :job, null: false, type: :uuid
 
       t.timestamps
-      t.index [:ip, :job_id], unique: true
+      t.index %i[ip job_id], unique: true
     end
   end
 end

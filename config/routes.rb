@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require 'sidekiq/web'
 
-Rails.application.routes.draw do
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   root to: 'home_pages#index'
 
   get 'login',  to: 'sessions#new'
   get 'logout', to: 'sessions#destroy'
 
-  resources :users, only: [:new, :create, :edit, :update] do
+  resources :users, only: %i[new create edit update] do # rubocop:disable Metrics/BlockLength
     member do
       get :edit_password
       post :update_password
@@ -15,7 +17,7 @@ Rails.application.routes.draw do
       get :activate
       get :delete_avatar
     end
-    resources :bookmarks, only: [:index, :create, :destroy]
+    resources :bookmarks, only: %i[index create destroy]
     resources :dashboards, only: [:index] do
       collection do
         get :jobs_posted_by_employers_today
@@ -24,20 +26,20 @@ Rails.application.routes.draw do
     end
     resources :work_experiences, only: [:new]
     resources :educations, only: [:new]
-    resources :resumes, only: [:new, :create, :destroy] do
+    resources :resumes, only: %i[new create destroy] do
       member do
         get :download
       end
     end
-    resources :cover_letters, only: [:new, :create, :destroy] do
+    resources :cover_letters, only: %i[new create destroy] do
       member do
         get :download
       end
     end
   end
 
-  resources :sessions,  only: [:new, :create, :destroy]
-  resources :companies, only: [:create, :edit, :update] do
+  resources :sessions,  only: %i[new create destroy]
+  resources :companies, only: %i[create edit update] do
     member do
       get :delete_logo
     end
@@ -49,7 +51,7 @@ Rails.application.routes.draw do
       get :closed_by_admin
       get :reopened_by_admin
     end
-    resources :applicants, only: [:index, :show, :new, :create] do
+    resources :applicants, only: %i[index show new create] do
       member do
         get :shortlist
         get :reject
@@ -59,7 +61,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :password_resets, only: %i[new create edit update]
   resources :categories, only: [:index]
   resources :admin_areas, only: [:index] do
     collection do
@@ -74,7 +76,8 @@ Rails.application.routes.draw do
   get 'terms_and_conditions', to: 'static_pages#terms_and_conditions'
   get 'privacy_policy', to: 'static_pages#privacy_policy'
 
-  # This routing are for render :new when render :new changes the url. we may need to delete some of these in future when we add other actions in controller.
+  # This routing are for render :new when render :new changes the url. we may need to delete some of these in future
+  # when we add other actions in controller.
   get '/users/:user_id/resumes', to: 'resumes#new'
   get '/users/:id/update_password', to: 'users#edit_password'
   get '/users/:user_id/cover_letters', to: 'cover_letters#new'

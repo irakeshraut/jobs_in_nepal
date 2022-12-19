@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ApplicantsController < ApplicationController
-  layout 'dashboard', except: [:new, :create]
+  layout 'dashboard', except: %i[new create]
 
   def index
     @job = Job.find(params[:job_id])
@@ -18,18 +20,19 @@ class ApplicantsController < ApplicationController
     if applicant.cover_letter_name.present?
       cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
       @cover_letter = @applicant_user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob)
-        .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).first
+                                     .where(active_storage_blobs: { filename: cover_letter_name,
+                                                                    created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).first
     end
     if applicant.resume_name.present?
       resume_name, resume_date = applicant.resume_name.split(' - ')
       @resume = @applicant_user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
-        .where(active_storage_blobs: { filename: resume_name, created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).first
+                               .where(active_storage_blobs: { filename: resume_name,
+                                                              created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).first
     end
-    if applicant.viewed_by_employer == false
-      applicant.viewed_by_employer = true
-      applicant.save!
-      ApplicantMailer.application_viewed(@applicant_user, @job, applicant).deliver_later
-    end
+    return if applicant.viewed_by_employer == true
+
+    applicant.update!(viewed_by_employer: true)
+    ApplicantMailer.application_viewed(@applicant_user, @job, applicant).deliver_later
   end
 
   def new
@@ -37,18 +40,16 @@ class ApplicantsController < ApplicationController
     @user = User.with_description_and_course_highlights.find(current_user.id)
     @applicant = Applicant.new # required when we render from create action
     authorize @job, policy_class: ApplicantPolicy
-    if @job.redirect_link.present?
-      redirect_to @job.redirect_link
-    end
+    redirect_to @job.redirect_link if @job.redirect_link.present?
   end
 
   def create
     @job = Job.find(params[:job_id])
-    if params[:resume_file] || params[:cover_letter_file]
-      @user = User.includes(resumes_attachments: :blob, cover_letters_attachments: :blob).find(params[:user_id])
-    else
-      @user = User.find(params[:user_id])
-    end
+    @user = if params[:resume_file] || params[:cover_letter_file]
+              User.includes(resumes_attachments: :blob, cover_letters_attachments: :blob).find(params[:user_id])
+            else
+              User.find(params[:user_id])
+            end
 
     authorize @job, policy_class: ApplicantPolicy
     @applicant = @job.applicants.build
@@ -57,7 +58,7 @@ class ApplicantsController < ApplicationController
       if @user.resumes.attach(params[:resume_file])
         # @user.resumes.last is not reliable that why I am using order
         resume = @user.resumes.order(created_at: :desc).first
-        @applicant.resume_name = "#{resume.filename.to_s} - #{resume.created_at.strftime("%d/%m/%Y")}"
+        @applicant.resume_name = "#{resume.filename} - #{resume.created_at.strftime('%d/%m/%Y')}"
         @user.delete_resumes_greater_than_10
       else
         @user.delete_resumes_with_id_nil
@@ -70,7 +71,7 @@ class ApplicantsController < ApplicationController
       if @user.cover_letters.attach(params[:cover_letter_file])
         # @user.cover_letters.last is not reliable that why I am using order
         cover_letter = @user.cover_letters.order(created_at: :desc).first
-        @applicant.cover_letter_name = "#{cover_letter.filename.to_s} - #{cover_letter.created_at.strftime("%d/%m/%Y")}"
+        @applicant.cover_letter_name = "#{cover_letter.filename} - #{cover_letter.created_at.strftime('%d/%m/%Y')}"
         @user.delete_cover_letters_greater_than_10
       else
         @user.delete_cover_letters_with_id_nil
@@ -140,11 +141,12 @@ class ApplicantsController < ApplicationController
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     resume_name, resume_date = applicant.resume_name.split(' - ')
     resume = user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
-      .where(active_storage_blobs: { filename: resume_name, created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).first
+                 .where(active_storage_blobs: { filename: resume_name,
+                                                created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).first
     if resume
       send_data resume.download, filename: resume.filename.to_s
     else
-      flash[:error] = "Unable to find Resume."
+      flash[:error] = 'Unable to find Resume.'
       if params[:redirect_back] == 'job_applicant_path'
         redirect_to job_applicant_path(job, params[:id])
       else
@@ -161,15 +163,16 @@ class ApplicantsController < ApplicationController
     if applicant.cover_letter_name.present?
       cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
       cover_letter = user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob)
-        .where(active_storage_blobs: { filename: cover_letter_name, created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).first
+                         .where(active_storage_blobs: { filename: cover_letter_name,
+                                                        created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).first
       if cover_letter
         send_data cover_letter.download, filename: cover_letter.filename.to_s
       else
-        flash[:error] = "Unable to find Cover Letter."
+        flash[:error] = 'Unable to find Cover Letter.'
         redirect_to job_applicant_path(job, params[:id])
       end
     else
-      flash[:error] = "Unable to find Cover Letter."
+      flash[:error] = 'Unable to find Cover Letter.'
       redirect_to job_applicant_path(job, params[:id])
     end
   end
