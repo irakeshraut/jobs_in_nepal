@@ -3,18 +3,14 @@
 class ApplicantsController < ApplicationController
   layout 'dashboard', except: %i[new create]
 
+  before_action :set_job
+  before_action :authorize_user, except: %i[new create]
+
   def index
-    @job = Job.find(params[:job_id])
-    authorize @job, policy_class: ApplicantPolicy
-    @users = @job.users.includes([avatar_attachment: :blob])
-    @users = @users.filter_by_name(params[:name]) if params[:name].present?
-    @users = @users.filter_by_status(params[:status]) if params[:status].present?
-    @users = @users.paginate(page: params[:page], per_page: 30)
+    @users = JobApplicant::Search.call(@job, params)
   end
 
   def show
-    @job = Job.find(params[:job_id])
-    authorize @job, policy_class: ApplicantPolicy
     @applicant_user = @job.users.with_description_and_course_highlights.find(params[:id])
     applicant = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id)
     if applicant.cover_letter_name.present?
@@ -36,7 +32,6 @@ class ApplicantsController < ApplicationController
   end
 
   def new
-    @job = Job.find(params[:job_id])
     @user = User.with_description_and_course_highlights.find(current_user.id)
     @applicant = Applicant.new # required when we render from create action
     authorize @job, policy_class: ApplicantPolicy
@@ -44,7 +39,6 @@ class ApplicantsController < ApplicationController
   end
 
   def create
-    @job = Job.find(params[:job_id])
     @user = if params[:resume_file] || params[:cover_letter_file]
               User.includes(resumes_attachments: :blob, cover_letters_attachments: :blob).find(params[:user_id])
             else
@@ -95,8 +89,6 @@ class ApplicantsController < ApplicationController
   end
 
   def shortlist
-    job = Job.find(params[:job_id])
-    authorize job, policy_class: ApplicantPolicy
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.update(status: 'Shortlisted')
       flash[:success] = 'Applicant Shortlisted.'
@@ -112,8 +104,6 @@ class ApplicantsController < ApplicationController
   end
 
   def reject
-    job = Job.find(params[:job_id])
-    authorize job, policy_class: ApplicantPolicy
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.update(status: 'Rejected')
       flash[:success] = 'Applicant Rejected.'
@@ -135,8 +125,6 @@ class ApplicantsController < ApplicationController
   end
 
   def download_resume
-    job = Job.find(params[:job_id])
-    authorize job, policy_class: ApplicantPolicy
     user = User.find(params[:id])
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     resume_name, resume_date = applicant.resume_name.split(' - ')
@@ -156,8 +144,6 @@ class ApplicantsController < ApplicationController
   end
 
   def download_cover_letter
-    job = Job.find(params[:job_id])
-    authorize job, policy_class: ApplicantPolicy
     user = User.find(params[:id])
     applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.cover_letter_name.present?
@@ -175,5 +161,15 @@ class ApplicantsController < ApplicationController
       flash[:error] = 'Unable to find Cover Letter.'
       redirect_to job_applicant_path(job, params[:id])
     end
+  end
+
+  private
+
+  def set_job
+    @job = Job.find(params[:job_id])
+  end
+
+  def authorize_user
+    authorize @job, policy_class: ApplicantPolicy
   end
 end
