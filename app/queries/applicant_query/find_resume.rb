@@ -1,6 +1,6 @@
 # frozen_literal_string: true
 
-module JobApplicant
+module ApplicantQuery
   class FindResume
     include BaseQuery
 

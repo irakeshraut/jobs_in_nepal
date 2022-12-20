@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module JobApplicant
+module ApplicantQuery
   class Search
     include BaseQuery
 

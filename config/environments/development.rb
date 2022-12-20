@@ -70,7 +70,12 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
-  config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.delivery_method = :smtp
+
+  # Letter Opener Setup
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+
   # config.action_mailer.smtp_settings = {
   #   :address              => "smtp.zoho.com",
   #   :port                 => 465,
@@ -81,13 +86,14 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   #   :tls                  => true,
   #   :enable_starttls_auto => true
   # }
-  ActionMailer::Base.smtp_settings = {
-    user_name: 'apikey',
-    password: ENV['SENDGRID_API_KEY'],
-    domain: 'https://jobsinnepal.com',
-    address: 'smtp.sendgrid.net',
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
+  #
+  # ActionMailer::Base.smtp_settings = {
+  #   user_name: 'apikey',
+  #   password: ENV['SENDGRID_API_KEY'],
+  #   domain: 'https://jobsinnepal.com',
+  #   address: 'smtp.sendgrid.net',
+  #   port: 587,
+  #   authentication: :plain,
+  #   enable_starttls_auto: true
+  # }
 end
