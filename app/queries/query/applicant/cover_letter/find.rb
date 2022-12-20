@@ -1,38 +1,42 @@
 # frozen_literal_string: true
 
+# You have to provide either (job and params) or (user and applicant) to use this class.
 module Query
   module Applicant
     module CoverLetter
       class Find
         include BaseQuery
+        include ApplicantHelper
 
-        def initialize(applicant_user, applicant)
-          @applicant_user = applicant_user
-          @applicant      = applicant
+        def initialize(job: nil, params: nil, user: nil, applicant: nil)
+          @job       = job
+          @params    = params
+          @user      = user      || find_user
+          @applicant = applicant || find_applicant
         end
 
         def call
           return if applicant.cover_letter_name.blank?
 
-          find_cover_letter_for_applied_job
+          find_cover_letter
         end
 
         private
 
-        attr_reader :applicant_user, :applicant, :cover_letter_date
+        attr_reader :job, :params, :user, :applicant, :cover_letter_date
 
-        def find_cover_letter_for_applied_job
+        def find_cover_letter
           cover_letter_name, @cover_letter_date = applicant.cover_letter_name.split(' - ')
           cover_letters.where(active_storage_blobs: { filename: cover_letter_name, created_at: }).first
         end
 
         def cover_letters
           # TODO: test if cover_letters.last will work, may be fixed in rails now
-          applicant_user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob)
+          user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob)
         end
 
         def created_at
-          Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day
+          Date.parse(cover_letter_date).all_day
         end
       end
     end

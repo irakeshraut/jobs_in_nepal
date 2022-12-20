@@ -14,7 +14,7 @@ class ApplicantsController < ApplicationController
     @applicant_user = @job.users.with_description_and_course_highlights.find(params[:id])
     applicant       = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id)
 
-    @cover_letter = Query::Applicant::CoverLetter::Find.call(@applicant_user, applicant)
+    @cover_letter = Query::Applicant::CoverLetter::Find.call(user: @applicant_user, applicant: )
     @resume       = Query::Applicant::Resume::Find.call(user: @applicant_user, applicant:)
 
     Service::Applicant::Viewed.call(@job, @applicant_user, applicant)
@@ -39,14 +39,14 @@ class ApplicantsController < ApplicationController
     if params[:resume_file]
       if @user.resumes.attach(params[:resume_file])
         # @user.resumes.last is not reliable that why I am using order
-        resume = @user.resumes.order(created_at: :desc).first
-        @applicant.resume_name = "#{resume.filename} - #{resume.created_at.strftime('%d/%m/%Y')}"
+        cover_letter = @user.resumes.order(created_at: :desc).first
+        @applicant.resume_name = "#{cover_letter.filename} - #{cover_letter.created_at.strftime('%d/%m/%Y')}"
         @user.delete_resumes_greater_than_10
       else
         @user.delete_resumes_with_id_nil
       end
     else
-      @applicant.resume_name = params[:resume]
+      @applicant.resume_name = params[:cover_letter]
     end
 
     if params[:cover_letter_file]
@@ -113,30 +113,18 @@ class ApplicantsController < ApplicationController
   end
 
   def download_resume
-    resume = Query::Applicant::Resume::Find.call(job: @job, params:)
-    return redirect_back_or_to job_applicants_path(@job), error: 'Unable to find Resume.' if resume.blank?
+    cover_letter = Query::Applicant::CoverLetter::Find.call(job: @job, params:)
+    return redirect_back_or_to job_applicants_path(@job), error: 'Unable to find Resume.' if cover_letter.blank?
 
-    send_data resume.download, filename: resume.filename.to_s
+    send_data cover_letter.download, filename: cover_letter.filename.to_s
   end
 
   def download_cover_letter
-    user = User.find(params[:id])
-    applicant = @job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
-    if applicant.cover_letter_name.present?
-      cover_letter_name, cover_letter_date = applicant.cover_letter_name.split(' - ')
-      cover_letter = user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob)
-                         .where(active_storage_blobs: { filename: cover_letter_name,
-                                                        created_at: Date.parse(cover_letter_date).beginning_of_day..Date.parse(cover_letter_date).end_of_day }).first
-      if cover_letter
-        send_data cover_letter.download, filename: cover_letter.filename.to_s
-      else
-        flash[:error] = 'Unable to find Cover Letter.'
-        redirect_to job_applicant_path(job, params[:id])
-      end
-    else
-      flash[:error] = 'Unable to find Cover Letter.'
-      redirect_to job_applicant_path(job, params[:id])
-    end
+    cover_letter  = Query::Applicant::CoverLetter::Find.call(job: @job, params:)
+    error_message =  'Unable to find Cover Letter'
+    return redirect_back_or_to job_applicant_path(@job, params[:id]), error: error_message if cover_letter.blank?
+
+    send_data cover_letter.download, filename: cover_letter.filename.to_s
   end
 
   private

@@ -6,6 +6,7 @@ module Query
     module Resume
       class Find
         include BaseQuery
+        include ApplicantHelper
 
         def initialize(job: nil, params: nil, user: nil, applicant: nil)
           @job       = job
@@ -23,14 +24,6 @@ module Query
         private
 
         attr_reader :job, :params, :user, :applicant, :resume_date
-
-        def find_user
-          User.find(params[:id])
-        end
-
-        def find_applicant
-          job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
-        end
 
         def find_resume
           resume_name, @resume_date = applicant.resume_name.split(' - ')
