@@ -4,7 +4,7 @@ class ApplicantsController < ApplicationController
   layout 'dashboard', except: %i[new create]
 
   before_action :set_job
-  before_action :authorize_user, except: %i[new create]
+  before_action :authorize_user
 
   def index
     @users = Query::Applicant::Search.call(@job, params)
@@ -15,15 +15,15 @@ class ApplicantsController < ApplicationController
     applicant       = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id)
 
     @cover_letter = Query::Applicant::CoverLetter::Find.call(@applicant_user, applicant)
-    @resume       = Query::Applicant::Resume::Find.call(@applicant_user, applicant)
+    @resume       = Query::Applicant::Resume::Find.call(user: @applicant_user, applicant:)
 
-    Service::Application::Viewed.call(@job, @applicant_user, applicant)
+    Service::Applicant::Viewed.call(@job, @applicant_user, applicant)
   end
 
   def new
-    @user = User.with_description_and_course_highlights.find(current_user.id)
+    @user      = User.with_description_and_course_highlights.find(current_user.id)
     @applicant = Applicant.new # required when we render from create action
-    authorize @job, policy_class: ApplicantPolicy
+
     redirect_to @job.redirect_link if @job.redirect_link.present?
   end
 
@@ -34,7 +34,6 @@ class ApplicantsController < ApplicationController
               User.find(params[:user_id])
             end
 
-    authorize @job, policy_class: ApplicantPolicy
     @applicant = @job.applicants.build
 
     if params[:resume_file]
@@ -78,7 +77,7 @@ class ApplicantsController < ApplicationController
   end
 
   def shortlist
-    applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
+    applicant = @job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.update(status: 'Shortlisted')
       flash[:success] = 'Applicant Shortlisted.'
     else
@@ -93,7 +92,7 @@ class ApplicantsController < ApplicationController
   end
 
   def reject
-    applicant = job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
+    applicant = @job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
     if applicant.update(status: 'Rejected')
       flash[:success] = 'Applicant Rejected.'
     else
@@ -114,22 +113,10 @@ class ApplicantsController < ApplicationController
   end
 
   def download_resume
-    user = User.find(params[:id])
-    applicant = @job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
-    resume_name, resume_date = applicant.resume_name.split(' - ')
-    resume = user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
-                 .where(active_storage_blobs: { filename: resume_name,
-                                                created_at: Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day }).first
-    if resume
-      send_data resume.download, filename: resume.filename.to_s
-    else
-      flash[:error] = 'Unable to find Resume.'
-      if params[:redirect_back] == 'job_applicant_path'
-        redirect_to job_applicant_path(job, params[:id])
-      else
-        redirect_to job_applicants_path(params[:job_id])
-      end
-    end
+    resume = Query::Applicant::Resume::Find.call(job: @job, params:)
+    return redirect_back_or_to job_applicants_path(@job), error: 'Unable to find Resume.' if resume.blank?
+
+    send_data resume.download, filename: resume.filename.to_s
   end
 
   def download_cover_letter

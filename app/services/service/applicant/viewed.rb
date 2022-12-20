@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Service
-  module Application
+  module Applicant
     class Viewed
       include BaseService
 

@@ -1,38 +1,49 @@
-# frozen_literal_string: true
+# frozen_string_literal: true
 
+# You have to provide either (job and params) or (user and applicant) to use this class.
 module Query
   module Applicant
     module Resume
       class Find
         include BaseQuery
 
-        def initialize(applicant_user, applicant)
-          @applicant_user = applicant_user
-          @applicant      = applicant
+        def initialize(job: nil, params: nil, user: nil, applicant: nil)
+          @job       = job
+          @params    = params
+          @user      = user      || find_user
+          @applicant = applicant || find_applicant
         end
 
         def call
           return if applicant.resume_name.blank?
 
-          find_resume_for_applied_job
+          find_resume
         end
 
         private
 
-        attr_reader :applicant_user, :applicant, :resume_date
+        attr_reader :job, :params, :user, :applicant, :resume_date
 
-        def find_resume_for_applied_job
+        def find_user
+          User.find(params[:id])
+        end
+
+        def find_applicant
+          job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
+        end
+
+        def find_resume
           resume_name, @resume_date = applicant.resume_name.split(' - ')
           resumes.where(active_storage_blobs: { filename: resume_name, created_at: }).first
         end
 
         def resumes
           # TODO: test if resumes.last will work, may be fixed in rails now
-          applicant_user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
+          user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
         end
 
         def created_at
-          Date.parse(resume_date).beginning_of_day..Date.parse(resume_date).end_of_day
+          Date.parse(resume_date).all_day
         end
       end
     end

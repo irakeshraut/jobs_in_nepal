@@ -1,17 +1,11 @@
 # frozen_string_literal: true
 
 class ApplicantPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope.all
-    end
-  end
-
   attr_reader :user, :job
 
   def initialize(user, job)
     @user = user
-    @job = job
+    @job  = job
   end
 
   def index?
@@ -19,7 +13,7 @@ class ApplicantPolicy < ApplicationPolicy
   end
 
   def show?
-    user.employer? && job.user == user
+    index?
   end
 
   def new?
@@ -27,7 +21,7 @@ class ApplicantPolicy < ApplicationPolicy
   end
 
   def create?
-    user.job_seeker? && !job.users.include?(user)
+    new?
   end
 
   def shortlist?
@@ -35,14 +29,14 @@ class ApplicantPolicy < ApplicationPolicy
   end
 
   def reject?
-    user.employer? && job.user == user
+    shortlist?
   end
 
   def download_resume?
-    user.employer? && job.user == user
+    shortlist?
   end
 
   def download_cover_letter?
-    user.employer? && job.user == user
+    shortlist?
   end
 end

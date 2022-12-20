@@ -51,11 +51,11 @@
                   <i class='ti-check marg-r-5'>Shortlist</i>
                 <% end %>
                 <% if @resume.present? %>
-                  <%= link_to download_resume_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width' do %>
+                  <%= link_to download_resume_job_applicant_path(@job, @applicant_user), class: 'btn btn-info full-width' do %>
                     <i class='ti-download marg-r-5'>Download Resume</i>
                   <% end %>
                 <% else %>
-                  <%= link_to download_resume_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width disabled' do %>
+                  <%= link_to download_resume_job_applicant_path(@job, @applicant_user), class: 'btn btn-info full-width disabled' do %>
                     <i class='ti-download marg-r-5'>No Resume Found</i>
                   <% end %>
                 <% end %>
@@ -90,11 +90,11 @@
                         <ul class="ove-detail-list">
                           <li>
                             <% if @resume.present? %>
-                              <%= link_to download_resume_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width' do %>
+                              <%= link_to download_resume_job_applicant_path(@job, @applicant_user), class: 'btn btn-info full-width' do %>
                                 <i class='ti-download marg-r-5'>Download Resume</i>
                               <% end %>
                             <% else %>
-                              <%= link_to download_resume_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-info full-width disabled' do %>
+                              <%= link_to download_resume_job_applicant_path(@job, @applicant_user), class: 'btn btn-info full-width disabled' do %>
                                 <i class='ti-download marg-r-5'>No Resume Found</i>
                               <% end %>
                             <% end %>
