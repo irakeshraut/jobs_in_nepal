@@ -12,9 +12,9 @@ class ApplicantsController < ApplicationController
 
   def show
     @applicant_user = @job.users.with_description_and_course_highlights.find(params[:id])
-    applicant       = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id)
+    applicant       = @job.applicants.find_by(user_id: @applicant_user.id)
 
-    @cover_letter = Query::Applicant::CoverLetter::Find.call(user: @applicant_user, applicant: )
+    @cover_letter = Query::Applicant::CoverLetter::Find.call(user: @applicant_user, applicant:)
     @resume       = Query::Applicant::Resume::Find.call(user: @applicant_user, applicant:)
 
     Service::Applicant::Viewed.call(@job, @applicant_user, applicant)
@@ -77,18 +77,23 @@ class ApplicantsController < ApplicationController
   end
 
   def shortlist
-    applicant = @job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
-    if applicant.update(status: 'Shortlisted')
-      flash[:success] = 'Applicant Shortlisted.'
-    else
-      flash[:error] = 'Something went wrong'
-    end
+    # applicant = @job.applicants.find_by(user_id: params[:id])
+    # if applicant.update(status: 'Shortlisted')
+    #   flash[:success] = 'Applicant Shortlisted.'
+    # else
+    #   flash[:error] = 'Something went wrong'
+    # end
+    #
+    # if params[:redirect_back] == 'job_applicant_path'
+    #   redirect_to job_applicant_path(job, params[:id])
+    # else
+    #   redirect_to job_applicants_path(params[:job_id])
+    # end
 
-    if params[:redirect_back] == 'job_applicant_path'
-      redirect_to job_applicant_path(job, params[:id])
-    else
-      redirect_to job_applicants_path(params[:job_id])
-    end
+    service = Service::Applicant::Shortlist.call(@job, params)
+    flash[:success] = service.success? ? 'Application Shortlisted.' : flash[:error] = 'Something went wrong'
+
+    redirect_back(fallback_location: job_applicants_path(@job))
   end
 
   def reject
