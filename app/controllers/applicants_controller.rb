@@ -7,15 +7,15 @@ class ApplicantsController < ApplicationController
   before_action :authorize_user, except: %i[new create]
 
   def index
-    @users = ApplicantQuery::Search.call(@job, params)
+    @users = Query::Applicant::Search.call(@job, params)
   end
 
   def show
     @applicant_user = @job.users.with_description_and_course_highlights.find(params[:id])
     applicant       = @job.applicants.find_by(job_id: @job.id, user_id: @applicant_user.id)
 
-    @cover_letter = ApplicantQuery::FindCoverLetter.call(@applicant_user, applicant)
-    @resume       = ApplicantQuery::FindResume.call(@applicant_user, applicant)
+    @cover_letter = Query::Applicant::CoverLetter::Find.call(@applicant_user, applicant)
+    @resume       = Query::Applicant::Resume::Find.call(@applicant_user, applicant)
 
     Service::Application::Viewed.call(@job, @applicant_user, applicant)
   end
