@@ -92,24 +92,10 @@ class ApplicantsController < ApplicationController
   end
 
   def reject
-    applicant = @job.applicants.find_by(job_id: params[:job_id], user_id: params[:id])
-    if applicant.update(status: 'Rejected')
-      flash[:success] = 'Applicant Rejected.'
-    else
-      flash[:error] = 'Something went wrong'
-    end
+    service = Service::Applicant::Reject.call(@job, params)
+    flash[:success] = service.success? ? 'Application Rejected.' : flash[:error] = 'Something went wrong'
 
-    if applicant.rejected_email_sent == false
-      applicant.rejected_email_sent = true
-      applicant.save!
-      ApplicantMailer.application_rejected(job, applicant).deliver_later
-    end
-
-    if params[:redirect_back] == 'job_applicant_path'
-      redirect_to job_applicant_path(job, params[:id])
-    else
-      redirect_to job_applicants_path(params[:job_id])
-    end
+    redirect_back(fallback_location: job_applicants_path(@job))
   end
 
   def download_resume
@@ -122,7 +108,7 @@ class ApplicantsController < ApplicationController
   def download_cover_letter
     cover_letter  = Query::Applicant::CoverLetter::Find.call(job: @job, params:)
     error_message =  'Unable to find Cover Letter'
-    return redirect_back_or_to job_applicant_path(@job, params[:id]), error: error_message if cover_letter.blank?
+    return redirect_back(fallback_location: job_applicant_path(@job, params[:id])), error: error_message if cover_letter.blank?
 
     send_data cover_letter.download, filename: cover_letter.filename.to_s
   end

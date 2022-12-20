@@ -16,7 +16,7 @@ module BaseService
     raise NotImplementedError
   end
 
-  # inside of perform, add errors if the use case did not succeed
+  # inside of call, add errors if the use case did not succeed
   def success?
     errors.none?
   end
