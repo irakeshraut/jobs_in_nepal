@@ -39,4 +39,3 @@ module Query
     end
   end
 end
-

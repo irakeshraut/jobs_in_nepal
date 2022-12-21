@@ -15,6 +15,7 @@ class BookmarkPolicy < ApplicationPolicy
   end
 
   def index?
+    # TODO: this may be wrong, test it.
     user == record
   end
 

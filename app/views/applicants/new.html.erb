@@ -25,8 +25,9 @@
   <div class="apply-job-form">
     <div class='row'>
       <div class='col-sm-8 col-sm-offset-2'>
-        <%= render 'shared/error_messages', object: @applicant %>
-        <%= render 'shared/error_messages', object: @user %>
+        <%#= render 'shared/error_messages', object: @applicant %>
+        <%#= render 'shared/error_messages', object: @user %>
+        <%= render 'shared/error_messages', object: @service || OpenStruct.new(errors: []) %>
       </div>
     </div>
     <%= form_with url: job_applicants_path(@job, user_id: @user.id), local: true do |f| %>
@@ -39,7 +40,8 @@
         </div>
         <div class='col-sm-4'>
           <%= f.label :resume, '(OR) Select Resume' %>
-          <% options =  @user.resumes.order(created_at: :desc).includes(:blob).references(:blob).pluck(:filename, :created_at).map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
+          <%# TODO: move this to query object, @user.reload is needed so old resume with failed attachment whose id is nil will be deleted %>
+          <% options =  @user.reload.resumes.order(created_at: :desc).includes(:blob).references(:blob).pluck(:filename, :created_at).map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
           <%= f.select :resume, options_for_select(options), prompt: '-- Select --', class: 'form-control' %>
         </div>
       </div>
@@ -65,7 +67,7 @@
         <div class="col-md-12 col-sm-12">
           <div class="form-group text-center">
             <%= f.submit 'Apply Job', class: 'btn-savepreview' %>
-          </div>	
+          </div>
         </div>
       </div>
     <% end %>

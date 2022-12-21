@@ -92,13 +92,6 @@ class User < ApplicationRecord
     end
   end
 
-  # @user.resumes.last.destroy is not relialbe that why I am looping througn resumes
-  def delete_resumes_with_id_nil
-    resumes.each do |resume|
-      resume.destroy if resume.id.nil?
-    end
-  end
-
   # TODO: this doesn't belong in ActiveRecord'
   def split_resumes_in_group_of_2
     if resumes.size.positive?
@@ -115,13 +108,6 @@ class User < ApplicationRecord
     return unless cover_letter_to_delete_count.positive?
 
     cover_letters.order(created_at: :asc).limit(cover_letter_to_delete_count).destroy_all
-  end
-
-  # @user.cover_letters.last.destroy is not relialbe that why I am looping througn cover_letters
-  def delete_cover_letters_with_id_nil
-    cover_letters.each do |cover_letter|
-      cover_letter.destroy if cover_letter.id.nil?
-    end
   end
 
   # TODO: this doesn't belong in ActiveRecord

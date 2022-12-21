@@ -1,4 +1,4 @@
-# frozen_literal_string: true
+# frozen_string_literal: true
 
 # You have to provide either (job and params) or (user and applicant) to use this class.
 module Query
