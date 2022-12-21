@@ -31,7 +31,6 @@ module Query
         end
 
         def cover_letters
-          # TODO: test if cover_letters.last will work, may be fixed in rails now
           user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob)
         end
 

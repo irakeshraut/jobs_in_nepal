@@ -31,7 +31,6 @@ module Query
         end
 
         def resumes
-          # TODO: test if resumes.last will work, may be fixed in rails now
           user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
         end
 

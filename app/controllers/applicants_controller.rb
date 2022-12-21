@@ -80,10 +80,10 @@ class ApplicantsController < ApplicationController
   end
 
   def set_user_with_resume_and_cover_letter
-    if params[:resume_file] || params[:cover_letter_file]
-      @user = User.includes(resumes_attachments: :blob, cover_letters_attachments: :blob).find(params[:user_id])
-    else
-      @user = User.find(params[:user_id])
-    end
+    @user = if params[:resume_file] || params[:cover_letter_file]
+              User.includes(resumes_attachments: :blob, cover_letters_attachments: :blob).find(params[:user_id])
+            else
+              User.find(params[:user_id])
+            end
   end
 end

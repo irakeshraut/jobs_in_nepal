@@ -7,22 +7,22 @@ class DashboardPolicy < ApplicationPolicy
     end
   end
 
-  attr_reader :user, :user_record
+  attr_reader :user, :record
 
-  def initialize(user, user_record)
-    @user = user
-    @user_record = user_record
+  def initialize(user, record)
+    @user   = user
+    @record = record
   end
 
   def index?
-    user_record == user
+    user == record
   end
 
   def jobs_posted_by_employers_today?
-    user_record == user && user.admin?
+    user == record && user.admin?
   end
 
   def all_jobs_posted_by_admin_and_employers?
-    user_record == user && user.admin?
+    user == record && user.admin?
   end
 end
