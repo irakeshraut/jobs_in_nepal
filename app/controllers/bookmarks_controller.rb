@@ -3,32 +3,37 @@
 class BookmarksController < ApplicationController
   layout 'dashboard', only: [:index]
 
+  before_action :set_user
+  before_action :authorize_user, except: :destroy
+
   def index
-    @user = User.find(params[:user_id])
-    authorize @user, policy_class: BookmarkPolicy
     @bookmarks = @user.bookmarks.order(created_at: :desc).paginate(page: params[:page], per_page: 30)
   end
 
   def create
-    user = User.find(params[:user_id])
-    job = Job.find(params[:job_id])
-    bookmark = user.bookmarks.new(job_id: params[:job_id])
-    authorize bookmark, policy_class: BookmarkPolicy
-    if bookmark.valid? && bookmark.save
-      flash[:success] = 'Job Saved'
-    else
-      flash[:error] = 'Unable to Save Job.'
-    end
+    bookmark = @user.bookmarks.new(job_id: params[:job_id])
+    bookmark.save ? flash[:success] = 'Job Saved' : flash[:error] = 'Unable to Save Job.'
 
-    redirect_to job
+    redirect_to job_path(params[:job_id])
   end
 
   def destroy
-    user = User.find(params[:user_id])
     bookmark = Bookmark.find(params[:id])
     authorize bookmark, policy_class: BookmarkPolicy
+
     bookmark.destroy
     flash[:success] = 'Saved Job Deleted.'
-    redirect_to user_bookmarks_path(user)
+
+    redirect_to user_bookmarks_path(@user)
+  end
+
+  private
+
+  def set_user
+    @user = User.find(params[:user_id])
+  end
+
+  def authorize_user
+    authorize @user, policy_class: BookmarkPolicy
   end
 end
