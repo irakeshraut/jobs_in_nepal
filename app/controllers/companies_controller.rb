@@ -7,7 +7,7 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     @company.users.first.role = 'employer'
-    @user = User.new(@company.users.first.attributes)
+
     if @company.valid? && @company.save
       flash[:success] = 'Account Created. Please check your email to Activate your account.'
       redirect_to login_path
@@ -44,8 +44,10 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    params.require(:company).permit(:name, :phone, :url, :description, :logo, users_attributes:
-                                    %i[first_name last_name email password
-                                       password_confirmation company_id])
+    params.require(:company).permit(:name, :phone, :url, :description, :logo, users_attributes:)
+  end
+
+  def users_attributes
+    %i[first_name last_name email password password_confirmation company_id]
   end
 end

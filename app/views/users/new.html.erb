@@ -21,7 +21,7 @@
         </ul>
         <div class="tab-content">
           <div id="candidate" class="tab-pane fade <%= @tab == 'job_seeker' ? 'in active' : '' %>">
-            <%= render 'shared/error_messages', object: @user %>
+            <%= render 'shared/error_messages', object: @user if @tab == 'job_seeker' %>
             <%= render "users/new_user_form" %>
 
             <div class="social-devider">
@@ -30,7 +30,7 @@
           </div>
 
           <div id="employer" class="tab-pane fade <%= @tab == 'employer' ? 'in active' : '' %>">
-            <%= render 'shared/error_messages', object: @company %>
+            <%= render 'shared/error_messages', object: @company if @tab == 'employer' %>
             <%= form_with model: @company, local: true do |f| %>
               <div class="form-group">
                 <%= f.label :name, 'Business Name' %>
