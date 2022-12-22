@@ -24,7 +24,8 @@ class CreateActiveStorageTables < ActiveRecord::Migration[5.2]
 
       t.index %i[record_type record_id name blob_id], name: 'index_active_storage_attachments_uniqueness',
                                                       unique: true
-      t.foreign_key :active_storage_blobs, column: :blob_id, type: :uuid
+      # t.foreign_key :active_storage_blobs, column: :blob_id, type: :uuid # Don't add type: :uuid for foreign key
+      t.foreign_key :active_storage_blobs, column: :blob_id
     end
   end
 end

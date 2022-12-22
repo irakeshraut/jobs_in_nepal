@@ -92,15 +92,6 @@ class User < ApplicationRecord
     end
   end
 
-  # TODO: this doesn't belong in ActiveRecord'
-  def split_resumes_in_group_of_2
-    if resumes.size.positive?
-      resumes.order(created_at: :desc).in_groups_of((resumes.size / 2.0).round, false)
-    else
-      [[], []]
-    end
-  end
-
   # TODO: move to service objects
   def delete_cover_letters_greater_than_10
     cover_letter_count = cover_letters.count

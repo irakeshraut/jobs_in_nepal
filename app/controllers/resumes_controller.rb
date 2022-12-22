@@ -3,8 +3,8 @@
 class ResumesController < ApplicationController
   layout 'dashboard'
 
-  before_action :set_user, only: %i[new download]
-  before_action :set_user_with_attachments, only: %i[create destroy]
+  before_action :set_user, except: :create
+  before_action :set_user_with_resumes, only: :create
   before_action :authorize_user
 
   def new
@@ -17,7 +17,7 @@ class ResumesController < ApplicationController
       @user.delete_resumes_greater_than_10
       redirect_to new_user_resume_path(@user)
     else
-      @resumes = @user.reload.resumes.order(created_at: :desc).to_a
+      @resumes = @user.reload.resumes.includes(:blob).order(created_at: :desc).to_a
       render :new
     end
   end
@@ -28,8 +28,6 @@ class ResumesController < ApplicationController
   end
 
   def destroy
-    @user = User.includes(resumes_attachments: :blob).find(params[:user_id])
-    authorize @user, policy_class: ResumePolicy
     resume = @user.resumes.find(params[:id])
     if @user.profile_visible
       visible_resume_name, resume_created_date = @user.visible_resume_name.split(' - ')
@@ -56,10 +54,8 @@ class ResumesController < ApplicationController
     @user = User.find(params[:user_id])
   end
 
-  def set_user_with_attachments
-    # If I don't attach cover_letter for user then I get N + 1 in create action when create fails. Very strange
-    # But destroy action will work without attached_cover_letters, I am just reusing same method of crete and destroy
-    @user = User.with_attached_resumes.with_attached_cover_letters.find(params[:user_id])
+  def set_user_with_resumes
+    @user = User.with_attached_resumes.find(params[:user_id])
   end
 
   def authorize_user
