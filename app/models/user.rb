@@ -119,4 +119,8 @@ class User < ApplicationRecord
   def resumes_with_blob
     resumes.includes(:blob).order(created_at: :desc)
   end
+
+  def cover_letters_with_blob
+    cover_letters.includes(:blob).order(created_at: :desc)
+  end
 end

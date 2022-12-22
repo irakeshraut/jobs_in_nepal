@@ -14,37 +14,33 @@
         <% end %>
         <div class='row'>
           <div class='col-md-6'>
-            <% if @cover_letters.first.present? %>
-              <% @cover_letters.first.each do |cover_letter| %>
-                <div class='statistic-item'>
-                  <%= link_to cover_letter.filename, download_user_cover_letter_path(@user, cover_letter), class: 'resume' %>
-                  <div>
-                    <%= link_to download_user_cover_letter_path(@user, cover_letter), class: 'btn btn-primary download-btn', title: 'Download' do %>
-                      <i class="fa fa-download"></i>
-                    <% end %>
-                    <%= link_to user_cover_letter_path(@user, cover_letter), method: :delete, data: { confirm: 'Are you sure ?' }, class: 'btn btn-danger', title: 'Delete' do %>
-                      <i class="fa fa-trash"></i>
-                    <% end %>
-                  </div>
+            <% @cover_letters.select.each_with_index { |_, i| i.even? }.each do |cover_letter| %>
+              <div class='statistic-item'>
+                <%= link_to filename_with_date(cover_letter), download_user_cover_letter_path(@user, cover_letter), class: 'resume' %>
+                <div>
+                  <%= link_to download_user_cover_letter_path(@user, cover_letter), class: 'btn btn-primary download-btn', title: 'Download' do %>
+                    <i class="fa fa-download"></i>
+                  <% end %>
+                  <%= link_to user_cover_letter_path(@user, cover_letter), method: :delete, data: { confirm: 'Are you sure ?' }, class: 'btn btn-danger', title: 'Delete' do %>
+                    <i class="fa fa-trash"></i>
+                  <% end %>
                 </div>
-              <% end %>
+              </div>
             <% end %>
           </div>
           <div class='col-md-6'>
-            <% if @cover_letters.second.present? %>
-              <% @cover_letters.second.each do |cover_letter| %>
-                <div class='statistic-item'>
-                  <%= link_to cover_letter.filename, download_user_cover_letter_path(@user, cover_letter), class: 'resume' %>
-                  <div>
-                    <%= link_to download_user_cover_letter_path(@user, cover_letter), class: 'btn btn-primary download-btn', title: 'Download' do %>
-                      <i class="fa fa-download"></i>
-                    <% end %>
-                    <%= link_to user_cover_letter_path(@user, cover_letter), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Delete' do %>
-                      <i class="fa fa-trash"></i>
-                    <% end %>
-                  </div>
+            <% @cover_letters.select.each_with_index { |_, i| i.odd? }.each do |cover_letter| %>
+              <div class='statistic-item'>
+                <%= link_to filename_with_date(cover_letter), download_user_cover_letter_path(@user, cover_letter), class: 'resume' %>
+                <div>
+                  <%= link_to download_user_cover_letter_path(@user, cover_letter), class: 'btn btn-primary download-btn', title: 'Download' do %>
+                    <i class="fa fa-download"></i>
+                  <% end %>
+                  <%= link_to user_cover_letter_path(@user, cover_letter), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Delete' do %>
+                    <i class="fa fa-trash"></i>
+                  <% end %>
                 </div>
-              <% end %>
+              </div>
             <% end %>
           </div>
         </div>
@@ -67,3 +63,4 @@
       </div>
     </div>
   </div>
+</div>
