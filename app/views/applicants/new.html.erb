@@ -25,8 +25,6 @@
   <div class="apply-job-form">
     <div class='row'>
       <div class='col-sm-8 col-sm-offset-2'>
-        <%#= render 'shared/error_messages', object: @applicant %>
-        <%#= render 'shared/error_messages', object: @user %>
         <%= render 'shared/error_messages', object: @service || OpenStruct.new(errors: []) %>
       </div>
     </div>
@@ -40,8 +38,7 @@
         </div>
         <div class='col-sm-4'>
           <%= f.label :resume, '(OR) Select Resume' %>
-          <%# TODO: move this to query object, @user.reload is needed so old resume with failed attachment whose id is nil will be deleted %>
-          <% options =  @user.reload.resumes.order(created_at: :desc).includes(:blob).references(:blob).pluck(:filename, :created_at).map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
+          <% options = filenames_with_date(@resumes) %>
           <%= f.select :resume, options_for_select(options), prompt: '-- Select --', class: 'form-control' %>
         </div>
       </div>
@@ -54,7 +51,7 @@
         </div>
         <div class='col-sm-4'>
           <%= f.label :cover_letter, '(OR) Select Cover Letter (Optional)' %>
-          <% options =  @user.cover_letters.order(created_at: :desc).includes(:blob).references(:blob).pluck(:filename, :created_at).map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
+          <% options =  filenames_with_date(@cover_letters) %>
           <%= f.select :cover_letter, options_for_select(options), prompt: '-- Select --', class: 'form-control' %>
         </div>
       </div>

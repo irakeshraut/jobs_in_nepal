@@ -4,8 +4,8 @@ module BaseQuery
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def call(*args, **kwargs)
-      new(*args, **kwargs).call
+    def call(*args)
+      new(*args).call
     end
   end
 

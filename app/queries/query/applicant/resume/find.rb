@@ -1,41 +1,30 @@
 # frozen_string_literal: true
 
-# You have to provide either (job and params) or (user and applicant) to use this class.
 module Query
   module Applicant
     module Resume
       class Find
         include BaseQuery
-        include ApplicantHelper
 
-        def initialize(job: nil, params: nil, user: nil, applicant: nil)
-          @job       = job
-          @params    = params
-          @user      = user      || find_user
-          @applicant = applicant || find_applicant
+        def initialize(user, applicant)
+          @user      = user
+          @applicant = applicant
         end
 
         def call
-          return if applicant.resume_name.blank?
-
           find_resume
         end
 
         private
 
-        attr_reader :job, :params, :user, :applicant, :resume_date
+        attr_reader :user, :applicant
 
         def find_resume
-          resume_name, @resume_date = applicant.resume_name.split(' - ')
-          resumes.where(active_storage_blobs: { filename: resume_name, created_at: }).first
+          resumes.where(active_storage_blobs: { filename: applicant.resume_name }).first
         end
 
         def resumes
-          user.resumes.order(created_at: :desc).includes(:blob).references(:blob)
-        end
-
-        def created_at
-          Date.parse(resume_date).all_day
+          user.resumes_with_blob
         end
       end
     end

@@ -13,8 +13,11 @@ module Service
 
       def call
         attach_existing_cover_letter and return if params[:cover_letter].present?
+        return if params[:cover_letter_file].blank?
 
-        upload_new_cover_letter if params[:cover_letter_file].present?
+        upload_cover_letter
+        set_cover_letter_name
+        delete_old_cover_letters
       end
 
       private
@@ -25,21 +28,27 @@ module Service
         applicant.cover_letter_name = params[:cover_letter]
       end
 
-      def upload_new_cover_letter
-        if user.cover_letters.attach(params[:cover_letter_file])
-          set_cover_letter_name
-          user.delete_cover_letters_greater_than_10
-        else
-          add_error_messages
-        end
+      def upload_cover_letter
+        add_error_message unless user.cover_letters.attach(io: params[:cover_letter_file], filename:)
+      end
+
+      def filename
+        @filename ||= "#{original_filename} - #{Time.zone.now.to_i}"
+      end
+
+      def original_filename
+        params[:cover_letter_file].original_filename
       end
 
       def set_cover_letter_name
-        cover_letter = user.cover_letters.order(created_at: :desc).first
-        applicant.cover_letter_name = "#{cover_letter.filename} - #{cover_letter.created_at.strftime('%d/%m/%Y')}"
+        applicant.cover_letter_name = filename
       end
 
-      def add_error_messages
+      def delete_old_cover_letters
+        user.delete_cover_letters_greater_than_10
+      end
+
+      def add_error_message
         user.errors.full_messages.each { |error| errors.add(:base, error) }
       end
     end
