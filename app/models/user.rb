@@ -114,4 +114,9 @@ class User < ApplicationRecord
   def clean_up_visible_resume_name
     self.visible_resume_name = nil unless profile_visible
   end
+
+  # TODO: may need to move to query object
+  def resumes_with_blob
+    resumes.includes(:blob).order(created_at: :desc)
+  end
 end

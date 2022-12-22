@@ -8,16 +8,16 @@ class ResumesController < ApplicationController
   before_action :authorize_user
 
   def new
-    @resumes = @user.resumes.includes(:blob).order(created_at: :desc).to_a
+    @resumes = @user.resumes_with_blob.to_a
   end
 
   def create
-    if @user.resumes.attach(params[:user][:resume])
+    if @user.resumes.attach(io: params[:user][:resume], filename: new_filename)
       flash[:success] = 'Resume Attached'
       @user.delete_resumes_greater_than_10
       redirect_to new_user_resume_path(@user)
     else
-      @resumes = @user.reload.resumes.includes(:blob).order(created_at: :desc).to_a
+      @resumes = @user.reload.resumes_with_blob.to_a
       render :new
     end
   end
@@ -28,24 +28,16 @@ class ResumesController < ApplicationController
   end
 
   def destroy
-    resume = @user.resumes.find(params[:id])
-    if @user.profile_visible
-      visible_resume_name, resume_created_date = @user.visible_resume_name.split(' - ')
-      resume_filename = "#{resume.filename} - #{resume.created_at.strftime('%d/%m/%Y')}"
-      if resume_filename == @user.visible_resume_name
-        resume_count = @user.resumes.includes(:blob).references(:blob)
-                            .where(active_storage_blobs: { filename: visible_resume_name,
-                                                           created_at: Date.parse(resume_created_date).beginning_of_day..Date.parse(resume_created_date).end_of_day }).count
-        if resume_count == 1
-          @trying_to_delete_visible_resume = true
-          @resumes = @user.split_resumes_in_group_of_2
-          render :new and return
-        end
-      end
+    service = Service::Resume::Delete.call(@user, params)
+
+    if service.success?
+      flash[:success] = 'Resume Deleted'
+      redirect_to new_user_resume_path(@user)
+    else
+      @visible_resume = service.errors[:visible_resume].present?
+      @resumes = @user.resumes_with_blob.to_a
+      render :new
     end
-    resume.purge
-    flash[:success] = 'Resume Deleted'
-    redirect_to new_user_resume_path(@user)
   end
 
   private
@@ -60,5 +52,10 @@ class ResumesController < ApplicationController
 
   def authorize_user
     authorize @user, policy_class: ResumePolicy
+  end
+
+  def new_filename
+    original_filename = params[:user][:resume].original_filename
+    "#{original_filename} - #{Time.zone.now.to_i}"
   end
 end

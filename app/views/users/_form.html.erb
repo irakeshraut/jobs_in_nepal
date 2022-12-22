@@ -93,7 +93,7 @@
       <div class='col-md-6'>
         <div class='form-group'>
           <%= f.label :visible_resume_name, 'Select Resume' %>
-          <% options =  @user.resumes.order(created_at: :desc).includes(:blob).references(:blob).pluck(:filename, :created_at).map { |e| filename = e.first; created_at = e.last; [filename, created_at.strftime('%d/%m/%Y')].join(' - ') }%>
+          <% options =  filenames_with_date(@user.resumes_with_blob) %>
           <% if options.empty? %>
             <p class='alert alert-danger'>You haven't uploaded any Resume yet. Please upload your resume from <%= link_to 'Resume Page', new_user_resume_path(@user) %> and then come back and select the resume you want to make it visible.</p>
           <% end %>
@@ -127,7 +127,7 @@
       $('#skills').removeAttr('required');
       $('#city').removeAttr('required');
     }
- 
+
     $('#profile-visible-checkbox').change(function() {
       if (this.checked) {
         $('#select-resume').show();

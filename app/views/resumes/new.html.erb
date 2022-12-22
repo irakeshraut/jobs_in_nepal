@@ -6,7 +6,7 @@
       </div>
       <div class="dashboard-caption-wrap">
         <%= render 'shared/error_messages', object: @user %>
-        <% if @trying_to_delete_visible_resume %>
+        <% if @visible_resume %>
           <p class='alert alert-danger'>You are trying to delete Resume which is attached to your profile. In order to delete this resume you can go to <%= link_to 'Profile Page', edit_user_path(@user) %>
           and select another resume to be visible or you can make your profile invisible to Employers/Recuriters.
           </p>
@@ -22,7 +22,7 @@
           <div class='col-md-6'>
               <% @resumes.select.each_with_index { |_, i| i.even? }.each do |resume| %>
                 <div class='statistic-item'>
-                  <%= link_to resume.filename, download_user_resume_path(@user, resume), class: 'resume' %>
+                  <%= link_to filename_with_date(resume), download_user_resume_path(@user, resume), class: 'resume' %>
                   <div>
                     <%= link_to download_user_resume_path(@user, resume), class: 'btn btn-primary download-btn', title: 'Download' do %>
                       <i class="fa fa-download"></i>
@@ -37,7 +37,7 @@
           <div class='col-md-6'>
             <% @resumes.select.each_with_index { |_, i| i.odd? }.each do |resume| %>
               <div class='statistic-item'>
-                <%= link_to resume.filename, download_user_resume_path(@user, resume), class: 'resume' %>
+                <%= link_to filename_with_date(resume), download_user_resume_path(@user, resume), class: 'resume' %>
                 <div>
                   <%= link_to download_user_resume_path(@user, resume), class: 'btn btn-primary download-btn', title: 'Download' do %>
                     <i class="fa fa-download"></i>
