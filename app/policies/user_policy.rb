@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class UserPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope.all
-    end
-  end
-
   attr_reader :user, :user_record
 
   def initialize(user, user_record)
@@ -19,19 +13,19 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    user_record == user
+    edit?
   end
 
   def edit_password?
-    user_record == user
+    edit?
   end
 
   def update_password?
-    user_record == user
+    edit?
   end
 
   def all_posted_jobs?
-    (user.employer? || user.admin?) && user_record == user
+    edit?
   end
 
   def applied_jobs?
@@ -39,6 +33,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def delete_avatar?
-    user_record == user
+    edit?
   end
 end

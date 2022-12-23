@@ -4,6 +4,9 @@ class UsersController < ApplicationController
   skip_before_action :require_login, only: %i[new create activate]
   layout 'dashboard', only: %i[edit update all_posted_jobs edit_password update_password applied_jobs]
 
+  before_action :set_user, only: %i[edit_password update_password]
+  before_action :authorize_user, only: %i[edit_password update_password]
+
   def new
     @user = User.new
     @company = Company.new
@@ -85,10 +88,8 @@ class UsersController < ApplicationController
   def all_posted_jobs
     @user = User.find(params[:id])
     authorize @user
-    @jobs = @user.jobs.order(created_at: :desc)
-    @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
-    @jobs = @jobs.filter_by_status(params[:status]) if params[:status].present?
-    @jobs = @jobs.paginate(page: params[:page], per_page: 30)
+
+    @jobs = Query::Employer::Job::Search.call(@user, params)
   end
 
   def applied_jobs
@@ -119,6 +120,14 @@ class UsersController < ApplicationController
 
   private
 
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def authorize_user
+    authorize @user
+  end
+
   def password_params
     params.permit(:password, :password_confirmation)
   end
@@ -128,10 +137,18 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :phone_no, :avatar, :password, :password_confirmation, :city, :skills, :profile_visible, :visible_resume_name,
-                                 work_experiences_attributes:
-                                 %i[id job_title company_name _destroy start_month start_year finish_month finish_year still_in_role description],
-                                 educations_attributes: %i[id institution_name course_name course_completed finished_year _destroy
-                                                           expected_finish_month expected_finish_year course_highlights])
+    params.require(:user).permit(
+      :first_name, :last_name, :email, :phone_no, :avatar, :password, :password_confirmation, :city, :skills,
+      :profile_visible, :visible_resume_name, work_experiences_attributes:, educations_attributes:
+    )
+  end
+
+  def work_experiences_attributes
+    %i[id job_title company_name _destroy start_month start_year finish_month finish_year still_in_role description]
+  end
+
+  def educations_attributes
+    %i[id institution_name course_name course_completed finished_year
+       _destroy expected_finish_month expected_finish_year course_highlights]
   end
 end

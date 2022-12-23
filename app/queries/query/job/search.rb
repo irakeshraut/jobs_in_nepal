@@ -37,7 +37,7 @@ module Query
       end
 
       def filter_by_category
-        @records = records.filter_by_status(params[:status]) if params[:status].present?
+        @jobs = jobs.filter_by_category(params[:category]) if params[:category].present?
       end
 
       def filter_by_location
