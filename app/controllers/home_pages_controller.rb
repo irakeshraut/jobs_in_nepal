@@ -7,6 +7,5 @@ class HomePagesController < ApplicationController
     @jobs = Job.active.order(job_type: :asc, created_at: :desc).limit(48)
     created_by_employer = @jobs.created_by_employers
     @jobs = @jobs.includes(user: { company: [logo_attachment: :blob] }) if created_by_employer.present?
-    @jobs
   end
 end

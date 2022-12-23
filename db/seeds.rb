@@ -12,6 +12,8 @@
 #         Candidates/Job Seekers
 #######################################
 
+puts 'Creating Users .......'
+
 candidate_one = User.find_by(email: 'candidate1@test.com')
 if candidate_one.nil?
   User.create(first_name: 'Candidate', last_name: 'One', role: 'job_seeker', email: 'candidate1@test.com',
@@ -43,6 +45,8 @@ end
 #######################################
 #         Companies
 #######################################
+
+puts 'Creating Companies ........'
 
 company_one   = Company.find_or_create_by(name: 'Company 1', phone: '0000000000')
 company_two   = Company.find_or_create_by(name: 'Company 2', phone: '0000000000')
@@ -76,6 +80,7 @@ employer_three = if employer.nil?
 #######################################
 #    Assign Employer to Compnay
 #######################################
+
 company_one.users << employer_one unless company_one.users.include?(employer_one)
 company_two.users << employer_two unless company_two.users.include?(employer_two)
 company_three.users << employer_three unless company_three.users.include?(employer_three)
@@ -85,3 +90,37 @@ company_three.users << employer_three unless company_three.users.include?(employ
 ########################################
 
 User.all.each(&:activate!)
+
+#########################################
+#   Jobs
+#########################################
+users = [admin, employer_one, employer_two, employer_three]
+
+if Job.count < 200
+  puts 'Creating Jobs .......'
+  200.times do
+    description = ""
+    description = 50.times { description += Faker::ChuckNorris.fact }
+
+    user = users.sample
+
+    job = Job.create!(
+            title: Faker::Job.title,
+            description: description,
+            category: Category::LIST.keys.sample,
+            location: Faker::Address.city,
+            employment_type: Job::TYPE.sample,
+            status: 'Active',
+            user: user,
+            job_type: Job::JOB_TYPE.values.sample,
+            min_salary: Faker::Number.between(from: 50_000, to: 70_000),
+            max_salary: Faker::Number.between(from: 70_000, to: 120_000)
+    )
+
+    if user.admin?
+      job.update!(company_name: Faker::Company.name, redirect_link: 'https://google.com')
+    end
+  end
+end
+
+puts 'Done'

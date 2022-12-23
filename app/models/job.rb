@@ -6,15 +6,12 @@ class Job < ApplicationRecord
   JOB_TYPE = { 'Top Job' => 1, 'Hot Job' => 2, 'Normal Job' => 3 }.freeze
 
   validates :title,           presence: true
-  validates :category,        presence: true
+  validates :category,        presence: true, inclusion: { in: Category::LIST.keys }
   validates :location,        presence: true
-  validates :employment_type, presence: true
-  validates :employment_type, inclusion: { in: Job::TYPE }
-  validates :status,          presence: true
-  validates :status,          inclusion: { in: Job::STATUS }
+  validates :employment_type, presence: true, inclusion: { in: Job::TYPE }
+  validates :status,          presence: true, inclusion: { in: Job::STATUS }
   validates :user,            presence: true
-  validates :job_type,        presence: true
-  validates :job_type,        inclusion: { in: [1, 2, 3] }
+  validates :job_type,        presence: true, inclusion: { in: [1, 2, 3] }
 
   belongs_to :user
   has_many :applicants, dependent: :destroy

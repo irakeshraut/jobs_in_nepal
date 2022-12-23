@@ -70,7 +70,7 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  # TODO: try to delete this before save, callbacks are not good, this will update everytime when user are updated.
+  # TODO: try to delete this before save callbacks are not good, this will update everytime when user are updated.
   def clean_up_visible_resume_name
     self.visible_resume_name = nil unless profile_visible
   end

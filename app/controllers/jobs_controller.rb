@@ -5,16 +5,8 @@ class JobsController < ApplicationController
   skip_before_action :require_login, only: %i[index show]
 
   def index
-    @jobs = Job.active.order(job_type: :asc, created_at: :desc).limit(48)
-    created_by_employer = @jobs.created_by_employers
-    @jobs = @jobs.includes(user: { company: [logo_attachment: :blob] }) if created_by_employer.present?
-    @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
-    @jobs = @jobs.filter_by_category(params[:category]) if params[:category].present?
-    @jobs = @jobs.filter_by_location(params[:location]) if params[:location].present?
-    @jobs = @jobs.paginate(page: params[:page], per_page: 30)
+    @jobs = Query::Job::Search.call(params)
     @category_count = @jobs.filter_by_category(params[:category]).count if params[:category].present?
-    # this is to solve soft 404 error on google search console
-    render :index, status: 404 if @jobs.count.zero?
   end
 
   def show
