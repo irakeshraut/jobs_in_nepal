@@ -33,12 +33,7 @@ class JobsController < ApplicationController
     authorize @job
     @job.status = 'Active'
     @job.user_id = current_user.id
-    # TODO: remove below code of setting job_type when we start taking payments and put options for job type in job new form
-    @job.job_type = if @job.created_by_employer?
-                      1 # Top Job
-                    else
-                      3 # Normal Job(created by Admin)
-                    end
+    @job.job_type = 3 if @job.created_by_employer?
     if @job.valid? && @job.save
       flash[:success] = 'Job Posted'
       redirect_to user_dashboards_path(current_user)

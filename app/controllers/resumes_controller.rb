@@ -14,10 +14,11 @@ class ResumesController < ApplicationController
   def create
     if @user.resumes.attach(io: params[:user][:resume], filename: new_filename)
       flash[:success] = 'Resume Attached'
-      @user.delete_resumes_greater_than_10
+      Service::Resume::Old::Delete.call(@user)
+
       redirect_to new_user_resume_path(@user)
     else
-      @resumes = @user.reload.resumes_with_blob.to_a
+      @resumes = @user.reload.resumes.to_a
       render :new
     end
   end

@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 2022_03_17_145703) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "company_name"
     t.boolean "closed_by_admin"
-    t.integer "job_type", null: false
+    t.integer "job_type", default: 1, null: false
     t.index ["category"], name: "index_jobs_on_category"
     t.index ["location"], name: "index_jobs_on_location"
     t.index ["title"], name: "index_jobs_on_title"

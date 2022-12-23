@@ -70,28 +70,6 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  # TODO: move all deleting logics to service objects
-  def delete_resumes_greater_than_10
-    resume_count = resumes.count
-    resume_to_delete_count = resume_count - 10
-    return unless resume_to_delete_count.positive?
-
-    if profile_visible
-      visible_resume_name, resume_created_date = self.visible_resume_name.split(' - ')
-      visible_resume = resumes.includes(:blob).references(:blob).order(created_at: :desc)
-                              .where(active_storage_blobs: { filename: visible_resume_name,
-                                                             created_at: Date.parse(resume_created_date).beginning_of_day..Date.parse(resume_created_date).end_of_day }).first
-      oldest_resume = resumes.includes(:blob).references(:blob).order(created_at: :desc).last
-      if visible_resume == oldest_resume
-        resumes.where.not(id: visible_resume.id).order(created_at: :asc).limit(resume_to_delete_count).destroy_all
-      else
-        resumes.order(created_at: :asc).limit(resume_to_delete_count).destroy_all
-      end
-    else
-      resumes.order(created_at: :asc).limit(resume_to_delete_count).destroy_all
-    end
-  end
-
   # TODO: move to service objects
   def delete_cover_letters_greater_than_10
     cover_letter_count = cover_letters.count
@@ -101,21 +79,12 @@ class User < ApplicationRecord
     cover_letters.order(created_at: :asc).limit(cover_letter_to_delete_count).destroy_all
   end
 
-  # TODO: this doesn't belong in ActiveRecord
-  def split_cover_letters_in_group_of_2
-    if cover_letters.size.positive?
-      cover_letters.order(created_at: :desc).in_groups_of((cover_letters.size / 2.0).round, false)
-    else
-      [[], []]
-    end
-  end
-
   # TODO: try to delete this before save, callbacks are not good, this will update everytime when user are updated.
   def clean_up_visible_resume_name
     self.visible_resume_name = nil unless profile_visible
   end
 
-  # TODO: may need to move to query object
+  # TODO: may need to move these to concerns
   def resumes_with_blob
     resumes.includes(:blob).order(created_at: :desc)
   end

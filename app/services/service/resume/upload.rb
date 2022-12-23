@@ -12,9 +12,7 @@ module Service
       end
 
       def call
-        attach_existing_resume and return if params[:resume].present?
-
-        upload_new_resume if params[:resume_file].present?
+        attach_existing_resume || upload_new_resume
       end
 
       private
@@ -22,24 +20,37 @@ module Service
       attr_reader :user, :applicant, :params
 
       def attach_existing_resume
-        applicant.resume_name = params[:resume]
+        applicant.resume_name = params[:resume] if params[:resume].present?
       end
 
       def upload_new_resume
-        if user.resumes.attach(params[:resume_file])
+        return if params[:resume_file].blank?
+
+        if user.resumes.attach(io: params[:resume_file], filename:)
           set_resume_name
-          user.delete_resumes_greater_than_10
+          delete_old_resumes
         else
-          add_error_messages
+          add_error_message
         end
       end
 
-      def set_resume_name
-        resume = user.resumes.order(created_at: :desc).first
-        applicant.resume_name = "#{resume.filename} - #{resume.created_at.strftime('%d/%m/%Y')}"
+      def filename
+        @filename ||= "#{original_filename} - #{Time.zone.now.to_i}"
       end
 
-      def add_error_messages
+      def original_filename
+        params[:resume_file].original_filename
+      end
+
+      def set_resume_name
+        applicant.resume_name = filename
+      end
+
+      def delete_old_resumes
+        Service::Resume::Old::Delete.call(user)
+      end
+
+      def add_error_message
         user.errors.full_messages.each { |error| errors.add(:base, error) }
       end
     end
