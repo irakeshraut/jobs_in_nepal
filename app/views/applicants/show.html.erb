@@ -47,7 +47,7 @@
               </div>
 
               <div class="ur-detail-btn">
-                <%= link_to shortlist_job_applicant_path(@job, @applicant_user, redirect_back: :job_applicant_path), class: 'btn btn-warning mrg-bot-10 full-width' do %>
+                <%= link_to shortlist_job_applicant_path(@job, @applicant_user), class: 'btn btn-warning mrg-bot-10 full-width' do %>
                   <i class='ti-check marg-r-5'>Shortlist</i>
                 <% end %>
                 <% if @resume.present? %>

@@ -96,7 +96,7 @@
             <% end %>
           </li>
           <li class="<%= controller.controller_name == 'dashboards' && controller.action_name == 'all_jobs_posted_by_admin_and_employers' ? 'active' : '' %>">
-            <%= link_to all_jobs_posted_by_admin_and_employers_user_dashboards_path(current_user) do %>
+            <%= link_to all_jobs_by_admin_and_employer_user_dashboards_path(current_user) do %>
               <i class="fa fa-briefcase"></i>All Jobs (admin + employers)
             <% end %>
           </li>

@@ -17,7 +17,7 @@ class AdminAreasController < ApplicationController
   end
 
   def delete_admin_expired_jobs
-    Job.expired.created_by_admin.destroy_all
+    Job.created_by_admin.expired.destroy_all
 
     redirect_to admin_areas_path
   end

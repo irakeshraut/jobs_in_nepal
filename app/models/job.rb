@@ -25,13 +25,14 @@ class Job < ApplicationRecord
   scope :active,  -> { where(status: 'Active') }
   scope :closed,  -> { where(status: 'Closed') }
   scope :expired, -> { where(status: 'Expired') }
-  scope :filter_by_title,      ->(title) { where('lower(title) like ?', "%#{title.downcase}%") }
+  scope :filter_by_title,      ->(title)    { where('lower(title) like ?', "%#{title.downcase}%") }
   scope :filter_by_category,   ->(category) { where(category:) }
   scope :filter_by_location,   ->(location) { where('lower(location) like ?', "%#{location.downcase}%") }
-  scope :filter_by_status,     ->(status) { where('lower(status) like ?', "%#{status.downcase}%") }
+  scope :filter_by_status,     ->(status)   { where('lower(status) like ?', "%#{status.downcase}%") }
   scope :created_by_employers, -> { joins(:user).where(users: { role: 'employer' }) }
   scope :created_by_admin,     -> { joins(:user).where(users: { role: 'admin' }) }
   scope :old_jobs,             -> { where('created_at < ?', 30.days.ago).where.not(status: 'Expired') }
+  scope :with_company_logo,    -> { includes(user: { company: [logo_attachment: :blob] }) }
 
   scope :hot_jobs,    -> { where(job_type: 1) }
   scope :top_jobs,    -> { where(job_type: 2) }

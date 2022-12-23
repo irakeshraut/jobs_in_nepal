@@ -21,7 +21,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :dashboards, only: [:index] do
       collection do
         get :jobs_posted_by_employers_today
-        get :all_jobs_posted_by_admin_and_employers
+        get :all_jobs_by_admin_and_employer
       end
     end
     resources :work_experiences, only: [:new]
