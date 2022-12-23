@@ -45,7 +45,7 @@ module Service
       end
 
       def delete_old_cover_letters
-        user.delete_cover_letters_greater_than_10
+        Service::CoverLetter::Old::Delete.call(user)
       end
 
       def add_error_message

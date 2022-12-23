@@ -14,7 +14,7 @@ class CoverLettersController < ApplicationController
   def create
     if @user.cover_letters.attach(io: params[:user][:cover_letter], filename: new_filename)
       flash[:success] = 'Cover Letter Attached'
-      @user.delete_cover_letters_greater_than_10
+      Service::CoverLetter::Old::Delete.call(@user)
       redirect_to new_user_cover_letter_path(@user)
     else
       @cover_letters = @user.reload.cover_letters_with_blob.to_a

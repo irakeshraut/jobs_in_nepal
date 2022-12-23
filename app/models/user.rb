@@ -70,15 +70,6 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  # TODO: move to service objects
-  def delete_cover_letters_greater_than_10
-    cover_letter_count = cover_letters.count
-    cover_letter_to_delete_count = cover_letter_count - 10
-    return unless cover_letter_to_delete_count.positive?
-
-    cover_letters.order(created_at: :asc).limit(cover_letter_to_delete_count).destroy_all
-  end
-
   # TODO: try to delete this before save, callbacks are not good, this will update everytime when user are updated.
   def clean_up_visible_resume_name
     self.visible_resume_name = nil unless profile_visible
