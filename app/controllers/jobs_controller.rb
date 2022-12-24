@@ -5,7 +5,7 @@ class JobsController < ApplicationController
   skip_before_action :require_login, only: %i[index show]
 
   before_action :set_job, except: %i[index new create]
-  before_action :authorize_user, except: %i[index show]
+  before_action :authorize_user, except: %i[index show new]
 
   def index
     @jobs = Query::Job::Search.call(params)
@@ -19,6 +19,7 @@ class JobsController < ApplicationController
 
   def new
     @job = Job.new
+    authorize @job
   end
 
   def create

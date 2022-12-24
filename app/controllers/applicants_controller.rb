@@ -98,7 +98,7 @@ class ApplicantsController < ApplicationController
 
   def set_user_with_resume_and_cover_letter
     @user = if params[:resume_file] || params[:cover_letter_file]
-              User.includes(resumes_attachments: :blob, cover_letters_attachments: :blob).find(params[:user_id])
+              User.with_resume_and_cover_letter.find(params[:user_id])
             else
               User.find(params[:user_id])
             end

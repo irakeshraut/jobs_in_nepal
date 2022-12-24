@@ -2,7 +2,7 @@
   <div class='row work_experiences'>
     <div class='col-md-6 col-sm-6'>
       <div class="form-group">
-        <%= hidden_field_tag :redirect_to, :edit_work_experience_path %>
+        <%= hidden_field_tag :render_template, 'work_experiences/new' %>
         <%= f.label :job_tile, 'Job Title'  %>
         <div class="input-with-icon">
           <%= f.text_field :job_title, placeholder: 'Enter Job Title', class: 'form-control', required: true %>

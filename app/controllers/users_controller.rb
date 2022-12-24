@@ -4,8 +4,8 @@ class UsersController < ApplicationController
   skip_before_action :require_login, only: %i[new create activate]
   layout 'dashboard', only: %i[edit update all_posted_jobs edit_password update_password applied_jobs]
 
-  before_action :set_user, only: %i[edit_password update_password]
-  before_action :authorize_user, only: %i[edit_password update_password]
+  before_action :set_user, only: %i[edit edit_password update_password all_posted_jobs applied_jobs delete_avatar]
+  before_action :authorize_user, only: %i[edit edit_password update_password all_posted_jobs applied_jobs delete_avatar]
 
   def new
     @user    = User.new
@@ -27,43 +27,23 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-    @user = User.find(params[:id])
-    authorize @user
-  end
+  def edit; end
 
-  # def update
-  #   @user = User.includes(cover_letters_attachments: :blob, resumes_attachments: :blob).find(params[:id])
-  #   authorize @user
-  #   if @user.update(user_params)
-  #     case params[:redirect_to]
-  #     when 'edit_work_experience_path'
-  #       flash[:success] = 'Work Experience Successfully Updated.'
-  #       redirect_to new_user_work_experience_path(@user)
-  #     when 'edit_education_path'
-  #       flash[:success] = 'Education Successfully Updated.'
-  #       redirect_to new_user_education_path(@user)
-  #     else
-  #       flash[:success] = 'User Profile Successfully Updated.'
-  #       redirect_to edit_user_path(@user)
-  #     end
-  #   elsif params[:redirect_to] == 'edit_work_experience_path'
-  #     @highlight_work_experience_navigation = true
-  #     render 'work_experiences/new'
-  #   elsif params[:redirect_to] == 'edit_education_path'
-  #     @highlight_education_navigation = true
-  #     render 'educations/new'
-  #   else
-  #     @highlight_edit_profile_navigation = true
-  #     render :edit
-  #   end
-  # end
+  def update
+    @user = User.with_resume_and_cover_letter.find(params[:id])
+    authorize @user
+
+    if @user.update(user_params)
+      flash[:success] = 'Update Successful'
+      redirect_back(fallback_location: user_dashboards_path(@user))
+    else
+      @highlight_navigation = params[:render_template]
+      render params[:render_template] || :edit
+    end
+  end
 
   # TODO: Create seperate PasswordController for this
-  def edit_password
-    @user = User.find(params[:id])
-    authorize @user
-  end
+  def edit_password; end
 
   # TODO: create separate controller called PasswordsController for this with Update method
   def update_password
@@ -74,15 +54,10 @@ class UsersController < ApplicationController
   end
 
   def all_posted_jobs
-    @user = User.find(params[:id])
-    authorize @user
-
     @jobs = Query::Employer::Job::Search.call(@user, params)
   end
 
   def applied_jobs
-    @user = User.find(params[:id])
-    authorize @user
     @applied_jobs = @user.applied_jobs.with_company_logo.order(created_at: :desc)
                          .paginate(page: params[:page], per_page: 30)
   end
@@ -98,8 +73,6 @@ class UsersController < ApplicationController
   end
 
   def delete_avatar
-    @user = User.find(params[:id])
-    authorize @user
     @user.avatar.purge
     flash[:success] = 'Avatar Deleted.'
     redirect_to edit_user_path(@user)

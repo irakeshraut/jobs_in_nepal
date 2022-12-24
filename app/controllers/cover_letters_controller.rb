@@ -38,7 +38,7 @@ class CoverLettersController < ApplicationController
   private
 
   def set_user_with_cover_letters
-    @user = User.includes(cover_letters_attachments: :blob).find(params[:user_id])
+    @user = User.with_attached_cover_letters.find(params[:user_id])
   end
 
   def set_user

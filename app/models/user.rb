@@ -15,6 +15,16 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
   validates :email, email: { mode: :strict, require_fqdn: true }
   validates :role, presence: true, inclusion: { in: %w[employer job_seeker admin] }
+  validates :resumes, content_type: Document::VALID_TYPES
+  validates :resumes, size: { less_than: 2.megabytes }
+  validates :cover_letters, content_type: Document::VALID_TYPES
+  validates :cover_letters, size: { less_than: 2.megabytes }
+  validates :avatar, size: { less_than: 2.megabytes }
+  validates :profile_visible, inclusion: { in: [true, false] }
+  validates :visible_resume_name, presence: true, if: :profile_visible
+  validates :phone_no, presence: true, if: :profile_visible
+  validates :skills, presence: true, if: :profile_visible
+  validates :city, presence: true, if: :profile_visible
 
   belongs_to :company, optional: true
   has_many :jobs, dependent: :destroy
@@ -33,22 +43,12 @@ class User < ApplicationRecord
   has_many_attached :cover_letters, dependent: :destroy
   has_one_attached :avatar, dependent: :destroy
 
-  validates :resumes, content_type: Document::VALID_TYPES
-  validates :resumes, size: { less_than: 2.megabytes }
-  validates :cover_letters, content_type: Document::VALID_TYPES
-  validates :cover_letters, size: { less_than: 2.megabytes }
-  validates :avatar, size: { less_than: 2.megabytes }
-  validates :profile_visible, inclusion: { in: [true, false] }
-  validates :visible_resume_name, presence: true, if: :profile_visible
-  validates :phone_no, presence: true, if: :profile_visible
-  validates :skills, presence: true, if: :profile_visible
-  validates :city, presence: true, if: :profile_visible
-
   scope :filter_by_name, ->(name) { where("lower(first_name) || ' ' || lower(last_name) like ?", "%#{name.downcase}%") }
   scope :filter_by_status, ->(status) { where(applicants: { status: }) }
   scope :with_education,       -> { includes(educations: :rich_text_course_highlights) }
   scope :with_work_experience, -> { includes(work_experiences: :rich_text_description) }
   scope :with_education_and_work_experience, -> { with_education.with_work_experience }
+  scope :with_resume_and_cover_letter, -> { with_attached_resumes.with_attached_cover_letters }
 
   before_save :clean_up_visible_resume_name
 
