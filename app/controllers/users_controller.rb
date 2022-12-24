@@ -59,32 +59,19 @@ class UsersController < ApplicationController
   #   end
   # end
 
+  # TODO: Create seperate PasswordController for this
   def edit_password
     @user = User.find(params[:id])
     authorize @user
   end
 
-  # def update_password
-  #   need to set current_user before using login otherwise current_user will be nil when login fail.
-  #   old_current_user = current_user
-  #
-  #   @user = login(old_current_user.email, params[:current_password])
-  #   authorize @user if @user
-  #
-  #   if @user
-  #     if @user.update(password_params)
-  #       flash[:success] = 'Password Successfully Updated.'
-  #       redirect_to user_dashboards_path(@user)
-  #     else
-  #       render :edit_password
-  #     end
-  #   else
-  #     @current_user = old_current_user
-  #     @user = @current_user
-  #     @invalid_current_password = true
-  #     render :edit_password
-  #   end
-  # end
+  # TODO: create separate controller called PasswordsController for this with Update method
+  def update_password
+    @service = Service::Password::Update.call(@user, password_params)
+    flash[:success] = 'Password Successfully Updated.' if @service.success?
+
+    @service.success? ? (redirect_to user_dashboards_path(@user)) : (render :edit_password)
+  end
 
   def all_posted_jobs
     @user = User.find(params[:id])
@@ -129,7 +116,7 @@ class UsersController < ApplicationController
   end
 
   def password_params
-    params.permit(:password, :password_confirmation)
+    params.permit(:current_password, :password, :password_confirmation)
   end
 
   def edit_user_params
