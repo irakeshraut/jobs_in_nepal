@@ -8,9 +8,9 @@ class UsersController < ApplicationController
   before_action :authorize_user, only: %i[edit_password update_password]
 
   def new
-    @user = User.new
+    @user    = User.new
     @company = Company.new
-    @tab = params[:tab] if params[:tab]
+    @tab     = params[:tab] if params[:tab]
     redirect_to new_user_path(tab: 'job_seeker') unless @tab
   end
 
@@ -32,58 +32,59 @@ class UsersController < ApplicationController
     authorize @user
   end
 
-  def update
-    @user = User.includes(cover_letters_attachments: :blob, resumes_attachments: :blob).find(params[:id])
-    authorize @user
-    if @user.update(user_params)
-      case params[:redirect_to]
-      when 'edit_work_experience_path'
-        flash[:success] = 'Work Experience Successfully Updated.'
-        redirect_to new_user_work_experience_path(@user)
-      when 'edit_education_path'
-        flash[:success] = 'Education Successfully Updated.'
-        redirect_to new_user_education_path(@user)
-      else
-        flash[:success] = 'User Profile Successfully Updated.'
-        redirect_to edit_user_path(@user)
-      end
-    elsif params[:redirect_to] == 'edit_work_experience_path'
-      @highlight_work_experience_navigation = true
-      render 'work_experiences/new'
-    elsif params[:redirect_to] == 'edit_education_path'
-      @highlight_education_navigation = true
-      render 'educations/new'
-    else
-      @highlight_edit_profile_navigation = true
-      render :edit
-    end
-  end
+  # def update
+  #   @user = User.includes(cover_letters_attachments: :blob, resumes_attachments: :blob).find(params[:id])
+  #   authorize @user
+  #   if @user.update(user_params)
+  #     case params[:redirect_to]
+  #     when 'edit_work_experience_path'
+  #       flash[:success] = 'Work Experience Successfully Updated.'
+  #       redirect_to new_user_work_experience_path(@user)
+  #     when 'edit_education_path'
+  #       flash[:success] = 'Education Successfully Updated.'
+  #       redirect_to new_user_education_path(@user)
+  #     else
+  #       flash[:success] = 'User Profile Successfully Updated.'
+  #       redirect_to edit_user_path(@user)
+  #     end
+  #   elsif params[:redirect_to] == 'edit_work_experience_path'
+  #     @highlight_work_experience_navigation = true
+  #     render 'work_experiences/new'
+  #   elsif params[:redirect_to] == 'edit_education_path'
+  #     @highlight_education_navigation = true
+  #     render 'educations/new'
+  #   else
+  #     @highlight_edit_profile_navigation = true
+  #     render :edit
+  #   end
+  # end
 
   def edit_password
     @user = User.find(params[:id])
     authorize @user
   end
 
-  def update_password
-    old_current_user = current_user # need to set current_user before using login otherwise current_user will be nil when login fail.
-
-    @user = login(old_current_user.email, params[:current_password])
-    authorize @user if @user
-
-    if @user
-      if @user.update(password_params)
-        flash[:success] = 'Password Successfully Updated.'
-        redirect_to user_dashboards_path(@user)
-      else
-        render :edit_password
-      end
-    else
-      @current_user = old_current_user
-      @user = @current_user
-      @invalid_current_password = true
-      render :edit_password
-    end
-  end
+  # def update_password
+  #   need to set current_user before using login otherwise current_user will be nil when login fail.
+  #   old_current_user = current_user
+  #
+  #   @user = login(old_current_user.email, params[:current_password])
+  #   authorize @user if @user
+  #
+  #   if @user
+  #     if @user.update(password_params)
+  #       flash[:success] = 'Password Successfully Updated.'
+  #       redirect_to user_dashboards_path(@user)
+  #     else
+  #       render :edit_password
+  #     end
+  #   else
+  #     @current_user = old_current_user
+  #     @user = @current_user
+  #     @invalid_current_password = true
+  #     render :edit_password
+  #   end
+  # end
 
   def all_posted_jobs
     @user = User.find(params[:id])
@@ -95,9 +96,8 @@ class UsersController < ApplicationController
   def applied_jobs
     @user = User.find(params[:id])
     authorize @user
-    @applied_jobs = @user.applied_jobs.order(created_at: :desc).includes(user: { company: [logo_attachment: :blob] }).paginate(
-      page: params[:page], per_page: 30
-    )
+    @applied_jobs = @user.applied_jobs.with_company_logo.order(created_at: :desc)
+                         .paginate(page: params[:page], per_page: 30)
   end
 
   def activate

@@ -15,7 +15,7 @@ class ApplicantsController < ApplicationController
 
   # TODO: check pundit for this, before_action :set_job need to ignore this or change applicant_user to user
   def show
-    @applicant_user = @job.users.with_description_and_course_highlights.find(params[:id])
+    @applicant_user = @job.users.with_education_and_work_experience.find(params[:id])
     applicant       = @job.applicants.find_by(user_id: @applicant_user.id)
 
     @resume       = Query::Applicant::Resume::Find.call(@applicant_user, applicant)
@@ -25,7 +25,7 @@ class ApplicantsController < ApplicationController
   end
 
   def new
-    @user    = User.with_description_and_course_highlights.find(current_user.id)
+    @user    = User.with_education_and_work_experience.find(current_user.id)
     @resumes = @user.resumes_with_blob
     @cover_letters = @user.cover_letters_with_blob
 

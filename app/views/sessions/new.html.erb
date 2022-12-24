@@ -20,9 +20,7 @@
             <h4>Login</h4>
           </div>
 
-          <% if @account_pending %>
-            <p class='alert alert-danger'>You need to activate your account. Please check your email for activation link.</p>
-          <% end %>
+          <%= render 'shared/error_messages', object: @service if @service %>
           <%= form_with url: sessions_path, local: true do |f| %>
             <div class="form-group">
               <%= f.label :email  %>
