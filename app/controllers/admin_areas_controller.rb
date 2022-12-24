@@ -11,7 +11,7 @@ class AdminAreasController < ApplicationController
   end
 
   def expire_jobs
-    Job.old_jobs.update_all(status: 'Expired')
+    Job.old_jobs.update(status: 'Expired')
 
     redirect_to admin_areas_path
   end

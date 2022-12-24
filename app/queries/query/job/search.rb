@@ -27,7 +27,7 @@ module Query
       end
 
       def include_company_logo
-        return unless jobs.created_by_employers.present?
+        return if jobs.created_by_employers.blank?
 
         @jobs = jobs.includes(user: { company: [logo_attachment: :blob] })
       end

@@ -19,7 +19,8 @@ class ApplicationController < ActionController::Base
   private
 
   def redirect_www_to_non_www
-    redirect_to "https://jobsinnepal.com#{request.fullpath}", status: 301 if request.host == 'www.jobsinnepal.com'
+    path = "https://jobsinnepal.com#{request.fullpath}"
+    redirect_to path, status: :moved_permanently if request.host == 'www.jobsinnepal.com'
   end
 
   def not_authenticated

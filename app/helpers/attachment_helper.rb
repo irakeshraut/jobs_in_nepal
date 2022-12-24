@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 module AttachmentHelper
-  attr_reader :filename, :timestamp
-
   def filename_with_date(attachment)
-    @filename, @timestamp = attachment.filename.to_s.split('-')
-    "#{filename} - #{formatted_date}"
+    filename, timestamp = attachment.filename.to_s.split('-')
+    "#{filename} - #{formatted_date(timestamp)}"
   end
 
   def filenames_with_date(attachments)
@@ -14,7 +12,7 @@ module AttachmentHelper
 
   # These are helpers not uses anywhere. Can't make module private
 
-  def formatted_date
-    Time.at(timestamp.to_i).strftime('%m/%d/%Y')
+  def formatted_date(timestamp)
+    Time.zone.at(timestamp.to_i).strftime('%m/%d/%Y')
   end
 end

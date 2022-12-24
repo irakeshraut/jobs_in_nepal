@@ -7,7 +7,7 @@ module WorkExperiencesHelper
   end
 
   def self.years
-    current_year = Time.new.year
+    current_year = Time.zone.new.year
     past_year = current_year - 20
     (past_year..current_year).to_a.reverse
   end
