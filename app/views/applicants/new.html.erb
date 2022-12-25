@@ -38,7 +38,7 @@
         </div>
         <div class='col-sm-4'>
           <%= f.label :resume, '(OR) Select Resume' %>
-          <% options = filenames_with_date(@resumes) %>
+          <% options = @presenter.resume_names_with_date %>
           <%= f.select :resume, options_for_select(options), prompt: '-- Select --', class: 'form-control' %>
         </div>
       </div>
@@ -51,7 +51,7 @@
         </div>
         <div class='col-sm-4'>
           <%= f.label :cover_letter, '(OR) Select Cover Letter (Optional)' %>
-          <% options =  filenames_with_date(@cover_letters) %>
+          <% options =  @presenter.cover_letter_names_with_date %>
           <%= f.select :cover_letter, options_for_select(options), prompt: '-- Select --', class: 'form-control' %>
         </div>
       </div>

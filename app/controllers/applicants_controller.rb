@@ -15,19 +15,16 @@ class ApplicantsController < ApplicationController
 
   # TODO: check pundit for this, before_action :set_job need to ignore this or change applicant_user to user
   def show
-    @applicant_user = @job.users.with_education_and_work_experience.find(params[:id])
-    applicant       = @job.applicants.find_by(user_id: @applicant_user.id)
+    @user      = @job.users.with_education_and_work_experience.find(params[:id])
+    applicant  = @job.applicants.find_by(user_id: @user.id)
+    @presenter = Presenter::Applicant::Show.new(@user, applicant)
 
-    @resume       = Query::Applicant::Resume::Find.call(@applicant_user, applicant)
-    @cover_letter = Query::Applicant::CoverLetter::Find.call(@applicant_user, applicant)
-
-    Service::Applicant::Viewed.call(@job, @applicant_user, applicant)
+    Service::Applicant::Viewed.call(@job, @user, applicant)
   end
 
   def new
-    @user    = User.with_education_and_work_experience.find(current_user.id)
-    @resumes = @user.resumes_with_blob
-    @cover_letters = @user.cover_letters_with_blob
+    @user      = User.with_education_and_work_experience.find(current_user.id)
+    @presenter = Presenter::Applicant::New.new(@user, view_context)
     redirect_link  = @job.redirect_link
 
     redirect_to redirect_link if redirect_link.present?
@@ -40,8 +37,7 @@ class ApplicantsController < ApplicationController
       flash[:success] = 'Application Submitted.'
       redirect_to root_path
     else
-      @resumes = @user.reload.resumes_with_blob
-      @cover_letters = @user.cover_letters_with_blob
+      @presenter = Presenter::Applicant::New.new(@user.reload, view_context)
       render :new
     end
   end
