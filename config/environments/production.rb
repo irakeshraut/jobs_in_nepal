@@ -76,7 +76,7 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   config.active_support.deprecation = :notify
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  config.log_formatter = Logger::Formatter.new
 
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
@@ -112,7 +112,7 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
-  config.action_mailer.default_url_options = { host: ENV['MAIL_HOST'] }
+  config.action_mailer.default_url_options = { host: ENV.fetch('MAIL_HOST', nil) }
   config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
   #   :address              => "smtp.zoho.com",
@@ -126,7 +126,7 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # }
   ActionMailer::Base.smtp_settings = {
     user_name: 'apikey',
-    password: ENV['SENDGRID_API_KEY'],
+    password: ENV.fetch('SENDGRID_API_KEY', nil),
     domain: 'https://jobsinnepal.com',
     address: 'smtp.sendgrid.net',
     port: 587,

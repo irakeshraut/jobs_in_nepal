@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  before_save :clean_up_visible_resume_name
   before_update :setup_activation, if: -> { email_changed? }
   after_update :send_activation_needed_email!, if: -> { previous_changes['email'].present? }
 
@@ -26,6 +27,7 @@ class User < ApplicationRecord
   validates :skills, presence: true, if: :profile_visible
   validates :city, presence: true, if: :profile_visible
 
+  # TODO: rather than optional: true check is user is employer and set dependent destroy
   belongs_to :company, optional: true
   has_many :jobs, dependent: :destroy
   has_many :work_experiences, lambda {
@@ -39,6 +41,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :work_experiences, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :educations, reject_if: :all_blank, allow_destroy: true
 
+  # TODO: only job_seekers should have attached resumes and cover letters, all validation
   has_many_attached :resumes, dependent: :destroy
   has_many_attached :cover_letters, dependent: :destroy
   has_one_attached :avatar, dependent: :destroy
@@ -49,8 +52,6 @@ class User < ApplicationRecord
   scope :with_work_experience, -> { includes(work_experiences: :rich_text_description) }
   scope :with_education_and_work_experience, -> { with_education.with_work_experience }
   scope :with_resume_and_cover_letter, -> { with_attached_resumes.with_attached_cover_letters }
-
-  before_save :clean_up_visible_resume_name
 
   def admin?
     role == 'admin'

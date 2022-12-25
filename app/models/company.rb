@@ -21,7 +21,7 @@ class Company < ApplicationRecord
   def logo_validation
     return unless logo.attached? && !logo.image?
 
-    errors[:base] << 'Logo must be Image type.'
+    errors.add(:base, 'Logo must be Image type.')
   end
 
   def delete_empty_description

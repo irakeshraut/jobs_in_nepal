@@ -10,7 +10,6 @@ class Job < ApplicationRecord
   validates :location,        presence: true
   validates :employment_type, presence: true, inclusion: { in: Job::TYPE }
   validates :status,          presence: true, inclusion: { in: Job::STATUS }
-  validates :user,            presence: true
   validates :job_type,        presence: true, inclusion: { in: [1, 2, 3] }
 
   belongs_to :user

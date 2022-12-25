@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   # TODO: create separate controller called PasswordsController for this with Update method
   def update_password
     @service = Service::Password::Update.call(@user, password_params)
-    flash[:success] = 'Password Successfully Updated.' if @service.success?
+    flash.now[:success] = 'Password Successfully Updated.' if @service.success?
 
     @service.success? ? (redirect_to user_dashboards_path(@user)) : (render :edit_password)
   end

@@ -17,7 +17,7 @@ class ApplicantPolicy < ApplicationPolicy
   end
 
   def new?
-    user.job_seeker? && !job.users.include?(user)
+    user.job_seeker? && job.users.exclude?(user)
   end
 
   def create?

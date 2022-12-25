@@ -2,6 +2,7 @@ require:
   - rubocop-rails
   - rubocop-rspec
 AllCops:
+  NewCops: enable
   Exclude:
     - 'db/**/*'
     - 'bin/bundle'
@@ -10,3 +11,14 @@ Style/Documentation:
 Lint/MissingSuper:
   Exclude:
     - 'app/policies/**/*'
+Rails/I18nLocaleTexts:
+  Enabled: false
+Rails/ActionOrder:
+  ExpectedOrder:
+    - index
+    - show
+    - new
+    - create
+    - edit
+    - update
+    - destroy
