@@ -29,7 +29,7 @@ module Category
     'Real Estate & Property' => 'fa-home',
     'Sales' => 'fa-rupee-sign',
     'Science & Technology' => 'fa-flask',
-    'Self Empolyment' => 'fa-user',
+    'Self Employment' => 'fa-user',
     'Sport & Recreation' => 'fa-running',
     'Trades & Services' => 'fa-heart',
     'Transport & Logistics' => 'fa-bus',

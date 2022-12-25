@@ -38,16 +38,16 @@ RSpec.describe User do
 
   # TODO: finish other scopes
   describe 'Scopes' do
-    let(:rakesh) { create(:user, :admin, first_name: 'Rakesh', last_name: 'Raut') }
-    let(:rajina) { create(:user, :admin, first_name: 'Rajina', last_name: 'Raut') }
+    let!(:rakesh) { create(:user, :admin, first_name: 'Rakesh', last_name: 'Raut') }
+    let!(:rajina) { create(:user, :admin, first_name: 'Rajina', last_name: 'Raut') }
 
     describe '.filter_by_name' do
       it 'will return users with first name "Rakesh"' do
-        expect(described_class.filter_by_name('rakesh')).to include(rakesh)
+        expect(described_class.filter_by_name('rakesh')).to eq([rakesh])
       end
 
       it 'will return users with last name "Raut"' do
-        expect(described_class.filter_by_name('Raut')).to include(rakesh, rajina)
+        expect(described_class.filter_by_name('Raut')).to eq([rakesh, rajina])
       end
     end
   end

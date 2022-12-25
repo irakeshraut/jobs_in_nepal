@@ -10,8 +10,9 @@ class Job < ApplicationRecord
   validates :location,        presence: true
   validates :employment_type, presence: true, inclusion: { in: Job::TYPE }
   validates :status,          presence: true, inclusion: { in: Job::STATUS }
-  validates :job_type,        presence: true, inclusion: { in: [1, 2, 3] }
+  validates :job_type,        presence: true, inclusion: { in: Job::JOB_TYPE.values }
 
+  # TODO: add validation presence of company_name, redirect_url when job is created by Admin
   belongs_to :user
   has_many :applicants, dependent: :destroy
   has_many :views,      dependent: :destroy
@@ -50,17 +51,18 @@ class Job < ApplicationRecord
   end
 
   def created_by_admin?
-    company_name.present? && redirect_link.present? && user.admin?
+    user.admin?
   end
 
   def created_by_employer?
     user.employer?
   end
 
+  # TODO: move this to query object
   def similar_jobs
     Job.includes(user: { company: [logo_attachment: :blob] })
        .where('lower(title) like :title OR lower(category) like :category',
-              title: title.downcase, category: category.downcase)
+              title: "%#{title.downcase}%", category: category.downcase)
        .where.not(id:).active.order(created_at: :desc).limit(4)
   end
 end
