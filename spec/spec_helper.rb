@@ -16,6 +16,8 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
+require 'active_storage_validations/matchers'
+
 SimpleCov.start 'rails'
 
 RSpec.configure do |config|

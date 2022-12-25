@@ -25,7 +25,7 @@ class ApplicantsController < ApplicationController
   def new
     @user      = User.with_education_and_work_experience.find(current_user.id)
     @presenter = Presenter::Applicant::New.new(@user, view_context)
-    redirect_link  = @job.redirect_link
+    redirect_link = @job.redirect_link
 
     redirect_to redirect_link if redirect_link.present?
   end

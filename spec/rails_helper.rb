@@ -67,6 +67,8 @@ RSpec.configure do |config|
 
   # Factory Bot setting
   config.include FactoryBot::Syntax::Methods
+  # Active storage validation by active_storage_validations gem
+  config.include ActiveStorageValidations::Matchers
 end
 
 # Should Matcher gem setup

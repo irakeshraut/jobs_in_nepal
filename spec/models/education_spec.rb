@@ -90,4 +90,6 @@ RSpec.describe Education do
       end
     end
   end
+
+  # TODO: write spec for delete_empty_course_highlights
 end

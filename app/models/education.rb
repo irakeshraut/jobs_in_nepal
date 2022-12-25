@@ -13,6 +13,7 @@ class Education < ApplicationRecord
   belongs_to :user
 
   before_save :clean_up_course_finish_time
+  before_save :delete_empty_course_highlights
 
   def clean_up_course_finish_time
     if course_completed?
@@ -21,5 +22,9 @@ class Education < ApplicationRecord
     else
       self.finished_year = nil
     end
+  end
+
+  def delete_empty_course_highlights
+    course_highlights.destroy if course_highlights.body.blank?
   end
 end
