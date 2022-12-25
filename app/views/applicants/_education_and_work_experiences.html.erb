@@ -13,7 +13,7 @@
               <% if education.finished_year %>
                 <span class="title-est">Course Finished Year: <%= education.finished_year %></span></h4>
               <% else %>
-                <span class="title-est">Expected Finish Time: <%= education.expected_finish_year %> (<%= WorkExperiencesHelper.months.key(education.expected_finish_month) %>)</span></h4>
+                <span class="title-est">Expected Finish Time: <%= education.expected_finish_year %> (<%= months.key(education.expected_finish_month) %>)</span></h4>
               <% end %>
             </h4>
             <h5 class="trim-edu-title"><%= education.course_name %></h5>
@@ -42,9 +42,9 @@
             <h4 class="trim-edu-title">
               <%= work_experience.company_name %>
               <% if work_experience.still_in_role %>
-                <span class="title-est"><%= "#{work_experience.start_year} (#{WorkExperiencesHelper.months.key(work_experience.start_month)}) - Present" %></span>
+                <span class="title-est"><%= "#{work_experience.start_year} (#{months.key(work_experience.start_month)}) - Present" %></span>
               <% else %>
-                <span class="title-est"><%= "#{work_experience.start_year} (#{WorkExperiencesHelper.months.key(work_experience.start_month)}) - #{work_experience.finish_year} (#{WorkExperiencesHelper.months.key(work_experience.finish_month)})" %></span>
+                <span class="title-est"><%= "#{work_experience.start_year} (#{months.key(work_experience.start_month)}) - #{work_experience.finish_year} (#{months.key(work_experience.finish_month)})" %></span>
               <% end %>
             </h4>
             <strong><%= work_experience.job_title %></strong>
