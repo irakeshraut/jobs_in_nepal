@@ -13,7 +13,7 @@ class JobPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin? || user.employer?
+    new?
   end
 
   def edit?
@@ -21,7 +21,7 @@ class JobPolicy < ApplicationPolicy
   end
 
   def update?
-    (user.admin? || user.employer?) && job.user == user
+    edit?
   end
 
   def destroy?
@@ -33,7 +33,7 @@ class JobPolicy < ApplicationPolicy
   end
 
   def reopen_job?
-    (user.admin? || user.employer?) && job.user == user && !job.expired?
+    close_job?
   end
 
   def closed_by_admin?
@@ -41,6 +41,6 @@ class JobPolicy < ApplicationPolicy
   end
 
   def reopened_by_admin?
-    user.admin? && !job.expired?
+    closed_by_admin?
   end
 end

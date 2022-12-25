@@ -28,8 +28,9 @@ class ApplicantsController < ApplicationController
     @user    = User.with_education_and_work_experience.find(current_user.id)
     @resumes = @user.resumes_with_blob
     @cover_letters = @user.cover_letters_with_blob
+    redirect_link  = @job.redirect_link
 
-    redirect_to @job.redirect_link if @job.redirect_link.present?
+    redirect_to redirect_link if redirect_link.present?
   end
 
   def create
@@ -97,10 +98,11 @@ class ApplicantsController < ApplicationController
   end
 
   def set_user_with_resume_and_cover_letter
+    id = params[:user_id]
     @user = if params[:resume_file] || params[:cover_letter_file]
-              User.with_resume_and_cover_letter.find(params[:user_id])
+              User.with_resume_and_cover_letter.find(id)
             else
-              User.find(params[:user_id])
+              User.find(id)
             end
   end
 end

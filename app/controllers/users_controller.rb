@@ -10,7 +10,8 @@ class UsersController < ApplicationController
   def new
     @user    = User.new
     @company = Company.new
-    @tab     = params[:tab] if params[:tab]
+    @tab     = params[:tab]
+
     redirect_to new_user_path(tab: 'job_seeker') unless @tab
   end
 
@@ -37,8 +38,9 @@ class UsersController < ApplicationController
       flash[:success] = 'Update Successful'
       redirect_back(fallback_location: user_dashboards_path(@user))
     else
-      @highlight_navigation = params[:render_template]
-      render params[:render_template] || :edit
+      render_template = params[:render_template]
+      @highlight_navigation = render_template
+      render render_template || :edit
     end
   end
 
@@ -48,9 +50,10 @@ class UsersController < ApplicationController
   # TODO: create separate controller called PasswordsController for this with Update method
   def update_password
     @service = Service::Password::Update.call(@user, password_params)
-    flash.now[:success] = 'Password Successfully Updated.' if @service.success?
+    success = @service.success?
+    flash.now[:success] = 'Password Successfully Updated.' if success
 
-    @service.success? ? (redirect_to user_dashboards_path(@user)) : (render :edit_password)
+    @service.success ? (redirect_to user_dashboards_path(@user)) : (render :edit_password)
   end
 
   def all_posted_jobs
