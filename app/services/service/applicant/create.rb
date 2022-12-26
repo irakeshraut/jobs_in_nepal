@@ -47,9 +47,8 @@ module Service
       end
 
       def add_error_messages
-        [applicant, resume_service, cover_letter_service].each do |object|
-          object.errors.full_messages.each { |error| errors.add(:base, error) }
-        end
+        objects = [applicant, resume_service, cover_letter_service]
+        objects.flat_map(&:errors).full_messages.each { |message| errors.add(:base, message) }
       end
     end
   end

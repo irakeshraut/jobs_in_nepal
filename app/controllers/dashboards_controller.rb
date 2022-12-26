@@ -35,8 +35,11 @@ class DashboardsController < ApplicationController
   end
 
   def filter_jobs
-    @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
-    @jobs = @jobs.filter_by_status(params[:status]) if params[:status].present?
+    title  = params[:title]
+    status = params[:status]
+
+    @jobs = @jobs.filter_by_title(title) if title.present?
+    @jobs = @jobs.filter_by_status(status) if status.present?
     @jobs = @jobs.paginate(page: params[:page], per_page: 30)
   end
 

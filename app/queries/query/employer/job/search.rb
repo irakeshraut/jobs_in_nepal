@@ -28,11 +28,13 @@ module Query
         end
 
         def filter_by_title
-          @jobs = @jobs.filter_by_title(params[:title]) if params[:title].present?
+          title = params[:title]
+          @jobs = @jobs.filter_by_title(title) if title.present?
         end
 
         def filter_by_status
-          @jobs = @jobs.filter_by_status(params[:status]) if params[:status].present?
+          status = params[:status]
+          @jobs = @jobs.filter_by_status(status) if status.present?
         end
 
         def pagination

@@ -11,10 +11,11 @@ class BookmarksController < ApplicationController
   end
 
   def create
-    bookmark = @user.bookmarks.new(job_id: params[:job_id])
+    job_id = params[:job_id]
+    bookmark = @user.bookmarks.new(job_id:)
     bookmark.save ? flash[:success] = 'Job Saved' : flash[:error] = 'Unable to Save Job.'
 
-    redirect_to job_path(params[:job_id])
+    redirect_to job_path(job_id)
   end
 
   def destroy

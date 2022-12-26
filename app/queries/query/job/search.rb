@@ -33,15 +33,18 @@ module Query
       end
 
       def filter_by_title
-        @jobs = jobs.filter_by_title(params[:title]) if params[:title].present?
+        title = params[:title]
+        @jobs = jobs.filter_by_title(title) if title.present?
       end
 
       def filter_by_category
-        @jobs = jobs.filter_by_category(params[:category]) if params[:category].present?
+        category = params[:category]
+        @jobs    = jobs.filter_by_category(category) if category.present?
       end
 
       def filter_by_location
-        @jobs = jobs.filter_by_location(params[:location]) if params[:location].present?
+        location = params[:location]
+        @jobs    = jobs.filter_by_location(location) if location.present?
       end
 
       def pagination

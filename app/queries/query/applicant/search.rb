@@ -26,11 +26,13 @@ module Query
       end
 
       def filter_by_name
-        @records = @records.filter_by_name(params[:name]) if params[:name].present?
+        name = params[:name]
+        @records = @records.filter_by_name(name) if name.present?
       end
 
       def filter_by_status
-        @records = @records.filter_by_status(params[:status]) if params[:status].present?
+        status = params[:status]
+        @records = @records.filter_by_status(status) if status.present?
       end
 
       def pagination
