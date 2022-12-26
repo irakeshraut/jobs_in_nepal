@@ -69,6 +69,8 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   # Active storage validation by active_storage_validations gem
   config.include ActiveStorageValidations::Matchers
+  # Time Helper so no need to use Timecop gem
+  config.include ActiveSupport::Testing::TimeHelpers
 end
 
 # Should Matcher gem setup
